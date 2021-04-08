@@ -1,12 +1,27 @@
-import logo from '../logo.svg';
+import Chessboard from 'chessboardjsx';
 import './App.css';
 
+interface BoardDetails {
+  fen: string;
+  draggable?: boolean;
+  width?: number;
+}
 
 function App() {
+  const currentBoard: BoardDetails = {
+    fen: "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
+    draggable: false,
+    width: 500,
+  }
+
   return ( 
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <Chessboard
+          position={currentBoard.fen} 
+          draggable={currentBoard.draggable}
+          width={currentBoard.width}
+        />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
