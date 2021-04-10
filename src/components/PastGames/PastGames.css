@@ -1,4 +1,6 @@
 .past-games {
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   grid-area: past-games;
 }

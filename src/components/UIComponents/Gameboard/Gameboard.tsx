@@ -1,20 +1,23 @@
 import React from 'react'
+import ChessBoard from 'chessboardjsx'
 import './Gameboard.css'
 
 interface PropTypes {
-  width?: number;
-  height?: number;
-  orientation?: string;
+  width: number;
+  orientation?: 'white' | 'black' | undefined;
   draggable?: boolean;
   fen?: string;
 }
 
-const Gameboard: React.FC<PropTypes> = ({ width, height, orientation, fen, draggable}) => {
+const Gameboard: React.FC<PropTypes> = ({ width, orientation, fen, draggable}) => {
   return (
-    <>
-      <h1>GAMEBOARD</h1>
-      <p>{fen}</p>
-    </>
+    <div className="gameboard-wrapper">
+      <ChessBoard 
+        position={fen}
+        width={width}
+        orientation={orientation}
+      />
+    </div>
   )
 }
 

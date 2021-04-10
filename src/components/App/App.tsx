@@ -1,7 +1,6 @@
 import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Splash from '../Splash/Splash'
-import Header from '../Header/Header'
 import Dashboard from '../Dashboard/Dashboard'
 
 

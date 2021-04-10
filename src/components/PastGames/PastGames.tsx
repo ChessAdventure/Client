@@ -8,7 +8,7 @@ interface PropTypes {
 
 const PastGames: React.FC<PropTypes> = ({ gameFens }) => {
   const gameboards = gameFens?.map((fen: string, index: number) => {
-   return <Gameboard fen={fen} key={index} />
+   return <Gameboard width={250} fen={fen} key={index} />
   }) 
   return (
     <section className="past-games">
