@@ -1,0 +1,4 @@
+.past-games {
+  display: flex;
+  grid-area: past-games;
+}

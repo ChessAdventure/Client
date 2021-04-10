@@ -9,7 +9,7 @@ interface PropTypes {
 const Thumbnail: React.FC<PropTypes> = ({ imageSource, text}) => {
   return (
     <section className="thumbnail">
-      <div className="thumbnail-image" style={{backgroundImage: `url(${imageSource})`}} ARIA-label="Player thumbnail"></div>
+      <div className="thumbnail-image" style={{backgroundImage: `url(${imageSource})`}} aria-label="Player thumbnail"></div>
       <p className="thumbnail-text">{text}</p>
     </section>
   )
