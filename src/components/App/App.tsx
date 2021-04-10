@@ -2,6 +2,8 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 import Splash from '../Splash/Splash'
 import Header from '../Header/Header'
+import Dashboard from '../Dashboard/Dashboard'
+
 
 const App: React.FC = () => {
   return ( 
@@ -16,12 +18,7 @@ const App: React.FC = () => {
           exact
           path="/dashboard/:user"
           render={({match}) => {
-            return (
-            <>
-              <Header />
-              <p>Welcome {match.params.user}</p>
-            </>
-            )
+            return <Dashboard user={match.params.user}/>
           }}
         ></Route>
         <Route render={() => {
