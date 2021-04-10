@@ -4,4 +4,5 @@
   border: 1px solid black;
   text-align: center;
   grid-area: quest-start;
+  margin: 1em;
 }
