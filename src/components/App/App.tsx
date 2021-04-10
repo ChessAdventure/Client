@@ -15,7 +15,7 @@ const App: React.FC = () => {
           exact
           path="/dashboard/:user"
           render={({match}) => {
-            return <p>`Welcome ${match.params.user}`</p>
+            return <p>Welcome {match.params.user}</p>
           }}
         ></Route>
         <Route render={() => {
