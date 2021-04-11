@@ -3,7 +3,7 @@
   height: 90vh;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0.5fr 2fr;
+  grid-template-rows: 1fr 0.2fr 2fr;
   gap: 10px;
   grid-template-areas:
     "quest-start quest-start thumbnail thumbnail"
@@ -11,3 +11,16 @@
     "past-games past-games past-games past-games"
 }
 
+.pastgame-header {
+  grid-area: pastgame-header;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 60%;
+  margin: 1em 1em 0 1em;
+  
+}
+
+.see-all-button {
+  margin-right: 3em;
+}
