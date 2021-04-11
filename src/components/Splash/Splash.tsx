@@ -10,9 +10,11 @@ const Splash = () => {
       </div>
       <section className="login-modal">
         <h1 className="title">Chess Quest</h1>
-        <div className="enter">
-          <Link to={'/dashboard/1234'}>BEGIN</Link>
-        </div>
+        <Link to={'/dashboard/1234'}>
+          <div className="enter">
+           <p>BEGIN</p>
+          </div>
+        </Link>
       </section>
       <img className="chess-pieces" src={chessPieces} alt="chess pieces" />
     </div>
