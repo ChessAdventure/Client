@@ -6,7 +6,7 @@ interface PropTypes {
   gameFens?: string[];
 }
 
-const PastGames: React.FC<PropTypes> = ({ gameFens }) => {
+const PastGames = ({ gameFens }: PropTypes) => {
   const gameboards = gameFens?.map((fen: string, index: number) => {
    return <Gameboard width={250} fen={fen} key={index} />
   }) 

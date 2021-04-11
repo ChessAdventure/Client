@@ -9,7 +9,7 @@ interface PropTypes {
   fen?: string;
 }
 
-const Gameboard: React.FC<PropTypes> = ({ width, orientation, fen, draggable}) => {
+const Gameboard = ({ width, orientation, fen, draggable}: PropTypes) => {
   return (
     <div className="gameboard-wrapper">
       <ChessBoard 

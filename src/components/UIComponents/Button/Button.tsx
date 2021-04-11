@@ -6,7 +6,7 @@ interface PropTypes {
   path?: string;
 }
 
-const Button: React.FC<PropTypes> = ({ text, path }) => {
+const Button = ({ text, path }: PropTypes) => {
   return (
     <button>{text}</button>
   )

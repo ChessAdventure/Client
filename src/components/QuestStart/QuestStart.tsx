@@ -2,7 +2,7 @@ import React from 'react'
 import './QuestStart.css'
 import Button from '../UIComponents/Button/Button'
 
-const QuestStart: React.FC<any> = () => {
+const QuestStart = () => {
   return (
     <section className="quest-start" id="quest-start">
       <p>Start Quest</p>

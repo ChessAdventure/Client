@@ -2,8 +2,8 @@ import React, {MouseEvent} from 'react'
 import {Link} from 'react-router-dom'
 import './Splash.css'
 import chessPieces from '../../chess.svg'
-const Splash = () => {
 
+const Splash = () => {
   return (
     <div className="splash">
       <div className="checkerboard">

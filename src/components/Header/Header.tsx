@@ -1,7 +1,7 @@
 import React from 'react'
 import './Header.css'
 
-const Header: React.FC = () => {
+const Header = () => {
   return (
     <header className="dashboard-header">
       <h1>Chess Quest</h1>

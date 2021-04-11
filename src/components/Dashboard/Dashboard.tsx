@@ -9,7 +9,7 @@ interface PropTypes {
   user: string;
 }
 
-const Dashboard: React.FC<PropTypes> = ({ user }) => {
+const Dashboard = ({ user }: PropTypes) => {
   return (
     <>
       <Header />
