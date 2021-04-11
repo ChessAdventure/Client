@@ -6,7 +6,7 @@ interface PropTypes {
   text?: string;
 }
 
-const Thumbnail = ({ imageSource, text}: PropTypes) => {
+const Thumbnail = ({ imageSource, text }: PropTypes) => {
   return (
     <section className="thumbnail">
       <div className="thumbnail-image" style={{backgroundImage: `url(${imageSource})`}} aria-label="Player thumbnail"></div>
