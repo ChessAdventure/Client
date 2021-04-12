@@ -7,15 +7,18 @@ interface PropTypes {
   orientation?: 'white' | 'black' | undefined;
   draggable?: boolean;
   fen?: string;
+  onDrop?: any;
+  position?: any;
 }
 
-const Gameboard = ({ width, orientation, fen, draggable}: PropTypes) => {
+const Gameboard = ({ width, orientation, fen, draggable, onDrop}: PropTypes) => {
   return (
     <div className="gameboard-wrapper">
       <ChessBoard 
         position={fen}
         width={width}
         orientation={orientation}
+        onDrop={onDrop}
       />
     </div>
   )

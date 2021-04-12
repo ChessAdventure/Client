@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
-import { Chess } from 'chess.js'
+import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
+const Chess = require('chess.js')
 
 interface PropTypes {
-    id: string;
+  id: string;
 }
 
 // chess.fen() returns current fen
@@ -18,26 +19,47 @@ interface PropTypes {
 
 const GameScreen = ({ id }: PropTypes) => {
 
-    // const [currentFen, setCurrentFen] = useState('')
-    // const [game, setGame] = useState(null)
-    // let chess
-    
-    // useEffect(() => {
-    //     chess = new Chess()
-        
-    // }, [])
+    const [chess] = useState<ChessInstance>(
+      new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    )
+    const [fen, setFen] = useState(chess.fen())
+    console.log('fen', fen)
+
+    const handleMove = (move: ShortMove) => {
+      console.log(move)
+      if (chess.move(move)) {
+        setTimeout(() => {
+          const moves = chess.moves();
+  
+          if (moves.length > 0) {
+            const computerMove = moves[Math.floor(Math.random() * moves.length)];
+            chess.move(computerMove);
+            setFen(chess.fen());
+          }
+        }, 300);
+  
+        setFen(chess.fen());
+      }
+    }
 
     return (
-        <section>
-            <Header />
-            <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg"/>
-            <Gameboard 
-                width={500} 
-                fen="start"
-                draggable={true}/>
-            <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
+      <section>
+          <Header />
+          <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg"/>
+          <Gameboard 
+            width={500} 
+            fen={fen}
+            onDrop={(move: any) => 
+              handleMove({
+                from: move.sourceSquare,
+                to: move.targetSquare,
+                promotion: "q",
+              })
+            }
+          />
+          <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
 
-        </section>
+      </section>
     )
 
 }
