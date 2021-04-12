@@ -10,10 +10,39 @@ const SignUp = ({ form }: PropTypes) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
-  const handleClick = (e: any) => {
+  const handleClick = async (e: any) => {
     e.preventDefault()
-    console.log(username, password, confirmPassword)
+    switch (form) {
+      case 'Log In':
+        //code
+      break
+      case 'Sign Up':
+        if (username.length >= 4 && password.length && confirmPassword.length && password === confirmPassword) {
+          // console.log({
+          //   un: username,
+          //   pw: password,
+          //   cpw: confirmPassword,
+          // })
+          const response = await fetch('http://localhost:3001/api/v1/users', {
+            method: 'POST',
+            headers: {'CONTENT_TYPE': 'application/json'},
+            body: JSON.stringify({
+              username,
+              password,
+              password_confirmation: confirmPassword
+            })
+          })
+          const data = await response.json();
+          console.log(data)
+        } else {
+          setError('Something went wrong, please try again')
+        }
+      break
+      default:
+        return
+    }
   }
 
   return(
@@ -55,6 +84,7 @@ const SignUp = ({ form }: PropTypes) => {
         </label>}
       </form>
       <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
+      {error && <p className="error">{error}</p>}
     </section>
   )
 }

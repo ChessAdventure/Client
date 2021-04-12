@@ -100,11 +100,3 @@ a {
   top: 17vw;
   left: 12%;
 }
-
-.or {
-  position: absolute;
-  color: white;
-  transform: translateX(-50%);
-  top: 70%;
-  left: 50%;
-}

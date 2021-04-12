@@ -21,7 +21,6 @@ const Splash = () => {
         <SignUp form={formState}/>
         {formState === 'Log In' && <button className="signup-button" onClick={() => setFormState('Sign Up')}>Sign Up</button>}
         {formState === 'Sign Up' && <button className="signup-button" onClick={() => setFormState('Log In')}>Log In</button>}
-        <p className="or">OR</p>
       </section>
       <img className="chess-pieces" src={chessPieces} alt="chess pieces" />
     </div>
