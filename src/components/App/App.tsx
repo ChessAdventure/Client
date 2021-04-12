@@ -1,40 +1,39 @@
-import Chessboard from 'chessboardjsx';
+import { Switch, Route } from 'react-router-dom';
 import './App.css';
+import Splash from '../Splash/Splash'
+import Dashboard from '../Dashboard/Dashboard'
+import GameScreen from '../GameScreen/GameScreen'
 
-interface BoardDetails {
-  fen: string;
-  draggable?: boolean;
-  width?: number;
-}
 
-function App() {
-  const currentBoard: BoardDetails = {
-    fen: "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2",
-    draggable: false,
-    width: 500,
-  }
-
+const App = () => {
   return ( 
-    <div className="App">
-      <header className="App-header">
-        <Chessboard
-          position={currentBoard.fen} 
-          draggable={currentBoard.draggable}
-          width={currentBoard.width}
-        />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Switch>
+        <Route 
+          exact
+          path="/"
+          component={Splash}
+        ></Route>
+        <Route
+          exact
+          path="/dashboard/:user"
+          render={({match}) => {
+            return <Dashboard user={match.params.user}/>
+          }}
+        ></Route>
+        <Route
+          path="/game/:id"
+          render={({ match }) => {
+            return <GameScreen id={match.params.id} />
+          }}
+        ></Route>
+        <Route render={() => {
+          return <p>404</p>
+        }}
+        ></Route>
+
+      </Switch>
+    </>
   );
 }
 

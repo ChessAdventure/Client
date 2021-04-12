@@ -1,0 +1,42 @@
+.past-games {
+  display: flex;
+  justify-content: flex-start;
+  grid-area: past-games;
+  /* border: 1px solid green; */
+  margin: 0 1em 2em 1em;
+}
+
+.past-game-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.past-game-icons-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #b58962;
+  width: 75%;
+  border-radius: 35%;
+  align-items: center;
+}
+
+.past-game-icon {
+  padding: .7em;
+  height: 40px;
+  width: auto;
+}
+
+.moves,
+.pieces-lost {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.counter {
+  height: 29px;
+  font-size: x-large;
+}
+

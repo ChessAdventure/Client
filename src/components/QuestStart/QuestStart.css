@@ -1,0 +1,8 @@
+.quest-start {
+  width: 100%;
+  height: 90%;
+  /* border: 1px solid purple; */
+  text-align: center;
+  grid-area: quest-start;
+  margin: 1em;
+}
