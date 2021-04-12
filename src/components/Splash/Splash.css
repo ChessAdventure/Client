@@ -61,10 +61,23 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 60%;
+  top: 75%;
   width: 30%;
   height: 10%;
   background: #FF8658;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  border-radius: 20px;
+}
+
+.button-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 90%;
+  width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;

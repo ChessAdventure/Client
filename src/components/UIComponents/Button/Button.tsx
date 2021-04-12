@@ -4,11 +4,14 @@ import './Button.css'
 interface PropTypes {
   text: string;
   path?: string;
+  handleClick?: any;
 }
 
-const Button = ({ text, path }: PropTypes) => {
+const Button = ({ text, path, handleClick }: PropTypes) => {
   return (
-    <button>{text}</button>
+    <button
+      onClick={handleClick}
+    >{text}</button>
   )
 }
 

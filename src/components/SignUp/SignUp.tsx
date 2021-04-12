@@ -1,15 +1,19 @@
 import React, { useState } from 'react'
 import './SignUp.css'
 
-const SignUp = () => {
+interface PropTypes {
+  form: string;
+}
+
+const SignUp = ({ form }: PropTypes) => {
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
   return(
-    <section>
-      <form>
+    <section className="form-wrapper">
+      <form className="form">
         <label>
           Username:
           <input
@@ -25,7 +29,7 @@ const SignUp = () => {
           Password:
           <input 
             className="input" 
-            type="text" 
+            type="password" 
             value={password} 
             name="password"
             onChange={e => setPassword(e.target.value)} 
@@ -33,17 +37,18 @@ const SignUp = () => {
           >
           </input>
         </label>
+        {form === 'Sign Up' &&
         <label>
           Confirm Password:
           <input 
             className="input" 
-            type="text" 
+            type="password" 
             value={confirmPassword} 
             name="confirmPassword"
             onChange={e => setConfirmPassword(e.target.value)}
             >
           </input>
-        </label>
+        </label>}
       </form>
     </section>
   )
