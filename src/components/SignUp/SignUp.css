@@ -3,6 +3,8 @@
 }
 
 .form-wrapper {
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -17,4 +19,14 @@
 
 input {
   margin: 1em;
+}
+
+.log-in {
+ width: 30%;
+ margin: auto;
+ position: absolute;
+ left: 35%;
+ top: 65%;
+ font-size: 1.5rem;
+ border-radius: 20px;
 }

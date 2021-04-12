@@ -72,11 +72,11 @@
   border-radius: 20px;
 }
 
-.button-wrapper {
+.signup-button {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 90%;
+  top: 80%;
   width: 30%;
   display: flex;
   justify-content: center;
@@ -99,4 +99,12 @@ a {
   width: 25vw;
   top: 17vw;
   left: 12%;
+}
+
+.or {
+  position: absolute;
+  color: white;
+  transform: translateX(-50%);
+  top: 70%;
+  left: 50%;
 }

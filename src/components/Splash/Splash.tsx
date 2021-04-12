@@ -3,11 +3,14 @@ import {Link} from 'react-router-dom'
 import './Splash.css'
 import chessPieces from '../../chess.svg'
 import SignUp from '../SignUp/SignUp'
-import Button from '../UIComponents/Button/Button'
 
 const Splash = () => {
 
   const [formState, setFormState] = useState<string>('Log In')
+
+  const validateLogIn = () => {
+    console.log('logged')
+  }
 
   return (
     <div className="splash">
@@ -16,16 +19,9 @@ const Splash = () => {
       <section className="login-modal">
         <h1 className="title">Chess Quest</h1>
         <SignUp form={formState}/>
-        <Link to={'/dashboard/1234'}>
-          <div className="enter">
-           <p>{formState}</p>
-          </div>
-        </Link>
-        {formState === 'Log In' && 
-        <div className="button-wrapper">
-          <Button text={'Sign Up'} handleClick={() => setFormState('Sign Up')} />
-        </div>
-        }
+        {formState === 'Log In' && <button className="signup-button" onClick={() => setFormState('Sign Up')}>Sign Up</button>}
+        {formState === 'Sign Up' && <button className="signup-button" onClick={() => setFormState('Log In')}>Log In</button>}
+        <p className="or">OR</p>
       </section>
       <img className="chess-pieces" src={chessPieces} alt="chess pieces" />
     </div>

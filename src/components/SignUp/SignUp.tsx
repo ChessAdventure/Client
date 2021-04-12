@@ -11,6 +11,11 @@ const SignUp = ({ form }: PropTypes) => {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
+  const handleClick = (e: any) => {
+    e.preventDefault()
+    console.log(username, password, confirmPassword)
+  }
+
   return(
     <section className="form-wrapper">
       <form className="form">
@@ -33,7 +38,6 @@ const SignUp = ({ form }: PropTypes) => {
             value={password} 
             name="password"
             onChange={e => setPassword(e.target.value)} 
-            
           >
           </input>
         </label>
@@ -50,6 +54,7 @@ const SignUp = ({ form }: PropTypes) => {
           </input>
         </label>}
       </form>
+      <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
     </section>
   )
 }
