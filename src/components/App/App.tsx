@@ -26,13 +26,13 @@ useEffect(() => {
           path="/"
           render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} />}}
         >
-          {userKey.length && <Redirect to={`/dashboard/${userName}`} />}
+          {userKey.length && <Redirect to={`/dashboard`} />}
         </Route>
         <Route
           exact
-          path="/dashboard/:user"
-          render={({match}) => {
-            return <Dashboard user={match.params.user} />
+          path="/dashboard"
+          render={() => {
+            return <Dashboard user={userName} />
           }}
           >
           {!userKey.length && <Redirect to={`/`} />}

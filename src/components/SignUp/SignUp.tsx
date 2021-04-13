@@ -39,11 +39,21 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json()
+          const data = await response.json();
           console.log(data);
           
+          const apiKey = data.data.attributes.api_key
+          const userName = data.data.attributes.username
+          localStorage.setItem('chessAdventureKey', apiKey)
+          localStorage.setItem('chessAdventureName', userName)
+
+          setUserName(userName)
+          setUserKey(apiKey)
+
+          history.push(`/dashboard`)
+          
         } catch (e) {
-          // Do thing
+          console.log(e);
         }
         break
       case 'Sign Up':
@@ -71,7 +81,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             localStorage.setItem('chessAdventureKey', apiKey)
             localStorage.setItem('chessAdventureName', userName)
 
-            history.push(`/dashboard/${userName}`)
+            history.push(`/dashboard`)
           } catch (e: any) {
             setError('Something went wrong, please try again')
             // eventually display a custom error message depending on what you borked
