@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import './SignUp.css'
 
-// interface PropTypes {
-//   form: string;
-// }
+interface PropTypes {
+  form: string;
+}
 
-const SignUp = ({ form }) => {
+const SignUp = ({ form }: PropTypes) => {
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
+  const [username, setUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [error, setError] = useState<string>('')
 
-  const handleClick = async (e) => {
+  const handleClick = async (e: any) => {
     e.preventDefault()
     switch (form) {
       case 'Log In':
@@ -33,7 +33,7 @@ const SignUp = ({ form }) => {
               password_confirmation: confirmPassword
             }
           }
-          
+          // /login, include username and password in a POST
           const response = await fetch(`http://localhost:3001/api/v1/users`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -41,7 +41,10 @@ const SignUp = ({ form }) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
+          // catch error and display it, as long as it's a 500+ (it's an array)
+          // otherwise display error below
           console.log(data)
+          // if apikey is included and response is 200, go to dashboard and save it in localstorage
         } else {
           setError('Something went wrong, please try again')
         }

@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
 import './Splash.css'
 import chessPieces from '../../chess.svg'
-import SignUp from '../SignUp/SignUp.js'
+import SignUp from '../SignUp/SignUp'
 
 const Splash = () => {
 
   const [formState, setFormState] = useState<string>('Log In')
 
-  const validateLogIn = () => {
-    console.log('logged')
-  }
+  // const validateLogIn = () => {
+  //   console.log('logged')
+  // }
 
   return (
     <div className="splash">
