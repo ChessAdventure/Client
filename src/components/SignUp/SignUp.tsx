@@ -60,7 +60,7 @@ const SignUp = ({ form }: PropTypes) => {
   return(
     <section className="form-wrapper">
       <form className="form">
-        <label>
+        <label className="label">
           Username:
           <input
             className="input" 
@@ -71,7 +71,7 @@ const SignUp = ({ form }: PropTypes) => {
             >
           </input>
         </label>
-        <label>
+        <label className="label">
           Password:
           <input 
             className="input" 

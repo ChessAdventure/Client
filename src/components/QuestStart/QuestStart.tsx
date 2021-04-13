@@ -1,7 +1,6 @@
 import React from 'react'
 import './QuestStart.css'
 import { Link } from 'react-router-dom'
-import Button from '../UIComponents/Button/Button'
 
 const QuestStart = () => {
   return (
@@ -10,7 +9,7 @@ const QuestStart = () => {
       <Link 
         to='/game/7'
       >
-        <Button text="Start a quest"></Button>
+        <button className="start-button">Start a quest</button>
       </Link>
     </section>
   )

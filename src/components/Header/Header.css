@@ -2,12 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  margin: auto;
+  width: 70%;
   height: 10vh;
-  background-color: #003049;
-  color: #EAE2B7;
+  background-color: #000f08;
+  color: #f4fff8;
+  border-bottom: 8px double #8baaad;
+  border-right: 8px double #8baaad;
+  border-left: 8px double #8baaad;
+  box-shadow: 6px 6px 10px #000f08;
 }
 
 h1 {
   margin: 0;
+  font-size: 3em;
 }

@@ -1,5 +1,10 @@
 .input {
   width: 200px;
+  height: 30px;
+}
+
+.label {
+  font-size: x-large;
 }
 
 .form-wrapper {
@@ -29,13 +34,16 @@ input {
  top: 75%;
  font-size: 1.5rem;
  border-radius: 20px;
- background: #FF8658;
+ background: #b24c63;
  color: white;
+ padding: .2em 0;
+ border: none;
+ box-shadow: 3px 3px 5px #f4fff8;
 }
 
 
 .log-in:hover {
-  filter: brightness(115%);
+  filter: brightness(85%);
 }
 
 .error {
