@@ -1,18 +1,18 @@
 import React, { useState } from 'react'
 import './SignUp.css'
 
-interface PropTypes {
-  form: string;
-}
+// interface PropTypes {
+//   form: string;
+// }
 
-const SignUp = ({ form }: PropTypes) => {
+const SignUp = ({ form }) => {
 
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
-  const [confirmPassword, setConfirmPassword] = useState<string>('')
-  const [error, setError] = useState<string>('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
-  const handleClick = async (e: any) => {
+  const handleClick = async (e) => {
     e.preventDefault()
     switch (form) {
       case 'Log In':
@@ -25,14 +25,20 @@ const SignUp = ({ form }: PropTypes) => {
           //   pw: password,
           //   cpw: confirmPassword,
           // })
-          const response = await fetch('http://localhost:3001/api/v1/users', {
-            method: 'POST',
-            headers: {'CONTENT_TYPE': 'application/json'},
-            body: JSON.stringify({
-              username,
-              password,
+          
+          const params = {
+            "user": {
+              username: username,
+              password: password,
               password_confirmation: confirmPassword
-            })
+            }
+          }
+          
+          const response = await fetch(`http://localhost:3001/api/v1/users`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            mode: 'cors',
+            body: JSON.stringify(params)
           })
           const data = await response.json();
           console.log(data)

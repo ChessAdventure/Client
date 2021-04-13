@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import './Splash.css'
 import chessPieces from '../../chess.svg'
-import SignUp from '../SignUp/SignUp'
+import SignUp from '../SignUp/SignUp.js'
 
 const Splash = () => {
 
