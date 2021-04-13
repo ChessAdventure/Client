@@ -22,7 +22,7 @@ const Dashboard = ({ user }: PropTypes) => {
         />
         <div className="pastgame-header">
           <h2>
-            Recent Matches
+            Recent games
           </h2>
           <button className="see-all-button">All Match History</button>
         </div>

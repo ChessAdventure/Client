@@ -29,22 +29,25 @@ const SignUp = ({ form }: PropTypes) => {
           //   pw: password,
           //   cpw: confirmPassword,
           // })
-          console.log(JSON.stringify({user: {
-            username,
-            password,
-            password_confirmation: confirmPassword
-          }}))
-          const response = await fetch('http://localhost:3001/api/v1/users?user', {
-            method: 'POST',
-            headers: {'CONTENT_TYPE': 'application/json'},
-            body: JSON.stringify({user: {
-              username,
-              password,
+          const params = {
+            "user": {
+              username: username,
+              password: password,
               password_confirmation: confirmPassword
-            }})
+            }
+          }
+          // /login, include username and password in a POST
+          const response = await fetch(`http://localhost:3001/api/v1/users`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            mode: 'cors',
+            body: JSON.stringify(params)
           })
           const data = await response.json();
+          // catch error and display it, as long as it's a 500+ (it's an array)
+          // otherwise display error below
           console.log(data)
+          // if apikey is included and response is 200, go to dashboard and save it in localstorage
         } else {
           setError('Something went wrong, please try again')
         }
