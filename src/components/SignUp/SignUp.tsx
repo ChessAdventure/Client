@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import './SignUp.css'
 
 interface PropTypes {
@@ -11,6 +12,7 @@ const SignUp = ({ form }: PropTypes) => {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
+  let history = useHistory()
 
   useEffect(() => {
     setError('')
@@ -32,8 +34,8 @@ const SignUp = ({ form }: PropTypes) => {
               password_confirmation: confirmPassword
             }
           }
+
           try {
-            // /login, include username and password in a POST
             const response = await fetch(`http://localhost:3001/api/v1/users`, {
               method: 'POST',
               headers: {'Content-Type': 'application/json'},
@@ -41,18 +43,17 @@ const SignUp = ({ form }: PropTypes) => {
               body: JSON.stringify(params)
             })
             const data = await response.json();
+
             const apiKey = data.data.attributes.api_key
             const userName = data.data.attributes.username
             localStorage.setItem('chessAdventureKey', apiKey)
             localStorage.setItem('chessAdventureName', userName)
-            // catch error and display it, as long as it's a 500+ (it's an array)
-            // otherwise display error below
+
+            history.push(`/dashboard/${userName}`)
           } catch(e: any) {
             setError('Something went wrong, please try again')
             // eventually display a custom error message depending on what you borked
           }
-          // data: attributes {api_key, username}, id, type
-          // if apikey is included and response is 200, go to dashboard and save it in localstorage
         }
       break
       default:
