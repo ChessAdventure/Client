@@ -13,5 +13,6 @@
   padding: .2em 1em;
   border-radius: 20px;
   background: #b24c63;
+  box-shadow: 3px 3px 7px #000f08;
   font-size: x-large;
 }

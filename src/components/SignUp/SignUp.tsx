@@ -4,9 +4,11 @@ import './SignUp.css'
 
 interface PropTypes {
   form: string;
+  setUserName: any;
+  setUserKey: any;
 }
 
-const SignUp = ({ form }: PropTypes) => {
+const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -22,8 +24,28 @@ const SignUp = ({ form }: PropTypes) => {
     e.preventDefault()
     switch (form) {
       case 'Log In':
-        //code
-      break
+        try {
+
+          const params = {
+            "user": {
+              username: username,
+              password: password
+            }
+          }
+
+          const response = await fetch(`http://localhost:3001/api/v1/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            mode: 'cors',
+            body: JSON.stringify(params)
+          })
+          const data = await response.json()
+          console.log(data);
+          
+        } catch (e) {
+          // Do thing
+        }
+        break
       case 'Sign Up':
         if (username.length >= 4 && password.length && confirmPassword.length && password === confirmPassword) {
 
@@ -38,7 +60,7 @@ const SignUp = ({ form }: PropTypes) => {
           try {
             const response = await fetch(`http://localhost:3001/api/v1/users`, {
               method: 'POST',
-              headers: {'Content-Type': 'application/json'},
+              headers: { 'Content-Type': 'application/json' },
               mode: 'cors',
               body: JSON.stringify(params)
             })
@@ -50,54 +72,54 @@ const SignUp = ({ form }: PropTypes) => {
             localStorage.setItem('chessAdventureName', userName)
 
             history.push(`/dashboard/${userName}`)
-          } catch(e: any) {
+          } catch (e: any) {
             setError('Something went wrong, please try again')
             // eventually display a custom error message depending on what you borked
           }
         }
-      break
+        break
       default:
         return
     }
   }
 
-  return(
+  return (
     <section className="form-wrapper">
       <form className="form">
         <label className="label">
           Username:
           <input
-            className="input" 
-            type="text" 
+            className="input"
+            type="text"
             value={username}
-            name="username" 
+            name="username"
             onChange={e => setUsername(e.target.value)}
-            >
+          >
           </input>
         </label>
         <label className="label">
           Password:
-          <input 
-            className="input" 
-            type="password" 
-            value={password} 
+          <input
+            className="input"
+            type="password"
+            value={password}
             name="password"
-            onChange={e => setPassword(e.target.value)} 
+            onChange={e => setPassword(e.target.value)}
           >
           </input>
         </label>
         {form === 'Sign Up' &&
-        <label>
-          Confirm Password:
-          <input 
-            className="input" 
-            type="password" 
-            value={confirmPassword} 
-            name="confirmPassword"
-            onChange={e => setConfirmPassword(e.target.value)}
+          <label className="confirm-label">
+            Confirm Password:
+          <input
+              className="input"
+              type="password"
+              value={confirmPassword}
+              name="confirmPassword"
+              onChange={e => setConfirmPassword(e.target.value)}
             >
-          </input>
-        </label>}
+            </input>
+          </label>}
       </form>
       <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
       {error && <p className="error">{error}</p>}

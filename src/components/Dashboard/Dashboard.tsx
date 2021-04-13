@@ -8,11 +8,12 @@ import './Dashboard.css'
 
 interface PropTypes {
   user: string;
+
 }
 
 const Dashboard = ({ user }: PropTypes) => {
   return (
-    <>
+  <>
       <Header />
       <section className="grid">
         <QuestStart />

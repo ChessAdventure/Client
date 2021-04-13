@@ -24,7 +24,7 @@ useEffect(() => {
         <Route 
           exact
           path="/"
-          component={Splash}
+          render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} />}}
         >
           {userKey.length && <Redirect to={`/dashboard/${userName}`} />}
         </Route>
@@ -32,9 +32,11 @@ useEffect(() => {
           exact
           path="/dashboard/:user"
           render={({match}) => {
-            return <Dashboard user={match.params.user}/>
+            return <Dashboard user={match.params.user} />
           }}
-        ></Route>
+          >
+          {!userKey.length && <Redirect to={`/`} />}
+        </Route>
         <Route
           path="/game/:id"
           render={({ match }) => {
