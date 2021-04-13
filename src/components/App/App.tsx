@@ -1,4 +1,5 @@
-import { Switch, Route } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
@@ -6,6 +7,17 @@ import GameScreen from '../GameScreen/GameScreen'
 
 
 const App = () => {
+
+  const [userName, setUserName] = useState<string>('')
+  const [userKey, setUserKey] = useState<string>('')
+
+useEffect(() => {
+  const activeUser = localStorage.getItem('chessAdventureName') || ''
+  const activeKey = localStorage.getItem('chessAdventureKey') || ''
+  setUserName(activeUser)
+  setUserKey(activeKey)
+}, [])
+
   return ( 
     <>
       <Switch>
@@ -13,7 +25,9 @@ const App = () => {
           exact
           path="/"
           component={Splash}
-        ></Route>
+        >
+          {userKey.length && <Redirect to={`/dashboard/${userName}`} />}
+        </Route>
         <Route
           exact
           path="/dashboard/:user"
