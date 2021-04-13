@@ -26,14 +26,21 @@ input {
  margin: auto;
  position: absolute;
  left: 35%;
- top: 65%;
+ top: 75%;
  font-size: 1.5rem;
  border-radius: 20px;
+ background: #FF8658;
+ color: white;
+}
+
+
+.log-in:hover {
+  filter: brightness(115%);
 }
 
 .error {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 70%;
+  top: 63%;
 }

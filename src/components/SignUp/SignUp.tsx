@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './SignUp.css'
 
 interface PropTypes {
@@ -11,6 +11,10 @@ const SignUp = ({ form }: PropTypes) => {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
   const [error, setError] = useState<string>('')
+
+  useEffect(() => {
+    setError('')
+  }, [form])
 
   const handleClick = async (e: any) => {
     e.preventDefault()
@@ -25,14 +29,19 @@ const SignUp = ({ form }: PropTypes) => {
           //   pw: password,
           //   cpw: confirmPassword,
           // })
-          const response = await fetch('http://localhost:3001/api/v1/users', {
+          console.log(JSON.stringify({user: {
+            username,
+            password,
+            password_confirmation: confirmPassword
+          }}))
+          const response = await fetch('http://localhost:3001/api/v1/users?user', {
             method: 'POST',
             headers: {'CONTENT_TYPE': 'application/json'},
-            body: JSON.stringify({
+            body: JSON.stringify({user: {
               username,
               password,
               password_confirmation: confirmPassword
-            })
+            }})
           })
           const data = await response.json();
           console.log(data)

@@ -57,35 +57,23 @@
   font-size: 3rem;
 }
 
-.enter {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 75%;
-  width: 30%;
-  height: 10%;
-  background: #FF8658;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  border-radius: 20px;
-}
 
 .signup-button {
+  color: white;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 80%;
+  top: 85%;
   width: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
   border-radius: 20px;
+  background: #FF8658;
 }
 
-.enter:hover {
+.signup-button:hover {
   filter: brightness(115%);
 }
 
@@ -96,7 +84,7 @@ a {
 
 .chess-pieces {
   position: absolute;
-  width: 25vw;
-  top: 17vw;
-  left: 12%;
+  width: 350px;
+  top: 35%;
+  left: 5vw;
 }

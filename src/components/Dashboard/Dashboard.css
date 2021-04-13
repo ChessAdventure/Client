@@ -14,13 +14,21 @@
 .pastgame-header {
   grid-area: pastgame-header;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 60%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 1em 1em 0 1em;
   
 }
 
 .see-all-button {
-  margin-right: 3em;
+  color: white;
+  width: 180px;
+  height: 30px;
+  border-radius: 20px;
+  background: #D62828;
+}
+
+.see-all-button:hover {
+  filter: brightness(115%);
 }

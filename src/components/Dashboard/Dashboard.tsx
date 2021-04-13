@@ -22,9 +22,9 @@ const Dashboard = ({ user }: PropTypes) => {
         />
         <div className="pastgame-header">
           <h2>
-            This is the header for past games
+            Recent Matches
           </h2>
-          <button className="see-all-button">See all past games</button>
+          <button className="see-all-button">All Match History</button>
         </div>
         <PastGames gameFens={['8/8/5p2/1P1K1k2/8/2r5/8/7R w - - 0 0', '8/8/5p2/1P1K1k2/8/2r5/8/7R w - - 0 0', '8/8/5p2/1P1K1k2/8/2r5/8/7R w - - 0 0']}/>
         
