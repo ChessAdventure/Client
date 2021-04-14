@@ -4,27 +4,47 @@ import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
 import GameScreen from '../GameScreen/GameScreen'
-
+import { ActionCableConsumer } from 'react-actioncable-provider'
 
 const App = () => {
 
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
+  const [gameData, handleReceivedGame] = useState<string[]>([])
 
-useEffect(() => {
-  const activeUser = localStorage.getItem('chessAdventureName') || ''
-  const activeKey = localStorage.getItem('chessAdventureKey') || ''
-  setUserName(activeUser)
-  setUserKey(activeKey)
-}, [])
+  useEffect(() => {
+    const activeUser = localStorage.getItem('chessAdventureName') || ''
+    const activeKey = localStorage.getItem('chessAdventureKey') || ''
+    setUserName(activeUser)
+    setUserKey(activeKey)
 
-  return ( 
+    const getGameData = async (userKey: string) => {
+      // will be the game endpoint, not the users
+      return fetch(`http://localhost:3001/api/v1/users/${userKey}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors'
+      })
+      .then(response => response.json())
+      .then(data => console.log('response', data)
+      )
+    }
+    console.log(getGameData);
+    
+  }, [userName, ])
+
+
+  return (
     <>
+      <ActionCableConsumer
+        channel={{ channel: 'gamesChannel' }}
+        onRecieved={handleReceivedGame}
+      />
       <Switch>
-        <Route 
+        <Route
           exact
           path="/"
-          render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} />}}
+          render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} /> }}
         >
           {userKey.length && <Redirect to={`/dashboard`} />}
         </Route>
@@ -34,7 +54,7 @@ useEffect(() => {
           render={() => {
             return <Dashboard user={userName} />
           }}
-          >
+        >
           {!userKey.length && <Redirect to={`/`} />}
         </Route>
         <Route
