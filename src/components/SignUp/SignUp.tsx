@@ -25,40 +25,33 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
     switch (form) {
       case 'Log In':
         try {
-
           const params = {
             "user": {
               username: username,
               password: password
             }
           }
-
           const response = await fetch(`http://localhost:3001/api/v1/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();
-          console.log(data);
-          
+          const data = await response.json();      
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureKey', apiKey)
           localStorage.setItem('chessAdventureName', userName)
-
           setUserName(userName)
           setUserKey(apiKey)
-
           history.push(`/dashboard`)
-          
         } catch (e) {
+          setError('User not found')
           console.log(e);
         }
         break
       case 'Sign Up':
         if (username.length >= 4 && password.length && confirmPassword.length && password === confirmPassword) {
-
           const params = {
             "user": {
               username: username,
@@ -66,7 +59,6 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
               password_confirmation: confirmPassword
             }
           }
-
           try {
             const response = await fetch(`http://localhost:3001/api/v1/users`, {
               method: 'POST',
@@ -75,12 +67,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
               body: JSON.stringify(params)
             })
             const data = await response.json();
-
             const apiKey = data.data.attributes.api_key
             const userName = data.data.attributes.username
             localStorage.setItem('chessAdventureKey', apiKey)
             localStorage.setItem('chessAdventureName', userName)
-
+            setUserName(userName)
+            setUserKey(apiKey)
             history.push(`/dashboard`)
           } catch (e: any) {
             setError('Something went wrong, please try again')
