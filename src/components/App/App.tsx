@@ -31,7 +31,7 @@ const App = () => {
     //   )
     // }
     // console.log(getGameData);
-    
+
   }, [userName])
 
 
@@ -40,8 +40,8 @@ const App = () => {
       <ActionCableConsumer
         channel={{ channel: 'friendlyGamesChannel' }}
         onRecieved={handleReceivedGame}
-        // pass apiKey when handleRecievedGame is called
-        // move to game component
+      // pass apiKey when handleRecievedGame is called
+      // redirect to game component *done
       />
       <Switch>
         <Route
@@ -55,14 +55,14 @@ const App = () => {
           exact
           path="/dashboard"
           render={() => {
-            return <Dashboard user={userName} setGameId={setGameId} userKey={userKey}/>
+            return <Dashboard user={userName} setGameId={setGameId} userKey={userKey} />
           }}
         >
+
           {/* if there's a gameID in localStorage, redirect to the GameScreen
           otherwise if there's a userKey in localStorage, redirect to the dashboard */}
-          
-          {gameId.length && <Redirect to={`/game/${gameId}`}/> && !userKey.length && <Redirect to={`/`} />}
-        
+          {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
+
         </Route>
         <Route
           path="/game/:id"
