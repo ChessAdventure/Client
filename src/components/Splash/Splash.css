@@ -1,52 +1,69 @@
 .splash {
   height: 100vh;
   width: 100vw;
-	background: #EAE2B7;
-	overflow: hidden;
-	perspective: 600px;
+  background: #f4fff8;
+  overflow: hidden;
+  perspective: 600px;
 }
 
 .checkerboard {
   position: absolute;
-	bottom: -30%;
-	right: -60%;
-	height: 150%;
-	width: 200%;
-	transform: rotateX(75deg);
-	transform-origin: center center;
-	transform-style: preserve-3d;
-	background-color: #EAE2B7;
-	background-size: 100px 100px;
-	background-position: 0 0, 50px 50px;
-	background-image: linear-gradient(45deg, #B58962 25%, transparent 25%, transparent 75%, #B58962 75%, #B58962), linear-gradient(45deg, #B58962 25%, transparent 25%, transparent 75%, #B58962 75%,#B58962);
-	animation: move-background 3s linear infinite;
+  bottom: -30%;
+  right: -60%;
+  height: 150%;
+  width: 200%;
+  transform: rotateX(75deg);
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  background-color: #8baaad;
+  background-size: 100px 100px;
+  background-position: 0 0, 50px 50px;
+  background-image: linear-gradient(
+      45deg,
+      #1c3738 25%,
+      transparent 25%,
+      transparent 75%,
+      #1c3738 75%,
+      #1c3738
+    ),
+    linear-gradient(
+      45deg,
+      #1c3738 25%,
+      transparent 25%,
+      transparent 75%,
+      #1c3738 75%,
+      #1c3738
+    );
+  animation: move-background 3s linear infinite;
 }
 
 .checkerboard:after {
-		content: '';
-		display: block;
-		height: 100%;
-		width: 100%;
-		background-image: linear-gradient(#EAE2B7, transparent);
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(#f4fff8, transparent);
 }
 
 @keyframes move-background {
-	100% {background-position: 0 100px, 50px 150px}
+  100% {
+    background-position: 0 100px, 50px 150px;
+  }
 }
 
 .login-modal {
   position: relative;
-  color: white;
+  color: #f4fff8;
   border: 1px solid black;
   width: 50%;
   height: 60%;
   position: absolute;
   left: 25%;
   top: 15%;
-  background: #003049;
+  background: #000f08;
   border-radius: 5%;
   padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, .5) 25px 25px 15px;
 }
 
 .title {
@@ -57,33 +74,36 @@
   font-size: 3rem;
 }
 
-.enter {
+.signup-button {
+  color: #f4fff8;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 60%;
+  top: 85%;
   width: 30%;
-  height: 10%;
-  background: #FF8658;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1.5rem;
   border-radius: 20px;
+  border: none;
+  background: #b24c63;
+  padding: .2em;
+  box-shadow: 3px 3px 5px #f4fff8;
 }
 
-.enter:hover {
-  filter: brightness(115%);
+.signup-button:hover {
+  filter: brightness(85%);
 }
 
 a {
-  color: white;
+  color: #f4fff8;
   text-decoration: none;
 }
 
 .chess-pieces {
   position: absolute;
-  width: 25vw;
-  top: 17vw;
-  left: 12%;
+  width: 275px;
+  top: 45%;
+  left: 12vw;
 }

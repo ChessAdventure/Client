@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import moves from '../../king.png'
 import pieces from '../../strategy.png'
