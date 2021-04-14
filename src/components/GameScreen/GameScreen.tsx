@@ -6,7 +6,7 @@ import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 const Chess = require('chess.js')
 
 interface PropTypes {
-  id: string;
+  gameId: string;
 }
 
 // chess.fen() returns current fen
@@ -17,7 +17,7 @@ interface PropTypes {
 // chess.reset() Resets board
 // chess.turn() Returns current side to move (w, b)
 
-const GameScreen = ({ id }: PropTypes) => {
+const GameScreen = ({ gameId }: PropTypes) => {
 
     const [chess] = useState<ChessInstance>(
       new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")

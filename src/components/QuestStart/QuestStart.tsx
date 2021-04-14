@@ -15,7 +15,7 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
 
   const handleClick = () => {
     //const currentGameId = fetch(gameId, userKey)
-    //setGameId(currentGameId)
+    setGameId('currentGameId')
   }
 
   return (
