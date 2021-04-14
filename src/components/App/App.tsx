@@ -18,20 +18,6 @@ const App = () => {
     const activeKey = localStorage.getItem('chessAdventureKey') || ''
     setUserName(activeUser)
     setUserKey(activeKey)
-
-    // const getGameData = async (userKey: string) => {
-    //   // will be the game endpoint, not the users
-    //   return fetch(`http://localhost:3001/api/v1/users/${userKey}`, {
-    //     method: 'GET',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     mode: 'cors'
-    //   })
-    //   .then(response => response.json())
-    //   .then(data => console.log('response', data)
-    //   )
-    // }
-    // console.log(getGameData);
-
   }, [userName])
 
 

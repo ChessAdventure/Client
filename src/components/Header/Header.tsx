@@ -6,7 +6,7 @@ const Header = () => {
   const handleSignOut = () => {
     localStorage.removeItem('chessAdventureKey')
     localStorage.removeItem('chessAdventureName')
-    window.location.reload();
+    window.location.replace('/');
   }
 
   return (

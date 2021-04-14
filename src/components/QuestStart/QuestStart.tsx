@@ -13,8 +13,27 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
   //create state in App for gameId
   //dashboard can redirect to gameScren once that exists
 
+      // const getGameData = async (userKey: string) => {
+    //   // will be the game endpoint, not the users
+    //   return fetch(`http://localhost:3001/api/v1/users/${userKey}`, {
+    //     method: 'GET',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     mode: 'cors'
+    //   })
+    //   .then(response => response.json())
+    //   .then(data => console.log('response', data)
+    //   )
+    // }
+    // console.log(getGameData);
+
   const handleClick = () => {
     //const currentGameId = fetch(gameId, userKey)
+    const currentGameID = fetch(`http://localhost:3001/api/v1/friendly_games`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      mode: 'cors',
+      body: JSON.stringify(userKey)
+    })
     setGameId('currentGameId')
   }
 
