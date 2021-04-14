@@ -18,27 +18,29 @@ const App = () => {
     setUserName(activeUser)
     setUserKey(activeKey)
 
-    const getGameData = async (userKey: string) => {
-      // will be the game endpoint, not the users
-      return fetch(`http://localhost:3001/api/v1/users/${userKey}`, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        mode: 'cors'
-      })
-      .then(response => response.json())
-      .then(data => console.log('response', data)
-      )
-    }
-    console.log(getGameData);
+    // const getGameData = async (userKey: string) => {
+    //   // will be the game endpoint, not the users
+    //   return fetch(`http://localhost:3001/api/v1/users/${userKey}`, {
+    //     method: 'GET',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     mode: 'cors'
+    //   })
+    //   .then(response => response.json())
+    //   .then(data => console.log('response', data)
+    //   )
+    // }
+    // console.log(getGameData);
     
-  }, [userName, ])
+  }, [userName])
 
 
   return (
     <>
       <ActionCableConsumer
-        channel={{ channel: 'gamesChannel' }}
+        channel={{ channel: 'friendlyGamesChannel' }}
         onRecieved={handleReceivedGame}
+        // pass apiKey when handleRecievedGame is called
+        // move to game component
       />
       <Switch>
         <Route
