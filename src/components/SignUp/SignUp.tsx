@@ -51,33 +51,33 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
         }
         break
       case 'Sign Up':
-        if (username.length >= 4 && password.length && confirmPassword.length && password === confirmPassword) {
-          const params = {
-            "user": {
-              username: username,
-              password: password,
-              password_confirmation: confirmPassword
-            }
+        const params = {
+          "user": {
+            username: username,
+            password: password,
+            password_confirmation: confirmPassword
           }
-          try {
-            const response = await fetch(`http://localhost:3001/api/v1/users`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              mode: 'cors',
-              body: JSON.stringify(params)
-            })
-            const data = await response.json();
-            const apiKey = data.data.attributes.api_key
-            const userName = data.data.attributes.username
-            localStorage.setItem('chessAdventureKey', apiKey)
-            localStorage.setItem('chessAdventureName', userName)
-            setUserName(userName)
-            setUserKey(apiKey)
-            history.push(`/dashboard`)
-          } catch (e: any) {
-            setError('Something went wrong, please try again')
-            // eventually display a custom error message depending on what you borked
-          }
+        }
+        try {
+          const response = await fetch(`http://localhost:3001/api/v1/users`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            mode: 'cors',
+            body: JSON.stringify(params)
+          })
+          const data = await response.json();
+          console.log(data)
+          const apiKey = data.data.attributes.api_key
+          const userName = data.data.attributes.username
+          localStorage.setItem('chessAdventureKey', apiKey)
+          localStorage.setItem('chessAdventureName', userName)
+          setUserName(userName)
+          setUserKey(apiKey)
+          history.push(`/dashboard`)
+        } catch (e: any) {
+          setError('Passwords must match. Username must be at least 4 characters.')
+          console.log(e)
+          // eventually display a custom error message depending on what you borked
         }
         break
       default:
