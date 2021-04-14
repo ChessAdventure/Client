@@ -1,16 +1,27 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import './QuestStart.css'
 import { Link } from 'react-router-dom'
 
-const QuestStart = () => {
+interface PropTypes {
+  setGameId: Dispatch<SetStateAction<string>>;
+  userKey: string;
+}
+
+const QuestStart = ({ setGameId, userKey }: PropTypes) => {
+  //remove Link
+  //start button fetches backend for game id
+  //create state in App for gameId
+  //dashboard can redirect to gameScren once that exists
+
+  const handleClick = () => {
+    //const currentGameId = fetch(gameId, userKey)
+    //setGameId(currentGameId)
+  }
+
   return (
     <section className="quest-start" id="quest-start">
       <p>Start Quest</p>
-      <Link 
-        to='/game/7'
-      >
-        <button className="start-button">Start a quest</button>
-      </Link>
+        <button className="start-button" onClick={handleClick}>Start a quest</button>
     </section>
   )
 }

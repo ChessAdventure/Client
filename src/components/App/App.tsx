@@ -11,6 +11,7 @@ const App = () => {
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
   const [gameData, handleReceivedGame] = useState<string[]>([])
+  const [gameId, setGameId] = useState<string>('')
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
@@ -54,10 +55,11 @@ const App = () => {
           exact
           path="/dashboard"
           render={() => {
-            return <Dashboard user={userName} />
+            return <Dashboard user={userName} setGameId={setGameId} userKey={userKey}/>
           }}
         >
           {!userKey.length && <Redirect to={`/`} />}
+          {gameId.length && <Redirect to={`/game/${gameId}`}/>}
         </Route>
         <Route
           path="/game/:id"
