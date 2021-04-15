@@ -19,16 +19,12 @@ const App = () => {
     setUserKey(activeKey)
   }, [userName])
 
-  // const handleReceivedGame() {
-  //   fetch('')
-  // }
-
   useEffect(() => {
-    if(gameId !== '') {
+    if (gameId !== '') {
       history.push(`/game/${gameId}`)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
-
   return (
     <>
       <Switch>
@@ -55,7 +51,7 @@ const App = () => {
         <Route
           path="/game/:id"
           render={({ match }) => {
-            return <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}/>
+            return <GameScreen gameId={match.params.id} userKey={userKey} userName={userName} />
           }}
         ></Route>
         <Route render={() => {

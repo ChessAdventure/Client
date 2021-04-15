@@ -7,6 +7,7 @@ import { ActionCableConsumer } from 'react-actioncable-provider'
 
 const Chess = require('chess.js')
 
+// game board should not show up until there are two people signed in
 interface PropTypes {
   gameId: string;
   userKey: string;
@@ -44,16 +45,19 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
       }, 300);
 
       setFen(chess.fen());
+      // after every move, if the game is over and there's a win
+      // send that info to BE
     }
   }
 
   return (
-    <section>      <ActionCableConsumer
-      channel={{ channel: 'FriendlyGamesChannel', api_key: userKey }}
-      onRecieved={handleReceivedGame}
-    // pass apiKey when handleRecievedGame is called
-    // redirect to game component *done
-    />
+    <section>
+      <ActionCableConsumer
+        channel={{ channel: 'FriendlyGamesChannel', api_key: userKey }}
+        onRecieved={handleReceivedGame}
+      // pass apiKey when handleRecievedGame is called
+      // redirect to game component *done
+      />
       <Header />
       <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
       <Gameboard

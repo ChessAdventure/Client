@@ -37,7 +37,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();   
+          const data = await response.json();
 
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
@@ -76,7 +76,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           setUserName(userName)
           setUserKey(apiKey)
           history.push(`/dashboard`)
-          
+
         } catch (e: any) {
           setError('Passwords must match. Username must be at least 4 characters.')
           console.log(e)
