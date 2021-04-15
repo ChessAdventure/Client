@@ -13,34 +13,28 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
   //create state in App for gameId
   //dashboard can redirect to gameScren once that exists
 
-      // const getGameData = async (userKey: string) => {
-    //   // will be the game endpoint, not the users
-    //   return fetch(`http://localhost:3001/api/v1/users/${userKey}`, {
-    //     method: 'GET',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     mode: 'cors'
-    //   })
-    //   .then(response => response.json())
-    //   .then(data => console.log('response', data)
-    //   )
-    // }
-    // console.log(getGameData);
-
-  const handleClick = () => {
+  const handleClick = async () => {
     //const currentGameId = fetch(gameId, userKey)
-    const currentGameID = fetch(`http://localhost:3001/api/v1/friendly_games`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
-      mode: 'cors',
-      body: JSON.stringify(userKey)
-    })
-    setGameId('currentGameId')
-  }
+    try {
+      const params = { api_key: userKey }
+      const promise = await fetch(`http://localhost:3001/api/v1/friendly_games`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors',
+        body: JSON.stringify(params)
+      })
 
+      const currentGameId = await promise.json()
+      setGameId(currentGameId.data.attributes.extension)
+      console.log(currentGameId.data.attributes.extension)
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <section className="quest-start" id="quest-start">
       <p>Start Quest</p>
-        <button className="start-button" onClick={handleClick}>Start a quest</button>
+      <button className="start-button" onClick={handleClick}>Start a quest</button>
     </section>
   )
 }

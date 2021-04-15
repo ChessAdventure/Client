@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
 import GameScreen from '../GameScreen/GameScreen'
-import { ActionCableConsumer } from 'react-actioncable-provider'
 
 const App = () => {
 
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
-  const [gameData, handleReceivedGame] = useState<string[]>([])
   const [gameId, setGameId] = useState<string>('')
+  let history = useHistory()
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
@@ -20,15 +19,18 @@ const App = () => {
     setUserKey(activeKey)
   }, [userName])
 
+  // const handleReceivedGame() {
+  //   fetch('')
+  // }
+
+  useEffect(() => {
+    if(gameId !== '') {
+      history.push(`/game/${gameId}`)
+    }
+  }, [gameId])
 
   return (
     <>
-      <ActionCableConsumer
-        channel={{ channel: 'friendlyGamesChannel' }}
-        onRecieved={handleReceivedGame}
-      // pass apiKey when handleRecievedGame is called
-      // redirect to game component *done
-      />
       <Switch>
         <Route
           exact
@@ -53,7 +55,7 @@ const App = () => {
         <Route
           path="/game/:id"
           render={({ match }) => {
-            return <GameScreen gameId={match.params.id} />
+            return <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}/>
           }}
         ></Route>
         <Route render={() => {
