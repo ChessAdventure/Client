@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import './QuestStart.css'
-import { Link } from 'react-router-dom'
+
 
 interface PropTypes {
   setGameId: Dispatch<SetStateAction<string>>;

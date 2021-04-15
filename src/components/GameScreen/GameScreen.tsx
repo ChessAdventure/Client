@@ -23,6 +23,7 @@ interface PropTypes {
 // chess.turn() Returns current side to move (w, b)
 
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [gameData, handleReceivedGame] = useState<string[]>([])
 
   const [chess] = useState<ChessInstance>(
