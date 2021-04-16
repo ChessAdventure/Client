@@ -59,8 +59,13 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   }
   const handleReceived = (data: any) => {
     console.log('RECEIVED')
+    console.log(data)
     setFen(data.data.attributes.current_fen)
     chess.load(data.data.attributes.current_fen)
+  }
+
+  const handleConnected = (data: any) => {
+    console.log('CONNECTED')
   }
 
   return (
@@ -69,7 +74,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         channel={{ channel: 'FriendlyGamesChannel', api_key: userKey, extension: gameId }}
         onReceived={handleReceived}
         onDisconnected={console.log('FUUUUUUUUUCK')}
-        onConnected={(data: any) => {console.log('CONNECTED')}}
+        onConnected={handleConnected}
       // pass apiKey when handleRecievedGame is called
       // redirect to game component *done
       />
