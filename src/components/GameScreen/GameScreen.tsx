@@ -26,28 +26,10 @@ interface PropTypes {
 
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [gameData, setGameData] = useState<string[]>([])
-  // const [cable, setCable] = useState<any>()
-
-  // useEffect(() => {
-  //   let connection = Cable.createConsumer(`${API_WS_ROOT}/${userKey}`)
-  //   setCable(connection.subscriptions.create(
-  //     {channel: 'FriendlyGamesChannel'},
-  //     {
-  //       connected: () => console.log('connected'),
-  //       disconnected: () => console.log('disconnected'),
-  //       rejected: () => console.log('rejected'),
-  //       sendMove: cable.perform('')
-  //     }
-  //   ))
-  // }, [])
-
   const [chess] = useState<ChessInstance>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
-  console.log('fen', fen)
 
   const handleMove = async (move: ShortMove) => {
     console.log(move)
