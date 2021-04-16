@@ -31,7 +31,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
               password: password
             }
           }
-          const response = await fetch(`http://chess-adventure-backend.herokuapp.com/api/v1/login`, {
+          const response = await fetch(`https://chess-adventure-backend.herokuapp.com/api/v1/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
@@ -62,7 +62,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           }
         }
         try {
-          const response = await fetch(`http://chess-adventure-backend.herokuapp.com/api/v1/users`, {
+          const response = await fetch(`https://chess-adventure-backend.herokuapp.com/api/v1/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
