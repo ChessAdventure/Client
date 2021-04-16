@@ -4,7 +4,6 @@ import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { ActionCableConsumer } from 'react-actioncable-provider'
-import Cable from 'actioncable'
 import { API_WS_ROOT } from '../../constants/index'
 
 const Chess = require('chess.js')
