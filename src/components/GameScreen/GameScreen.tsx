@@ -52,11 +52,13 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const handleMove = async (move: ShortMove) => {
     console.log(move)
     if (chess.move(move)) {
+      const newFen = chess.fen()
+      console.log(newFen)
       try {
         const params = {
-          fen: fen,
+          fen: newFen,
           api_key: userKey,
-          extension: gameId,
+          extension: gameId
         }
         const response = await fetch('http://localhost:3001/api/v1/friendly_games', {
           method: 'PATCH',
@@ -65,8 +67,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           mode: 'cors'
         })
         const data = await response.json()
-        //await setFen(data.newFen)
-        console.log(data)
+        console.log('DATA from PATCH', data)
       } catch(e) {
         console.log(e)
       }
@@ -75,14 +76,17 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     }
   }
   const handleReceived = (data: any) => {
-    console.log(data)
+    console.log('RECEIVED')
+    setFen(data.data.attributes.current_fen)
+    chess.load(data.data.attributes.current_fen)
   }
 
   return (
     <section>
       <ActionCableConsumer
         channel={{ channel: 'FriendlyGamesChannel', api_key: userKey, extension: gameId }}
-        onRecieved={(data: any) => handleReceived(data)}
+        onReceived={handleReceived}
+        onDisconnected={console.log('FUUUUUUUUUCK')}
         onConnected={(data: any) => {console.log('CONNECTED')}}
       // pass apiKey when handleRecievedGame is called
       // redirect to game component *done
