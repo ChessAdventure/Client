@@ -41,7 +41,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           api_key: userKey,
           extension: gameId
         }
-        const response = await fetch('http://localhost:3001/api/v1/friendly_games', {
+        const response = await fetch('http://chess-adventure-backend.herokuapp.com/api/v1/friendly_games', {
           method: 'PATCH',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify(params),

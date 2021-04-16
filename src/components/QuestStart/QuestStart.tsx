@@ -17,7 +17,7 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
     //const currentGameId = fetch(gameId, userKey)
     try {
       const params = { api_key: userKey }
-      const promise = await fetch(`http://localhost:3001/api/v1/friendly_games`, {
+      const promise = await fetch(`http://chess-adventure-backend.herokuapp.com/api/v1/friendly_games`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         mode: 'cors',
