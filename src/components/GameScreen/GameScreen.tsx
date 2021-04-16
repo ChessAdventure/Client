@@ -25,12 +25,12 @@ interface PropTypes {
 
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
 
-  const [chess] = useState<ChessInstance>(
+  const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
 
-  const handleMove = async (move: ShortMove) => {
+  const handleMove = async (move: any) => {
     console.log(move)
     if (chess.move(move)) {
       const newFen = chess.fen()
