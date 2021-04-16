@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { ActionCableConsumer } from 'react-actioncable-provider'
+import Cable from 'actioncable'
+import { API_WS_ROOT } from '../../constants/index'
 
 const Chess = require('chess.js')
 
@@ -23,8 +25,23 @@ interface PropTypes {
 // chess.turn() Returns current side to move (w, b)
 
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [gameData, handleReceivedGame] = useState<string[]>([])
+  const [gameData, setGameData] = useState<string[]>([])
+  // const [cable, setCable] = useState<any>()
+
+  // useEffect(() => {
+  //   let connection = Cable.createConsumer(`${API_WS_ROOT}/${userKey}`)
+  //   setCable(connection.subscriptions.create(
+  //     {channel: 'FriendlyGamesChannel'},
+  //     {
+  //       connected: () => console.log('connected'),
+  //       disconnected: () => console.log('disconnected'),
+  //       rejected: () => console.log('rejected'),
+  //       sendMove: cable.perform('')
+  //     }
+  //   ))
+  // }, [])
 
   const [chess] = useState<ChessInstance>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
@@ -32,30 +49,41 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [fen, setFen] = useState(chess.fen())
   console.log('fen', fen)
 
-  const handleMove = (move: ShortMove) => {
+  const handleMove = async (move: ShortMove) => {
     console.log(move)
     if (chess.move(move)) {
-      setTimeout(() => {
-        const moves = chess.moves();
-
-        if (moves.length > 0) {
-          const computerMove = moves[Math.floor(Math.random() * moves.length)];
-          chess.move(computerMove);
-          setFen(chess.fen());
+      try {
+        const params = {
+          fen: fen,
+          api_key: userKey,
+          extension: gameId,
         }
-      }, 300);
-
-      setFen(chess.fen());
+        const response = await fetch('http://localhost:3001/api/v1/friendly_games', {
+          method: 'PATCH',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(params),
+          mode: 'cors'
+        })
+        const data = await response.json()
+        //await setFen(data.newFen)
+        console.log(data)
+      } catch(e) {
+        console.log(e)
+      }
       // after every move, if the game is over and there's a win
       // send that info to BE
     }
+  }
+  const handleReceived = (data: any) => {
+    console.log(data)
   }
 
   return (
     <section>
       <ActionCableConsumer
-        channel={{ channel: 'FriendlyGamesChannel', api_key: userKey }}
-        onRecieved={handleReceivedGame}
+        channel={{ channel: 'FriendlyGamesChannel', api_key: userKey, extension: gameId }}
+        onRecieved={(data: any) => handleReceived(data)}
+        onConnected={(data: any) => {console.log('CONNECTED')}}
       // pass apiKey when handleRecievedGame is called
       // redirect to game component *done
       />
