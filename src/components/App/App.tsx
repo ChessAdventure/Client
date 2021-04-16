@@ -50,7 +50,7 @@ const App = () => {
         </Route>
         <Route
           path="/game/:id"
-          render={({ match }) => {
+          render={({ match }: any) => {
             return <GameScreen gameId={match.params.id} userKey={userKey} userName={userName} />
           }}
         ></Route>
