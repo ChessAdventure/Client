@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
+import { API_ROOT } from '../../constants/index'
 import './QuestStart.css'
 
 
@@ -17,7 +18,7 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
     //const currentGameId = fetch(gameId, userKey)
     try {
       const params = { api_key: userKey }
-      const promise = await fetch(`https://chess-adventure-backend.herokuapp.com/api/v1/friendly_games`, {
+      const promise = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         mode: 'cors',

@@ -15,9 +15,10 @@ const App = () => {
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
     const activeKey = localStorage.getItem('chessAdventureKey') || ''
+    console.log(activeKey)
     setUserName(activeUser)
     setUserKey(activeKey)
-  }, [userName])
+  }, [])
 
   useEffect(() => {
     if (gameId !== '') {
@@ -51,7 +52,9 @@ const App = () => {
         <Route
           path="/game/:id"
           render={({ match }: any) => {
-            return <GameScreen gameId={match.params.id} userKey={userKey} userName={userName} />
+            return userKey.length ?
+            <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}
+             /> : <p>Loading</p>
           }}
         ></Route>
         <Route render={() => {

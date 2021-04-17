@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { API_ROOT } from '../../constants/index'
+
 import './SignUp.css'
 
 interface PropTypes {
@@ -31,7 +33,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
               password: password
             }
           }
-          const response = await fetch(`https://chess-adventure-backend.herokuapp.com/api/v1/login`, {
+          const response = await fetch(`${API_ROOT}/api/v1/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
@@ -62,7 +64,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           }
         }
         try {
-          const response = await fetch(`https://chess-adventure-backend.herokuapp.com/api/v1/users`, {
+          const response = await fetch(`${API_ROOT}/api/v1/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
@@ -77,7 +79,6 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           setUserName(userName)
           setUserKey(apiKey)
           history.push(`/dashboard`)
-
         } catch (e: any) {
           setError('Passwords must match. Username must be at least 4 characters.')
           console.log(e)
