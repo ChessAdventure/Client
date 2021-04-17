@@ -6,13 +6,13 @@ const Header = () => {
   const handleSignOut = () => {
     localStorage.removeItem('chessAdventureKey')
     localStorage.removeItem('chessAdventureName')
-    window.location.reload();
+    window.location.replace('/');
   }
 
   return (
     <header className="dashboard-header">
       <h1>Chess Quest</h1>
-      <button onClick={handleSignOut}>Sign Out</button>
+      <button className="sign-out-button" onClick={handleSignOut}>Sign Out</button>
     </header>
   )
 }
