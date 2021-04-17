@@ -37,7 +37,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();      
+          const data = await response.json();
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureKey', apiKey)
@@ -90,6 +90,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
       <form className="form">
         <label className="label">
           Username:
+          <br></br>
           <input
             className="input"
             type="text"
@@ -101,6 +102,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
         </label>
         <label className="label">
           Password:
+          <br></br>
           <input
             className="input"
             type="password"
@@ -113,7 +115,8 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
         {form === 'Sign Up' &&
           <label className="confirm-label">
             Confirm Password:
-          <input
+          <br></br>
+            <input
               className="input"
               type="password"
               value={confirmPassword}
@@ -123,7 +126,9 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             </input>
           </label>}
       </form>
-      <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
+      <div className='log-in-wrapper'>
+        <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
+      </div>
       {error && <p className="error">{error}</p>}
     </section>
   )

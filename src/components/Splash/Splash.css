@@ -10,9 +10,8 @@
 
 .login-modal {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 90%;
+  flex-direction: row-reverse;
+  width: 80%;
   height: 20%;
   margin: auto;
   margin-top: 1em;
@@ -28,14 +27,15 @@
   margin-top: .5em;
   font-size: 2.5rem;
   text-shadow: 2px 2px 1px #000f08;
+  /* border: 1px solid yellow; */
 }
 
 .signup-button {
   width: 150px;
   margin: auto;
   position: relative;
-  top: 40px;
-  font-size: 1.5rem;
+  top: 25px;
+  font-size: 1.2rem;
   border-radius: 20px;
   background: #b24c63;
   color: #f4fff8;
