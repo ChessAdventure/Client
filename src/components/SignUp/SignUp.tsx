@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { API_ROOT } from '../../constants/index'
+
 import './SignUp.css'
 
 interface PropTypes {
@@ -31,7 +33,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
               password: password
             }
           }
-          const response = await fetch(`http://localhost:3001/api/v1/login`, {
+          const response = await fetch(`${API_ROOT}/api/v1/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
@@ -44,7 +46,9 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
           setUserKey(apiKey)
+          
           history.push(`/dashboard`)
+
         } catch (e) {
           setError('User not found.')
           console.log(e);
@@ -59,14 +63,14 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           }
         }
         try {
-          const response = await fetch(`http://localhost:3001/api/v1/users`, {
+          const response = await fetch(`${API_ROOT}/api/v1/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          console.log(data)
+
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureKey', apiKey)
