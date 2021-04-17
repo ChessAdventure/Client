@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 import { API_ROOT } from '../../constants/index'
-
 import './SignUp.css'
 
 interface PropTypes {
