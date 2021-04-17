@@ -46,7 +46,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           setUserKey(apiKey)
           history.push(`/dashboard`)
         } catch (e) {
-          setError('User not found')
+          setError('User not found.')
           console.log(e);
         }
         break
