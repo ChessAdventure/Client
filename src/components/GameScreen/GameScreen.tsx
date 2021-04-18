@@ -16,14 +16,8 @@ interface PropTypes {
   userKey: string;
   userName: string;
 }
-
 // chess.fen() returns current fen
 // chess.game_over() returns true if game is over
-// chess.move(move, [options]) Attempts to make a move on the board, returning a move object if the move was legal, otherwise null. 
-// chess.moves([options]) Returns a list of legal moves from the current position.
-// chess.put(piece, square) Place a piece on the square where piece is an object with the form { type: ..., color: ... }. 
-// chess.reset() Resets board
-// chess.turn() Returns current side to move (w, b)
 
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [chess] = useState<any>(
@@ -65,6 +59,8 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     if (chess.move(move)) {
       const newFen = chess.fen()
       if (chess.game_over()) {
+        // This will send a different patch with the end game fen, result of who won,
+        // and kick off the next game with a new fen from the BE. Will redirect to a new extension
         console.log('game over from FE')
       }
       try {
@@ -90,7 +86,6 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   return (
     <section>
       <Header />
-
       <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
       <Gameboard
         width={500}
@@ -110,7 +105,6 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
       </label>
       {gameOver && <GameOver />}
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
-
     </section>
   )
 
