@@ -38,7 +38,6 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     },{
       connected: ()=> {
         console.log('connected!')
-
       },
       disconnected: () => {
         console.log('disconnected')
@@ -48,16 +47,16 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         console.log('fen', resp.data.attributes.current_fen)
         setFen(resp.data.attributes.current_fen)
         chess.load(resp.data.attributes.current_fen)
+        if (chess.game_over()) {
+          //render end game animation
+        }
       }
     })
   }, [])
 
   const handleMove = async (move: any) => {
-    console.log('user credentials', gameId, userKey, fen)
-    console.log(move)
     if (chess.move(move)) {
       const newFen = chess.fen()
-      console.log(newFen)
       try {
         const params = {
           fen: newFen,
