@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
+import Error from '../Error/Error'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
-import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 const actioncable = require('actioncable');
@@ -14,19 +14,12 @@ interface PropTypes {
   userName: string;
 }
 
-// chess.fen() returns current fen
-// chess.game_over() returns true if game is over
-// chess.move(move, [options]) Attempts to make a move on the board, returning a move object if the move was legal, otherwise null. 
-// chess.moves([options]) Returns a list of legal moves from the current position.
-// chess.put(piece, square) Place a piece on the square where piece is an object with the form { type: ..., color: ... }. 
-// chess.reset() Resets board
-// chess.turn() Returns current side to move (w, b)
-
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+  const [moveError, setMoveError] = useState<string>('')
   useEffect(() => {
     console.log(gameId)
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -50,6 +43,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         chess.load(resp.data.attributes.current_fen)
       }
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMove = async (move: any) => {
@@ -71,18 +65,23 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           mode: 'cors'
         })
         const data = await response.json()
-        console.log('DATA from PATCH', data)
-      } catch(e) {
-        console.log(e)
+        if(data.errors) {
+          setMoveError(data.errors[0])
+        } else {
+          setMoveError('')
+        }
+      } catch (e) {
+        console.log("error:", e)
       }
       // after every move, if the game is over and there's a win
       // send that info to BE
-    }
+    } 
   }
 
   return (
     <section>
       <Header />
+      {moveError.length > 0 && <Error text={moveError} />}
       <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
       <Gameboard
         width={500}
@@ -96,7 +95,6 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         }
       />
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
-
     </section>
   )
 

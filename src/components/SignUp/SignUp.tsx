@@ -132,7 +132,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
       <div className='log-in-wrapper'>
         <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
       </div>
-      {error && <p className="error">{error}</p>}
+      {error && <p className="signup-error">{error}</p>}
     </section>
   )
 }
