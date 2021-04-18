@@ -5,8 +5,10 @@ import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 import GameOver from '../GameOver/GameOver'
+import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
+
 
 // game board should not show up until there are two people signed in
 interface PropTypes {
@@ -29,6 +31,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   )
   const [fen, setFen] = useState<string>(chess.fen())
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false)
 
   useEffect(() => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -54,9 +57,16 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     })
   }, [])
 
+  const handleToggle = () => {
+    setChecked(!checked)
+  }
+
   const handleMove = async (move: any) => {
     if (chess.move(move)) {
       const newFen = chess.fen()
+      if (chess.game_over()) {
+        console.log('game over from FE')
+      }
       try {
         const params = {
           fen: newFen,
@@ -80,10 +90,12 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   return (
     <section>
       <Header />
+
       <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
       <Gameboard
         width={500}
         fen={fen}
+        orientation={checked ? 'black' : 'white'}
         onDrop={(move: any) =>
           handleMove({
             from: move.sourceSquare,
@@ -92,6 +104,10 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           })
         }
       />
+      <label className="switch">
+        <input type="checkbox" checked={checked} onChange={handleToggle}/>
+        <span className="slider round"></span>
+      </label>
       {gameOver && <GameOver />}
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
 

@@ -2,8 +2,8 @@
   color: black;
   position: absolute;
   top: 40%;
-  left: 25%;
-  width: 50%;
+  left: 35%;
+  width: 30%;
   height: 25%;
   background: white;
   display: flex;
@@ -11,4 +11,5 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  border-radius: 20px;
 }
