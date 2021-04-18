@@ -54,7 +54,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     setChecked(!checked)
   }
 
-  const handleMove = async (move: any) => {
+  const handleMove = async (move: object) => {
     if (chess.move(move)) {
       const newFen = chess.fen()
       if (chess.game_over()) {
