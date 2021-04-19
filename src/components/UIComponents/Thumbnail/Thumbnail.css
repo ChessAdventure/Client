@@ -8,18 +8,6 @@
   /* border: 1px solid green; */
 }
 
-.thumbnail-image {
-  margin-top: 10px;
-  width: 100px;
-  height: 100px;
-  background-repeat: no-repeat;
-  background-position: 50% 10%;
-  background-size: cover;
-  border-radius: 50%;
-  border: 3px solid #f4fff8;
-  box-shadow: 8px 8px 5px #000f08;
-}
-
 .thumbnail-text {
   font-size: 1.5em;
   margin-top: .5em;
