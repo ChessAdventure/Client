@@ -3,6 +3,7 @@ import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
+import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
@@ -13,19 +14,17 @@ interface PropTypes {
   userName: string;
 }
 
-// chess.fen() returns current fen
-// chess.game_over() returns true if game is over
-// chess.move(move, [options]) Attempts to make a move on the board, returning a move object if the move was legal, otherwise null. 
-// chess.moves([options]) Returns a list of legal moves from the current position.
-// chess.put(piece, square) Place a piece on the square where piece is an object with the form { type: ..., color: ... }. 
-// chess.reset() Resets board
-// chess.turn() Returns current side to move (w, b)
-
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+  const [checked, setChecked] = useState<boolean>(false)
+  
+  const handleToggle = () => {
+    setChecked(!checked)
+  }
+  
   useEffect(() => {
     console.log(gameId)
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -75,8 +74,6 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
       } catch (e) {
         console.log(e)
       }
-      // after every move, if the game is over and there's a win
-      // send that info to BE
     }
   }
 
@@ -98,10 +95,12 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         />
       </div>
       <Thumbnail text={userName} />
-
+      <label className="switch">
+        <input type="checkbox" checked={checked} onChange={handleToggle} />
+        <span className="slider round"></span>
+      </label>
     </section>
   )
-
 }
 
 export default GameScreen
