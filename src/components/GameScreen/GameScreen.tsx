@@ -32,10 +32,10 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     console.log('API_KEY', userKey)
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
-      api_key: userKey, 
+      api_key: userKey,
       extension: gameId
-    },{
-      connected: ()=> {
+    }, {
+      connected: () => {
         console.log('connected!')
 
       },
@@ -49,7 +49,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         chess.load(resp.data.attributes.current_fen)
       }
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMove = async (move: any) => {
@@ -66,13 +66,13 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         }
         const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
           method: 'PATCH',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params),
           mode: 'cors'
         })
         const data = await response.json()
         console.log('DATA from PATCH', data)
-      } catch(e) {
+      } catch (e) {
         console.log(e)
       }
       // after every move, if the game is over and there's a win
@@ -83,18 +83,20 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   return (
     <section>
       <Header />
-      <Thumbnail text="your opponent"/>
-      <Gameboard
-        width={500}
-        fen={fen}
-        onDrop={(move: any) =>
-          handleMove({
-            from: move.sourceSquare,
-            to: move.targetSquare,
-            promotion: "q",
-          })
-        }
-      />
+      <Thumbnail text="your opponent" />
+      <div className="gameboard-wrapper">
+        <Gameboard
+          width={500}
+          fen={fen}
+          onDrop={(move: any) =>
+            handleMove({
+              from: move.sourceSquare,
+              to: move.targetSquare,
+              promotion: "q",
+            })
+          }
+        />
+      </div>
       <Thumbnail text={userName} />
 
     </section>

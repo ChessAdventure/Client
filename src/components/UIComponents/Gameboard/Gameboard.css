@@ -1,8 +1,9 @@
 .gameboard-wrapper {
-  margin: auto;
+  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
-  box-shadow: 2px 2px 8px var(--dark), -2px -2px 8px var(--dark);
+  margin: auto;
+  width: auto;
+  height: auto;
 }
