@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
-import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 const actioncable = require('actioncable');
@@ -14,29 +13,21 @@ interface PropTypes {
   userName: string;
 }
 
-// chess.fen() returns current fen
-// chess.game_over() returns true if game is over
-// chess.move(move, [options]) Attempts to make a move on the board, returning a move object if the move was legal, otherwise null. 
-// chess.moves([options]) Returns a list of legal moves from the current position.
-// chess.put(piece, square) Place a piece on the square where piece is an object with the form { type: ..., color: ... }. 
-// chess.reset() Resets board
-// chess.turn() Returns current side to move (w, b)
-
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
   useEffect(() => {
-    console.log(gameId)
+    console.log("gameId:", gameId)
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
-    console.log('API_KEY', userKey)
+    console.log('API_KEY:', userKey)
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
-      api_key: userKey, 
+      api_key: userKey,
       extension: gameId
-    },{
-      connected: ()=> {
+    }, {
+      connected: () => {
         console.log('connected!')
 
       },
@@ -45,7 +36,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
       },
       received: (resp: any) => {
         console.log('received')
-        console.log('fen', resp.data.attributes.current_fen)
+        console.log('fen:', resp.data.attributes.current_fen)
         setFen(resp.data.attributes.current_fen)
         chess.load(resp.data.attributes.current_fen)
       }
@@ -53,11 +44,11 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   }, [])
 
   const handleMove = async (move: any) => {
-    console.log('user credentials', gameId, userKey, fen)
-    console.log(move)
+    // console.log('user credentials', gameId, userKey, fen)
+    console.log("move:", move)
     if (chess.move(move)) {
       const newFen = chess.fen()
-      console.log(newFen)
+      console.log("newFen:", newFen)
       try {
         const params = {
           fen: newFen,
@@ -66,18 +57,18 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         }
         const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
           method: 'PATCH',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params),
           mode: 'cors'
         })
         const data = await response.json()
         console.log('DATA from PATCH', data)
-      } catch(e) {
-        console.log(e)
+      } catch (e) {
+        console.log("error:", e)
       }
       // after every move, if the game is over and there's a win
       // send that info to BE
-    }
+    } 
   }
 
   return (
