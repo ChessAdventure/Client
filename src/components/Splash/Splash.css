@@ -1,98 +1,53 @@
 .splash {
+  background: url("../../splash-background.jpg");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100vh;
-  width: 100vw;
-  background: #f4fff8;
   overflow: hidden;
-  perspective: 600px;
-}
-
-.checkerboard {
-  position: absolute;
-  bottom: -30%;
-  right: -60%;
-  height: 150%;
-  width: 200%;
-  transform: rotateX(75deg);
-  transform-origin: center center;
-  transform-style: preserve-3d;
-  background-color: #8baaad;
-  background-size: 100px 100px;
-  background-position: 0 0, 50px 50px;
-  background-image: linear-gradient(
-      45deg,
-      #1c3738 25%,
-      transparent 25%,
-      transparent 75%,
-      #1c3738 75%,
-      #1c3738
-    ),
-    linear-gradient(
-      45deg,
-      #1c3738 25%,
-      transparent 25%,
-      transparent 75%,
-      #1c3738 75%,
-      #1c3738
-    );
-  animation: move-background 3s linear infinite;
-}
-
-.checkerboard:after {
-  content: "";
-  display: block;
-  height: 100%;
-  width: 100%;
-  background-image: linear-gradient(#f4fff8, transparent);
-}
-
-@keyframes move-background {
-  100% {
-    background-position: 0 100px, 50px 150px;
-  }
+  width: 100vw;
 }
 
 .login-modal {
-  position: relative;
-  color: #f4fff8;
-  border: 1px solid black;
-  width: 50%;
-  height: 60%;
-  position: absolute;
-  left: 25%;
-  top: 15%;
   background: #000f08;
-  border-radius: 5%;
-  padding: 10px;
-  box-shadow: rgba(0, 0, 0, .5) 25px 25px 15px;
+  border-radius: 5px;
+  box-shadow: 10px 10px 15px #1c3738, -2px -2px 8px #f4fff8;
+  display: flex;
+  flex-direction: row-reverse;
+  height: 20%;
+  margin: auto;
+  margin-top: 1em;
+  padding: 0 0.5em;
+  width: 80%;
 }
 
 .title {
-  position: absolute;
-  transform: translateX(-50%);
+  font-size: 2.5rem;
   left: 50%;
-  top: 10%;
-  font-size: 3rem;
+  margin-top: 0.5em;
+  position: absolute;
+  text-shadow: 2px 2px 1px #000f08;
+  transform: translateX(-50%);
 }
 
 .signup-button {
-  color: #f4fff8;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 85%;
-  width: 30%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  border-radius: 20px;
-  border: none;
   background: #b24c63;
-  padding: .2em;
-  box-shadow: 3px 3px 5px #f4fff8;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px #f4fff8;
+  color: #f4fff8;
+  font-size: 1.2rem;
+  margin: auto;
+  padding: 0.2em 0;
+  position: relative;
+  top: 25px;
+  width: 150px;
 }
 
 .signup-button:hover {
+  box-shadow: -3px -3px 5px #f4fff8;
+  color: #000f08;
+  cursor: pointer;
   filter: brightness(85%);
 }
 
@@ -101,9 +56,25 @@ a {
   text-decoration: none;
 }
 
-.chess-pieces {
-  position: absolute;
-  width: 275px;
-  top: 45%;
-  left: 12vw;
+/* 1110 and smaller */
+@media only screen and (max-width: 1110px) {
+  .login-modal {
+    flex-direction: column;
+    height: 60%;
+    margin-top: 4em;
+    width: 40%;
+  }
+
+  .signup-button {
+    border: none;
+    position: relative;
+    top: -25px;
+  }
 }
+
+/* 570 and smaller */
+/* @media only screen and (max-width: 1150px) {
+  body {
+    color: black;
+  }
+} */
