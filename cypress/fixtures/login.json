@@ -1,0 +1,7 @@
+{
+  "ok": true,
+  "redirected": false,
+  "status": 200,
+  "url": "http://localhost:3001/api/v1/login",
+  "type": "cors"
+}
