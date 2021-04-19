@@ -5,7 +5,6 @@ import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 import GameOver from '../GameOver/GameOver'
-import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
@@ -16,6 +15,13 @@ interface PropTypes {
   userKey: string;
   userName: string;
 }
+
+interface userDetails {
+  extension: string;
+  current_fen: string;
+  white: string;
+  black: string;
+}
 // chess.fen() returns current fen
 // chess.game_over() returns true if game is over
 
@@ -24,8 +30,13 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState<string>(chess.fen())
-  const [gameOver, setGameOver] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false)
+  const [color, setColor] = useState<string>('')
+  const [winner, setWinner] = useState<string>('')
+
+  const setUser = (userDetails: userDetails) => {
+    userName === userDetails.white ? setColor('white') : setColor('black')
+  }
 
   useEffect(() => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -41,10 +52,12 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         console.log('disconnected')
       },
       received: (resp: any) => {
+        console.log('response from server', resp)
+        setUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
         chess.load(resp.data.attributes.current_fen)
         if (chess.game_over()) {
-          setGameOver(true);
+          color === 'white' ? setWinner('black') : setWinner('white')
         }
       }
     })
@@ -58,26 +71,45 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     if (chess.move(move)) {
       const newFen = chess.fen()
       if (chess.game_over()) {
+        try {
+          const params = {
+            fen: newFen,
+            api_key: userKey,
+            extension: gameId,
+            status: 1
+          }
+          const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(params),
+            mode: 'cors'
+          })
+          const data = await response.json()
+          console.log('DATA from WIN', data)
+          setWinner(color)
+        } catch(e) {
+          console.log(e)
+        }
         // This will send a different patch with the end game fen, result of who won,
         // and kick off the next game with a new fen from the BE. Will redirect to a new extension
-        console.log('game over from FE')
-      }
-      try {
-        const params = {
-          fen: newFen,
-          api_key: userKey,
-          extension: gameId
+      } else {
+          try {
+          const params = {
+            fen: newFen,
+            api_key: userKey,
+            extension: gameId
+          }
+          const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(params),
+            mode: 'cors'
+          })
+          const data = await response.json()
+          console.log('DATA from PATCH', data)
+        } catch(e) {
+          console.log(e)
         }
-        const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
-          method: 'PATCH',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(params),
-          mode: 'cors'
-        })
-        const data = await response.json()
-        console.log('DATA from PATCH', data)
-      } catch(e) {
-        console.log(e)
       }
     }
   }
@@ -102,7 +134,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         <input type="checkbox" checked={checked} onChange={handleToggle}/>
         <span className="slider round"></span>
       </label>
-      {gameOver && <GameOver />}
+      {winner.length && <GameOver winner={winner} playerColor={color}/>}
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
     </section>
   )

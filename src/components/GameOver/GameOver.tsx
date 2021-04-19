@@ -1,12 +1,18 @@
 import React from 'react'
 import './GameOver.css'
 
-const GameOver = () => {
+interface PropTypes {
+  winner: string;
+  playerColor: string;
+}
+
+const GameOver = ({ winner, playerColor}: PropTypes) => {
   return (
     <section className="game-over-modal">
-      {/*Eventually this will render from a prop that says if it's a win or a loss based on which player
-      is playing*/}
-      <p>Game over!</p>
+      {winner === playerColor ? 
+        <p>You won! Play again to continue your quest.</p> :
+        <p>You've lost. It's not over. Play again for a shot at revenge!</p>
+      }
       <button>Continue Quest?</button>
     </section>
   )
