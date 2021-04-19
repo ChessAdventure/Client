@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
-import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 const actioncable = require('actioncable');
@@ -50,6 +49,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         chess.load(resp.data.attributes.current_fen)
       }
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMove = async (move: any) => {
