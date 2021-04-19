@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import Header from '../Header/Header'
 import QuestStart from '../QuestStart/QuestStart'
-import OldGameBoard from '../OldGameBoard/OldGameBoard'
+import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import './Dashboard.css'
 
@@ -26,7 +26,12 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
         <br></br>
         <div>
           <h3 className="previous-game-header">Previous Game End:</h3>
-          <OldGameBoard width={200} fen={''}/>
+          <Gameboard 
+            width={200} 
+            orientation={'white'}
+            draggable={false}
+            fen={'4R3/1k6/1p2P1p1/p7/4r3/1P1r4/1K6/2R5 w - - 0 0'}
+          />
         </div>
       </section>
     </>
