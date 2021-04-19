@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
-import { ChessInstance, ShortMove } from 'chess.js'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 import GameOver from '../GameOver/GameOver'
+import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
@@ -27,12 +27,14 @@ interface userDetails {
 // chess.game_over() returns true if game is over
 
 const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetails }: PropTypes) => {
+  console.log(followUpDetails?.current_fen, 'CURRENT FEN FROM GAMESCREEN')
   const [chess] = useState<any>(
-    new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    new Chess(followUpDetails?.current_fen || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState<string>(chess.fen())
   const [checked, setChecked] = useState<boolean>(false)
   const [color, setColor] = useState<string>('')
+  const [opponent, setOpponent] = useState(false)
   const [winner, setWinner] = useState<string>('')
 
   const handleUser = (userDetails: userDetails) => {
@@ -57,6 +59,9 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
       },
       received: (resp: any) => {
         console.log('response from server', resp)
+        if (resp.data.attributes.black) {
+          setOpponent(true)
+        }
         handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
         chess.load(resp.data.attributes.current_fen)
@@ -122,7 +127,7 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
     <section>
       <Header />
       <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
-      <Gameboard
+      {opponent && <Gameboard
         width={500}
         fen={fen}
         orientation={checked ? 'black' : 'white'}
@@ -133,7 +138,9 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
             promotion: "q",
           })
         }
-      />
+      />}
+      {!opponent && <p>Send this link to a friend to start playing! <br></br> 
+        https://localhost:3000/game/{gameId}</p>}
       <label className="switch">
         <input type="checkbox" checked={checked} onChange={handleToggle}/>
         <span className="slider round"></span>

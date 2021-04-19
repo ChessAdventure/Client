@@ -51,8 +51,6 @@ const App = () => {
             return <Dashboard user={userName} setGameId={setGameId} userKey={userKey} />
           }}
         >
-          {/* if there's a gameID in localStorage, redirect to the GameScreen
-          otherwise if there's a userKey in localStorage, redirect to the dashboard */}
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
         </Route>
         <Route
@@ -60,20 +58,13 @@ const App = () => {
           render={({ match }: any) => {
             return userKey.length ?
             <GameScreen 
-              gameId={match.params.id} 
+              gameId={followUpGame?.extension || match.params.id} 
               userKey={userKey} 
               userName={userName} 
               setFollowUpGame={setFollowUpGame}
              /> : <p>Loading</p>
           }}
         >
-          {followUpGame?.extension && 
-            <GameScreen 
-              gameId={followUpGame.extension} 
-              userKey={userKey} 
-              userName={userName} 
-              setFollowUpGame={setFollowUpGame} 
-            />}
         </Route>
         <Route render={() => {
           return <p>404</p>

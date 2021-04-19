@@ -24,9 +24,13 @@ const GameOver = ({ winner, playerColor, extension, userKey, setFollowUpGame}: P
         body: JSON.stringify(params)
       })
       const data = await promise.json()
-      console.log(data)
+      console.log('data for followup game', data.data.attributes)
       setFollowUpGame(data.data.attributes)
-      history.push(`/game/${extension}`)
+      setTimeout(() => {
+        history.push({
+          pathname: `/game/${data.data.attributes.extension}`,
+        })
+      })
     } catch(e) {
       console.log(e)
     }
@@ -38,9 +42,7 @@ const GameOver = ({ winner, playerColor, extension, userKey, setFollowUpGame}: P
         <p>You won! Play again to continue your quest.</p> :
         <p>You've lost. It's not over. Play again for a shot at revenge!</p>
       }
-      <Link>
-        <button onClick={handleClick}>Continue Quest?</button>
-      </Link>
+      <button onClick={handleClick}>Continue Quest?</button>
     </section>
   )
 }
