@@ -1,55 +1,108 @@
-.input {
-  width: 200px;
-  height: 30px;
+.form-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin: auto;
+  padding-top: 2em;
+  width: 80%;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .label,
 .confirm-label {
-  font-size: x-large;
+  font-size: large;
+  line-height: 1;
 }
 
-.form-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+.input {
+  border-radius: 5px;
+  height: 30px;
+  left: -16px;
+  margin: 0.5em 1em;
+  position: relative;
+  width: 150px;
 }
 
-.form {
-  width: 75%;
-  height: 100%;
+.log-in-wrapper {
+  align-items: center;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   justify-content: center;
 }
 
-input {
-  margin: 1em;
-}
-
 .log-in {
- width: 30%;
- margin: auto;
- position: absolute;
- left: 35%;
- top: 75%;
- font-size: 1.5rem;
- border-radius: 20px;
- background: #b24c63;
- color: white;
- padding: .2em 0;
- border: none;
- box-shadow: 3px 3px 5px #f4fff8;
+  background: #b24c63;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px #f4fff8;
+  color: #f4fff8;
+  font-size: 1.2rem;
+  margin: auto;
+  padding: 0.2em 0;
+  position: relative;
+  top: 10px;
+  width: 150px;
 }
-
 
 .log-in:hover {
+  box-shadow: -3px -3px 5px #f4fff8;
+  color: #000f08;
+  cursor: pointer;
   filter: brightness(85%);
 }
 
 .error {
-  position: absolute;
+  background-color: #b24c63;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px #000f08;
+  font-size: x-large;
   left: 50%;
+  padding: 1em;  
+  position: absolute;
+  top: 33%;    
+  text-align: center;
   transform: translateX(-50%);
-  top: 63%;
+  width: 70%;
+}
+
+/* 1110 and smaller */
+@media only screen and (max-width: 1110px) {
+
+  .form-wrapper {
+    flex-direction: column;
+    height: 70%;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 5em;
+    width: 80%;
+  }
+
+  .form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.1em;
+  }
+
+  .label,
+  .confirm-label {
+    margin-bottom: 1em;
+  }
+
+  .log-in-wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .error {
+    font-size: large;
+    text-align: center;
+    top: 12%;
+  }
 }
