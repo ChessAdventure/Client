@@ -127,15 +127,13 @@ describe("Sign Up and Log In", () => {
   it("should sign up the user", () => {
     cy.get(".signup-button").click()
 
-    cy.get("input").eq(0).type("test user name1")
-    cy.get("input").eq(0).should("have.value", "test user name1")
+    cy.get("input").eq(0).type("test user name")
+    cy.get("input").eq(0).should("have.value", "test user name")
 
     cy.get("input").eq(1).type("testpassword")
     cy.get("input").eq(1).should("have.value", "testpassword")
     cy.get("input").eq(2).type("testpassword")
     cy.get("input").eq(2).should("have.value", "testpassword")
-
-    cy.get(".log-in").click({ force: true })
 
     cy.intercept(
       {
@@ -143,14 +141,16 @@ describe("Sign Up and Log In", () => {
         url: "http://localhost:3001/api/v1/users",
       },
       {
-        statusCode: 200,
-        body: "../fixtures/login.json",
+        status: 200,
+        fixture: "login.json",
       }
     )
+
+    cy.get(".log-in").click({ force: true })
 
     cy.location().should((loc) => {
       expect(loc.host).to.eq("localhost:3000")
       expect(loc.href).to.eq("http://localhost:3000/dashboard")
     })
-  })  
+  })
 })

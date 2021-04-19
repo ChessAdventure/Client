@@ -1,7 +1,8 @@
 {
-  "ok": true,
-  "redirected": false,
-  "status": 200,
-  "url": "http://localhost:3001/api/v1/login",
-  "type": "cors"
+  "data": {
+    "attributes": {
+      "api_key": "test-key",
+      "username": "test user name"
+    }
+  }
 }
