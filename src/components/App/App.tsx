@@ -4,18 +4,26 @@ import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
 import GameScreen from '../GameScreen/GameScreen'
+import { match } from 'cypress/types/sinon';
+
+interface userDetails {
+  extension: string;
+  current_fen: string;
+  white: string;
+  black: string;
+}
 
 const App = () => {
 
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
   const [gameId, setGameId] = useState<string>('')
+  const [followUpGame, setFollowUpGame] = useState<userDetails | undefined>(undefined)
   let history = useHistory()
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
     const activeKey = localStorage.getItem('chessAdventureKey') || ''
-    console.log(activeKey)
     setUserName(activeUser)
     setUserKey(activeKey)
   }, [])
@@ -43,20 +51,30 @@ const App = () => {
             return <Dashboard user={userName} setGameId={setGameId} userKey={userKey} />
           }}
         >
-
           {/* if there's a gameID in localStorage, redirect to the GameScreen
           otherwise if there's a userKey in localStorage, redirect to the dashboard */}
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
-
         </Route>
         <Route
           path="/game/:id"
           render={({ match }: any) => {
             return userKey.length ?
-            <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}
+            <GameScreen 
+              gameId={match.params.id} 
+              userKey={userKey} 
+              userName={userName} 
+              setFollowUpGame={setFollowUpGame}
              /> : <p>Loading</p>
           }}
-        ></Route>
+        >
+          {followUpGame?.extension && 
+            <GameScreen 
+              gameId={followUpGame.extension} 
+              userKey={userKey} 
+              userName={userName} 
+              setFollowUpGame={setFollowUpGame} 
+            />}
+        </Route>
         <Route render={() => {
           return <p>404</p>
         }}

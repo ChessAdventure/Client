@@ -14,18 +14,19 @@ interface PropTypes {
   gameId: string;
   userKey: string;
   userName: string;
+  setFollowUpGame: any;
+  followUpDetails?: userDetails | undefined;
 }
-
 interface userDetails {
-  extension: string;
-  current_fen: string;
-  white: string;
-  black: string;
+  extension: string | undefined;
+  current_fen: string | undefined;
+  white: string | undefined;
+  black: string | undefined;
 }
 // chess.fen() returns current fen
 // chess.game_over() returns true if game is over
 
-const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
+const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetails }: PropTypes) => {
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
@@ -34,7 +35,10 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [color, setColor] = useState<string>('')
   const [winner, setWinner] = useState<string>('')
 
-  const setUser = (userDetails: userDetails) => {
+  const handleUser = (userDetails: userDetails) => {
+    if (followUpDetails) {
+      console.log('followupdetails', followUpDetails)
+    }
     userName === userDetails.white ? setColor('white') : setColor('black')
   }
 
@@ -53,7 +57,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
       },
       received: (resp: any) => {
         console.log('response from server', resp)
-        setUser(resp.data.attributes)
+        handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
         chess.load(resp.data.attributes.current_fen)
         if (chess.game_over()) {
@@ -76,7 +80,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
             fen: newFen,
             api_key: userKey,
             extension: gameId,
-            status: 1
+            status: color === 'white' ? 1 : 2,
           }
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
@@ -85,7 +89,6 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
             mode: 'cors'
           })
           const data = await response.json()
-          console.log('DATA from WIN', data)
           setWinner(color)
         } catch(e) {
           console.log(e)
@@ -99,6 +102,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
             api_key: userKey,
             extension: gameId
           }
+          console.log(params)
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
@@ -134,7 +138,12 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         <input type="checkbox" checked={checked} onChange={handleToggle}/>
         <span className="slider round"></span>
       </label>
-      {winner.length && <GameOver winner={winner} playerColor={color}/>}
+      {winner.length && <GameOver 
+        winner={winner} 
+        playerColor={color} 
+        extension={gameId} 
+        userKey={userKey}
+        setFollowUpGame={setFollowUpGame}/>}
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
     </section>
   )
