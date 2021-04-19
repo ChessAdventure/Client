@@ -1,0 +1,18 @@
+.quest-start {
+  width: 100%;
+  text-align: center;
+  grid-area: quest-start;
+  margin: 1em;
+  font-size: 2em;
+  border-right: 8px double #8baaad;
+}
+
+.start-button {
+  color: #f4fff8;
+  width: auto;
+  padding: .2em 1em;
+  border-radius: 20px;
+  background: #b24c63;
+  box-shadow: 3px 3px 7px #000f08;
+  font-size: x-large;
+}
