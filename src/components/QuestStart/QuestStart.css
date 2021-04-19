@@ -1,10 +1,9 @@
 .quest-start {
   width: 100%;
   text-align: center;
-  grid-area: quest-start;
   margin: 1em;
   font-size: 2em;
-  border-right: 8px double #8baaad;
+  /* border: 1px solid yellow; */
 }
 
 .start-button {
