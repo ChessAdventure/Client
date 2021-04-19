@@ -17,11 +17,12 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
     <>
       <Header />
       <section className="container">
-        <Rules />
+        <div className="greeting">
+          <p>Welcome, </p>
+          <Thumbnail text={user} />
+        </div>
         <br></br>
-        <Thumbnail
-          text={user}
-        />
+        <Rules />
         <br></br>
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <br></br>

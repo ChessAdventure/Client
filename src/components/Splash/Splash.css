@@ -9,9 +9,10 @@
 }
 
 .login-modal {
-  background: #000f08;
+  background: var(--dark);
   border-radius: 5px;
-  box-shadow: 10px 10px 15px #1c3738, -2px -2px 8px #f4fff8;
+  box-shadow: 2px 2px 8px var(--midlight), -2px -2px 8px var(--highlight);
+  color: var(--highlight);
   display: flex;
   flex-direction: row-reverse;
   height: 20%;
@@ -26,16 +27,16 @@
   left: 50%;
   margin-top: 0.5em;
   position: absolute;
-  text-shadow: 2px 2px 1px #000f08;
+  text-shadow: 2px 2px 1px var(--dark);
   transform: translateX(-50%);
 }
 
 .signup-button {
-  background: #b24c63;
+  background: var(--midlight);
   border: none;
   border-radius: 20px;
-  box-shadow: 2px 2px 5px #f4fff8;
-  color: #f4fff8;
+  box-shadow: 2px 2px 5px var(--highlight);
+  color: var(--dark);
   font-size: 1.2rem;
   margin: auto;
   padding: 0.2em 0;
@@ -45,14 +46,13 @@
 }
 
 .signup-button:hover {
-  box-shadow: -3px -3px 5px #f4fff8;
-  color: #000f08;
+  box-shadow: -3px -3px 5px var(--highlight);
   cursor: pointer;
   filter: brightness(85%);
 }
 
 a {
-  color: #f4fff8;
+  color: var(--highlight);
   text-decoration: none;
 }
 

@@ -36,11 +36,11 @@
 }
 
 .log-in {
-  background: #b24c63;
+  background: var(--midlight);
   border: none;
   border-radius: 20px;
-  box-shadow: 2px 2px 5px #f4fff8;
-  color: #f4fff8;
+  box-shadow: 2px 2px 5px var(--highlight);
+  color: var(--dark);
   font-size: 1.2rem;
   margin: auto;
   padding: 0.2em 0;
@@ -50,21 +50,21 @@
 }
 
 .log-in:hover {
-  box-shadow: -3px -3px 5px #f4fff8;
-  color: #000f08;
+  box-shadow: -3px -3px 5px var(--highlight);
   cursor: pointer;
   filter: brightness(85%);
 }
 
 .error {
-  background-color: #b24c63;
+  background-color: var(--highlight);
   border-radius: 5px;
-  box-shadow: 3px 3px 5px #000f08;
-  font-size: x-large;
+  box-shadow: 3px 3px 5px var(--dark);
+  color: var(--dark);
+  font-size: 1.2rem;
   left: 50%;
-  padding: 1em;  
+  padding: 1em;
   position: absolute;
-  top: 33%;    
+  top: 35%;
   text-align: center;
   transform: translateX(-50%);
   width: 70%;
@@ -72,7 +72,6 @@
 
 /* 1110 and smaller */
 @media only screen and (max-width: 1110px) {
-
   .form-wrapper {
     flex-direction: column;
     height: 70%;

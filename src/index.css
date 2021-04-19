@@ -1,9 +1,17 @@
 body {
-  background-color: #1c3738;
-  color: #f4fff8;
-  font-family: 'Dosis', sans-serif;
+  background-color: #eae2b7;
+  color: #003049;
+  font-family: "Dosis", sans-serif;
   height: 100vh;
-  letter-spacing: .1em;
+  letter-spacing: 0.1em;
   margin: 0;
   width: 100vw;
+}
+
+:root {
+  --dark: #003049;
+  --highlight: #fcbf49;
+  --light: #eae2b7;
+  --lowlight: #d62828;
+  --midlight: #f77f00;
 }
