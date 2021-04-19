@@ -9,9 +9,10 @@ interface PropTypes {
   extension: string;
   userKey: string;
   setFollowUpGame: any;
+  setGameId: any;
 }
 
-const GameOver = ({ winner, playerColor, extension, userKey, setFollowUpGame}: PropTypes) => {
+const GameOver = ({ winner, playerColor, extension, userKey, setFollowUpGame, setGameId}: PropTypes) => {
   let history = useHistory()
 
   const handleClick = async () => {
@@ -26,11 +27,12 @@ const GameOver = ({ winner, playerColor, extension, userKey, setFollowUpGame}: P
       const data = await promise.json()
       console.log('data for followup game', data.data.attributes)
       setFollowUpGame(data.data.attributes)
+      setGameId(data.data.attributes.extension)
       setTimeout(() => {
         history.push({
-          pathname: `/game/${data.data.attributes.extension}`,
+          pathname: `/dashboard`,
         })
-      })
+      }, 1000)
     } catch(e) {
       console.log(e)
     }

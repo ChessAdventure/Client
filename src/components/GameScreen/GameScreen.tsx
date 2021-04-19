@@ -14,6 +14,7 @@ interface PropTypes {
   gameId: string;
   userKey: string;
   userName: string;
+  setGameId: any;
   setFollowUpGame: any;
   followUpDetails?: userDetails | undefined;
 }
@@ -26,7 +27,7 @@ interface userDetails {
 // chess.fen() returns current fen
 // chess.game_over() returns true if game is over
 
-const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetails }: PropTypes) => {
+const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetails, setGameId }: PropTypes) => {
   console.log(followUpDetails?.current_fen, 'CURRENT FEN FROM GAMESCREEN')
   const [chess] = useState<any>(
     new Chess(followUpDetails?.current_fen || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
@@ -140,17 +141,18 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
         }
       />}
       {!opponent && <p>Send this link to a friend to start playing! <br></br> 
-        https://localhost:3000/game/{gameId}</p>}
+        http://localhost:3000/game/{gameId}</p>}
       <label className="switch">
         <input type="checkbox" checked={checked} onChange={handleToggle}/>
         <span className="slider round"></span>
       </label>
-      {winner.length && <GameOver 
+      {winner.length > 0 && <GameOver 
+        setGameId={setGameId}
         winner={winner} 
         playerColor={color} 
         extension={gameId} 
         userKey={userKey}
-        setFollowUpGame={setFollowUpGame}/>}
+      setFollowUpGame={setFollowUpGame}/>}
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
     </section>
   )

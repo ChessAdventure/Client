@@ -56,8 +56,9 @@ const App = () => {
         <Route
           path="/game/:id"
           render={({ match }: any) => {
-            return userKey.length ?
+            return userKey.length > 0 ?
             <GameScreen 
+              setGameId={setGameId}
               gameId={followUpGame?.extension || match.params.id} 
               userKey={userKey} 
               userName={userName} 
