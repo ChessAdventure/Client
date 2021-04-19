@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
-context("Actions", () => {
+context("Sign Up and Log In", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/")
   })
@@ -123,10 +123,10 @@ context("Actions", () => {
     cy.get(".signup-button").should("exist").should("have.text", "Log In")
   })
 
-  it.skip("should sign up the user", () => {
+  it("should sign up the user", () => {
     cy.get(".signup-button").click()
 
-    cy.get("input").eq(0).type("test user name5")
+    cy.get("input").eq(0).type("test user name6")
 
     cy.get("input").eq(1).type("testpassword")
     cy.get("input").eq(2).type("testpassword")
@@ -147,8 +147,6 @@ context("Actions", () => {
     cy.location().should((loc) => {
       expect(loc.host).to.eq("localhost:3000")
       expect(loc.href).to.eq("http://localhost:3000/dashboard")
-
     })
-      .should("exist")
-  })
+  })  
 })
