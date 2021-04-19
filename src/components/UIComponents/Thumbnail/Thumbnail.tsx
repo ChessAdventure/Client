@@ -10,7 +10,7 @@ const Thumbnail = ({ imageSource, text }: PropTypes) => {
   return (
     <section className="thumbnail">
       <div className="thumbnail-image" style={{backgroundImage: `url(${imageSource})`}} aria-label="Player thumbnail"></div>
-      <p className="thumbnail-text">Welcome, {text}</p>
+      <p className="thumbnail-text">{text}</p>
     </section>
   )
 }
