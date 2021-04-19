@@ -24,7 +24,7 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
         <br></br>
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <br></br>
-        <div>
+        <section>
           <h3 className="previous-game-header">Previous Game End:</h3>
           <Gameboard 
             width={200} 
@@ -32,7 +32,7 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
             draggable={false}
             fen={'4R3/1k6/1p2P1p1/p7/4r3/1P1r4/1K6/2R5 w - - 0 0'}
           />
-        </div>
+        </section>
       </section>
     </>
   )
