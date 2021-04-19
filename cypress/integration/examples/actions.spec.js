@@ -1,7 +1,8 @@
+/* eslint-disable jest/valid-expect */
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
-context("Sign Up and Log In", () => {
+describe("Sign Up and Log In", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/")
   })
@@ -126,17 +127,20 @@ context("Sign Up and Log In", () => {
   it("should sign up the user", () => {
     cy.get(".signup-button").click()
 
-    cy.get("input").eq(0).type("test user name6")
+    cy.get("input").eq(0).type("test user name1")
+    cy.get("input").eq(0).should("have.value", "test user name1")
 
     cy.get("input").eq(1).type("testpassword")
+    cy.get("input").eq(1).should("have.value", "testpassword")
     cy.get("input").eq(2).type("testpassword")
+    cy.get("input").eq(2).should("have.value", "testpassword")
 
     cy.get(".log-in").click({ force: true })
 
     cy.intercept(
       {
         method: "POST",
-        url: "http://localhost:3001/api/v1/login",
+        url: "http://localhost:3001/api/v1/users",
       },
       {
         statusCode: 200,
