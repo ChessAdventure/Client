@@ -34,7 +34,7 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
   }
   return (
     <section className="quest-start" id="quest-start">
-      <button className="start-button" onClick={handleClick}>Start a quest</button>
+      <button className="start-button" onClick={handleClick}>Start A ChessPedition</button>
     </section>
   )
 }

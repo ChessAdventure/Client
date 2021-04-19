@@ -26,7 +26,7 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
         <br></br>
         <div>
           <h3 className="previous-game-header">Previous Game End:</h3>
-          <OldGameBoard width={200} />
+          <OldGameBoard width={200} fen={''}/>
         </div>
       </section>
     </>
