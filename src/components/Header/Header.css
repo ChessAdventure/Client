@@ -19,11 +19,19 @@ h1 {
 }
 
 .sign-out-button {
-  color: #f4fff8;
-  width: auto;
-  padding: 0.2em 1em;
+  background: #b24c63;
+  border: none;
   border-radius: 20px;
-  background: #1c3738;
-  box-shadow: 3px 3px 7px #000f08;
-  font-size: x-large;
+  box-shadow: 1px 1px 3px #8baaad;
+  color: #f4fff8;
+  font-size: 1.2rem;
+  padding: 0.2em 1em;
+  width: auto;
+}
+
+.sign-out-button:hover {
+  box-shadow: -3px -3px 5px #f4fff8;
+  color: #000f08;
+  cursor: pointer;
+  filter: brightness(85%);
 }

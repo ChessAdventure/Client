@@ -10,8 +10,16 @@
   color: #f4fff8;
   width: auto;
   padding: .2em 1em;
+  border: none;
   border-radius: 20px;
   background: #b24c63;
   box-shadow: 3px 3px 7px #000f08;
   font-size: x-large;
+}
+
+.start-button:hover {
+  box-shadow: -3px -3px 5px #f4fff8;
+  color: #000f08;
+  cursor: pointer;
+  filter: brightness(85%);
 }
