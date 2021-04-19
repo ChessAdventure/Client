@@ -4,21 +4,12 @@ import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
 import GameScreen from '../GameScreen/GameScreen'
-import { match } from 'cypress/types/sinon';
-
-interface userDetails {
-  extension: string;
-  current_fen: string;
-  white: string;
-  black: string;
-}
 
 const App = () => {
 
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
   const [gameId, setGameId] = useState<string>('')
-  const [followUpGame, setFollowUpGame] = useState<userDetails | undefined>(undefined)
   let history = useHistory()
 
   useEffect(() => {
@@ -34,6 +25,7 @@ const App = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
+
   return (
     <>
       <Switch>
@@ -59,10 +51,9 @@ const App = () => {
             return userKey.length > 0 ?
             <GameScreen 
               setGameId={setGameId}
-              gameId={followUpGame?.extension || match.params.id} 
+              gameId={match.params.id} 
               userKey={userKey} 
               userName={userName} 
-              setFollowUpGame={setFollowUpGame}
              /> : <p>Loading</p>
           }}
         >

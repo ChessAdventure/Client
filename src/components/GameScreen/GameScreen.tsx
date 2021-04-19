@@ -15,8 +15,6 @@ interface PropTypes {
   userKey: string;
   userName: string;
   setGameId: any;
-  setFollowUpGame: any;
-  followUpDetails?: userDetails | undefined;
 }
 interface userDetails {
   extension: string | undefined;
@@ -24,13 +22,10 @@ interface userDetails {
   white: string | undefined;
   black: string | undefined;
 }
-// chess.fen() returns current fen
-// chess.game_over() returns true if game is over
 
-const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetails, setGameId }: PropTypes) => {
-  console.log(followUpDetails?.current_fen, 'CURRENT FEN FROM GAMESCREEN')
+const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   const [chess] = useState<any>(
-    new Chess(followUpDetails?.current_fen || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+    new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState<string>(chess.fen())
   const [checked, setChecked] = useState<boolean>(false)
@@ -39,11 +34,17 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
   const [winner, setWinner] = useState<string>('')
 
   const handleUser = (userDetails: userDetails) => {
-    if (followUpDetails) {
-      console.log('followupdetails', followUpDetails)
-    }
     userName === userDetails.white ? setColor('white') : setColor('black')
   }
+
+  useEffect(() => {
+    setGameId(gameId)
+  }, [])
+
+  useEffect(() => {
+    console.log('changed fen', fen)
+    chess.load(fen)
+  }, [fen])
 
   useEffect(() => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -65,13 +66,12 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
         }
         handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
-        chess.load(resp.data.attributes.current_fen)
         if (chess.game_over()) {
           color === 'white' ? setWinner('black') : setWinner('white')
         }
       }
     })
-  }, [])
+  }, [gameId])
 
   const handleToggle = () => {
     setChecked(!checked)
@@ -86,7 +86,7 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
             fen: newFen,
             api_key: userKey,
             extension: gameId,
-            status: color === 'white' ? 1 : 2,
+            status: color === 'white' ? 2 : 1,
           }
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
@@ -99,8 +99,6 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
         } catch(e) {
           console.log(e)
         }
-        // This will send a different patch with the end game fen, result of who won,
-        // and kick off the next game with a new fen from the BE. Will redirect to a new extension
       } else {
           try {
           const params = {
@@ -147,12 +145,16 @@ const GameScreen = ({ gameId, userKey, userName, setFollowUpGame, followUpDetail
         <span className="slider round"></span>
       </label>
       {winner.length > 0 && <GameOver 
+        userName={userName}
         setGameId={setGameId}
         winner={winner} 
+        setFen={setFen}
+        setWinner={setWinner}
         playerColor={color} 
-        extension={gameId} 
+        curExtension={gameId} 
         userKey={userKey}
-      setFollowUpGame={setFollowUpGame}/>}
+        setColor={setColor}
+      />}
       <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
     </section>
   )
