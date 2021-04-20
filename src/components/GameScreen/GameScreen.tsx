@@ -75,14 +75,8 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           mode: 'cors'
         })
         const data = await response.json()
-
         console.log('DATA from PATCH', data)
-      } catch (e) {
-        console.log(e)
-      }
-    }
-
-        if(data.errors) {
+        if (data.errors) {
           setMoveError(data.errors[0])
         } else {
           setMoveError('')
