@@ -1,0 +1,20 @@
+.leave-game {
+  position: absolute;
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--dark);
+  color: var(--dark);
+  padding: 0.3em 1em;
+  width: auto;
+  left: 50%;
+  top: 90%;
+  transform: translateX(-50%);
+  margin: 5px 0 5px 0;
+}
+
+.leave-game:hover {
+  box-shadow: -3px -3px 5px var(--dark);
+  cursor: pointer;
+  filter: brightness(85%);
+}

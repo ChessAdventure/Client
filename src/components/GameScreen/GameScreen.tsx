@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
@@ -25,6 +26,7 @@ interface userDetails {
 }
 
 const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
+  const history = useHistory();
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
@@ -119,12 +121,19 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
       }
     } else {
       setMoveError('Not a valid move')
+      console.log('Not a valid move')
     }
+  }
+
+  const handleLeave = () => {
+    setGameId('')
+    history.push(`/dashboard`)
   }
 
   return (
     <section>
       <Header />
+      <button className="leave-game" onClick={handleLeave}>Leave Game</button>
       {opponent !== 'none' && <Thumbnail text={`Playing: ${opponent}`}/>}
       {opponent !== 'none' && <Gameboard
         width={500}
