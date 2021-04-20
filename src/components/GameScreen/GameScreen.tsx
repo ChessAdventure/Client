@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
@@ -40,11 +41,13 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
 
   useEffect(() => {
     setGameId(gameId)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     console.log('changed fen', fen)
     chess.load(fen)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fen])
 
   useEffect(() => {
@@ -61,7 +64,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         console.log('disconnected')
       },
       received: (resp: any) => {
-        console.log('response from server', resp)
         if (resp.data.attributes.black) {
           setOpponent(true)
         }
@@ -72,6 +74,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         }
       }
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
 
   const handleToggle = () => {
@@ -117,7 +120,11 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
             mode: 'cors'
           })
           const data = await response.json()
-          console.log('DATA from PATCH', data)
+          if (data.errors) {
+            setMoveError(data.errors[0])
+          } else {
+            setMoveError('')
+          }
         } catch(e) {
           console.log(e)
         }
