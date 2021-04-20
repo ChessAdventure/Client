@@ -83,7 +83,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   return (
     <section>
       <Header />
-      <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
+      <Thumbnail />
       <Gameboard
         width={500}
         fen={fen}
@@ -95,7 +95,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           })
         }
       />
-      <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
+      <Thumbnail />
 
     </section>
   )
