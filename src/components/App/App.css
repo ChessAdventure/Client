@@ -1,0 +1,23 @@
+.game-loading-screen-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 2em;
+  margin: auto;
+  margin-top: 2em;
+  text-align: center;
+}
+
+.go-to-login {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--dark);
+  color: var(--dark);
+  font-size: 1.2rem;
+  margin: auto;
+  padding: 0.2em 0;
+  position: relative;
+  width: 175px;
+}

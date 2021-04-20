@@ -27,6 +27,10 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
 
+  const goToLogin = () => {
+    history.push(`/`)
+  }
+
   return (
     <>
       <Switch>
@@ -41,12 +45,12 @@ const App = () => {
           exact
           path="/dashboard"
           render={() => {
-            return <Dashboard 
-              user={userName}  
-              setGameId={setGameId} 
-              userKey={userKey} 
+            return <Dashboard
+              user={userName}
+              setGameId={setGameId}
+              userKey={userKey}
               activeGame={activeGame}
-              />
+            />
           }}
         >
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
@@ -55,13 +59,20 @@ const App = () => {
           path="/game/:id"
           render={({ match }: any) => {
             return userKey.length > 0 ?
-            <GameScreen 
-              setActiveGame={setActiveGame}
-              setGameId={setGameId}
-              gameId={match.params.id} 
-              userKey={userKey} 
-              userName={userName} 
-             /> : <p>Loading</p>
+              <GameScreen
+                setActiveGame={setActiveGame}
+                setGameId={setGameId}
+                gameId={match.params.id}
+                userKey={userKey}
+                userName={userName}
+              /> :
+              <div className="game-loading-screen-container">
+                <p>Hang on, we're setting up the game board!</p>
+                <p>If you see this screen for more than a few seconds,
+                  <br></br>
+                  please <button onClick={goToLogin} className="go-to-login">click here to log in</button> or refresh the page.</p>
+              </div>
+
           }}
         >
         </Route>
@@ -69,7 +80,6 @@ const App = () => {
           return <p>404</p>
         }}
         ></Route>
-
       </Switch>
     </>
   );
