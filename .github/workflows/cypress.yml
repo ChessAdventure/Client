@@ -10,11 +10,12 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v1
         with:
-          build: CI='' npm run build
+          build: npm run build
           start: npm start
           wait-on: http://localhost:3000
         env: 
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+          CI: false
 
 # name: My workflow
 
