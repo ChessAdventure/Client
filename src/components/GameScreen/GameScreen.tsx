@@ -112,15 +112,13 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
             mode: 'cors'
           })
           const data = await response.json()
-          if (data.errors) {
-            setMoveError(data.errors[0])
-          } else {
-            setMoveError('')
-          }
+          setMoveError('')
         } catch(e) {
           console.log(e)
         }
       }
+    } else {
+      setMoveError('Not a valid move')
     }
   }
 
