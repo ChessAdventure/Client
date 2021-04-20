@@ -4,6 +4,7 @@ on: [pull_request]
 
 jobs:
   build_id:
+    runs-on: ubuntu-latest
     steps:
       - name: 'Set build id'
         id: build_id
