@@ -27,6 +27,7 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
     setFen(current_fen)
     setGameId(extension)
     setWinner('')
+    console.log('white player', white, 'userName', userName)
     setColor(white === userName ? 'white' : 'black')
   }
 

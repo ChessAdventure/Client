@@ -86,8 +86,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
             fen: newFen,
             api_key: userKey,
             extension: gameId,
-            status: color === 'white' ? 2 : 1,
+            status: color === 'white' ? 1 : 2,
           }
+          console.log(typeof params.status)
+          console.log(params.status)
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
