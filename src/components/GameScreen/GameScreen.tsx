@@ -18,6 +18,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [moveError, setMoveError] = useState<string>('')
   useEffect(() => {
     console.log(gameId)
