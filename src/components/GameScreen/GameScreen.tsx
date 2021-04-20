@@ -31,7 +31,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   const [fen, setFen] = useState<string>(chess.fen())
   const [checked, setChecked] = useState<boolean>(false)
   const [color, setColor] = useState<string>('')
-  const [opponent, setOpponent] = useState(false)
+  const [opponent, setOpponent] = useState<string>('none')
   const [winner, setWinner] = useState<string>('')
   const [moveError, setMoveError] = useState<string>('')
 
@@ -63,9 +63,9 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         console.log('disconnected')
       },
       received: (resp: any) => {
-        if (resp.data.attributes.black) {
-          setOpponent(true)
-        }
+        resp.data.attributes.white === userName ?
+          setOpponent(resp.data.attributes.black || 'none') :
+          setOpponent(resp.data.attributes.white)
         handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
         if (chess.game_over()) {
@@ -75,10 +75,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
-
-  const handleToggle = () => {
-    setChecked(!checked)
-  }
 
   const handleMove = async (move: object) => {
     if (chess.move(move)) {
@@ -131,11 +127,11 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   return (
     <section>
       <Header />
-      <Thumbnail />
-      {opponent && <Gameboard
+      {opponent !== 'none' && <Thumbnail text={`Playing: ${opponent}`}/>}
+      {opponent !== 'none' && <Gameboard
         width={500}
         fen={fen}
-        orientation={checked ? 'black' : 'white'}
+        orientation={color === 'white' ? 'white' : 'black'}
         onDrop={(move: any) =>
           handleMove({
             from: move.sourceSquare,
@@ -144,12 +140,8 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
           })
         }
       />}
-      {!opponent && <p>Send this link to a friend to start playing! <br></br> 
+      {opponent === 'none' && <p>Send this link to a friend to start playing! <br></br> 
         http://localhost:3000/game/{gameId}</p>}
-      <label className="switch">
-        <input type="checkbox" checked={checked} onChange={handleToggle}/>
-        <span className="slider round"></span>
-      </label>
       {winner.length > 0 && <GameOver 
         userName={userName}
         setGameId={setGameId}
