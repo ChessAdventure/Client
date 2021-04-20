@@ -1,20 +1,50 @@
+.game-screen-lower-third {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+}
+
 .leave-game {
-  position: absolute;
   background: var(--midlight);
   border: none;
   border-radius: 20px;
   box-shadow: 2px 2px 5px var(--dark);
   color: var(--dark);
-  padding: 0.3em 1em;
-  width: auto;
-  left: 50%;
-  top: 90%;
-  transform: translateX(-50%);
-  margin: 5px 0 5px 0;
+  font-size: 1.2rem;
+  margin: auto;
+  margin-bottom: 1em;
+  padding: 0.2em 0;
+  position: relative;
+  top: 25px;
+  width: 250px;
 }
 
 .leave-game:hover {
   box-shadow: -3px -3px 5px var(--dark);
   cursor: pointer;
   filter: brightness(85%);
+}
+
+.new-game-link-container {
+  background: var(--dark);
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 2px 2px 8px var(--midlight), -2px -2px 8px var(--highlight);
+  color: var(--highlight);
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 50%;
+  margin: auto;
+  margin-top: 1em;
+  padding: 1em;
+}
+
+.new-game-link-text,
+.new-game-link {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.6;
+  margin: 1em;
 }

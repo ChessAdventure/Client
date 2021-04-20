@@ -28,24 +28,22 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
-          {activeGame?.length > 0 && 
+        {activeGame?.length > 0 &&
           <>
             <p>You are in an active game.</p>
-            <button className="return-to-game" onClick={handleReturn}>Return to game</button>
+            <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
           </>
-          }
-        <br></br>
-        <Rules />
-        <br></br>
+        }
         <QuestStart setGameId={setGameId} userKey={userKey} />
-        <br></br>
+        <Rules />
         <section>
           <h3 className="previous-game-header">Previous Game End:</h3>
-          <Gameboard 
-            width={200} 
+          <Gameboard
+            width={200}
             orientation={'white'}
             draggable={false}
             fen={'4R3/1k6/1p2P1p1/p7/4r3/1P1r4/1K6/2R5 w - - 0 0'}
+          // make call to BE for this fen
           />
         </section>
       </section>
