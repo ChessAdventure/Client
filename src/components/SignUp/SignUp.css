@@ -55,8 +55,10 @@
   filter: brightness(85%);
 }
 
-.error {
-  background-color: var(--highlight);
+
+.signup-error {
+  background-color: #b24c63;
+
   border-radius: 5px;
   box-shadow: 3px 3px 5px var(--dark);
   color: var(--dark);
@@ -99,7 +101,7 @@
     justify-content: center;
   }
 
-  .error {
+  .signup-error {
     font-size: large;
     text-align: center;
     top: 12%;

@@ -19,12 +19,17 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+
   const [checked, setChecked] = useState<boolean>(false)
   
   const handleToggle = () => {
     setChecked(!checked)
   }
   
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [moveError, setMoveError] = useState<string>('')
+
   useEffect(() => {
     console.log(gameId)
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -70,16 +75,31 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           mode: 'cors'
         })
         const data = await response.json()
+
         console.log('DATA from PATCH', data)
       } catch (e) {
         console.log(e)
       }
     }
+
+        if(data.errors) {
+          setMoveError(data.errors[0])
+        } else {
+          setMoveError('')
+        }
+      } catch (e) {
+        console.log("error:", e)
+      }
+      // after every move, if the game is over and there's a win
+      // send that info to BE
+    } 
+
   }
 
   return (
     <section>
       <Header />
+
       <Thumbnail text="your opponent" />
       <div className="gameboard-wrapper">
         <Gameboard
@@ -99,6 +119,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         <input type="checkbox" checked={checked} onChange={handleToggle} />
         <span className="slider round"></span>
       </label>
+
     </section>
   )
 }

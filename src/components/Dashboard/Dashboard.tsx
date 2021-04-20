@@ -16,6 +16,7 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
   return (
     <>
       <Header />
+
       <section className="container">
         <div className="greeting">
           <p>Welcome, </p>
