@@ -13,13 +13,15 @@ interface PropTypes {
 
 const Gameboard = ({ width, orientation, fen, draggable, onDrop}: PropTypes) => {
   return (
-    <ChessBoard 
-        width={width}
-        orientation={orientation}
-        draggable={draggable}
-        onDrop={onDrop}
-        position={fen}
-    />
+    <section className="gameboard-wrapper">
+      <ChessBoard 
+          width={width}
+          orientation={orientation}
+          draggable={draggable}
+          onDrop={onDrop}
+          position={fen}
+      />
+    </section>
   )
 }
 
