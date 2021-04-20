@@ -1,13 +1,29 @@
 .container {
-  width: 90%;
-  margin: auto;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  /* border: 1px solid red;   */
+  margin: auto;
+  width: 90%;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+
+.greeting p {
+  color: var(--dark);
+  font-size: x-large;
+  margin-bottom: 0;
+  margin-top: .5em;
+  margin-right: .5em;
 }
 
 .previous-game-header {
-  text-align: center;
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  margin-top: .5em;
+  text-align: center;  
 }

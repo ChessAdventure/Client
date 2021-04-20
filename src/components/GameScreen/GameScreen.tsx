@@ -3,6 +3,7 @@ import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
+import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
@@ -18,18 +19,27 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+
+  const [checked, setChecked] = useState<boolean>(false)
+  
+  const handleToggle = () => {
+    setChecked(!checked)
+  }
+  
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [moveError, setMoveError] = useState<string>('')
+
   useEffect(() => {
     console.log(gameId)
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
     console.log('API_KEY', userKey)
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
-      api_key: userKey, 
+      api_key: userKey,
       extension: gameId
-    },{
-      connected: ()=> {
+    }, {
+      connected: () => {
         console.log('connected!')
 
       },
@@ -43,7 +53,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         chess.load(resp.data.attributes.current_fen)
       }
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleMove = async (move: any) => {
@@ -60,11 +70,18 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
         }
         const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
           method: 'PATCH',
-          headers: {'Content-Type': 'application/json'},
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params),
           mode: 'cors'
         })
         const data = await response.json()
+
+        console.log('DATA from PATCH', data)
+      } catch (e) {
+        console.log(e)
+      }
+    }
+
         if(data.errors) {
           setMoveError(data.errors[0])
         } else {
@@ -76,28 +93,35 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
       // after every move, if the game is over and there's a win
       // send that info to BE
     } 
+
   }
 
   return (
     <section>
       <Header />
-      <Thumbnail />
-      <Gameboard
-        width={500}
-        fen={fen}
-        onDrop={(move: any) =>
-          handleMove({
-            from: move.sourceSquare,
-            to: move.targetSquare,
-            promotion: "q",
-          })
-        }
-      />
-      <Thumbnail />
+
+      <Thumbnail text="your opponent" />
+      <div className="gameboard-wrapper">
+        <Gameboard
+          width={500}
+          fen={fen}
+          onDrop={(move: any) =>
+            handleMove({
+              from: move.sourceSquare,
+              to: move.targetSquare,
+              promotion: "q",
+            })
+          }
+        />
+      </div>
+      <Thumbnail text={userName} />
+      <label className="switch">
+        <input type="checkbox" checked={checked} onChange={handleToggle} />
+        <span className="slider round"></span>
+      </label>
 
     </section>
   )
-
 }
 
 export default GameScreen

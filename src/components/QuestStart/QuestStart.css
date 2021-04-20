@@ -1,25 +1,23 @@
 .quest-start {
-  width: 100%;
-  text-align: center;
-  margin: 1em;
   font-size: 2em;
-  /* border: 1px solid yellow; */
+  margin: 1em;
+  text-align: center;
+  width: 100%;
 }
 
 .start-button {
-  color: #f4fff8;
-  width: auto;
-  padding: .2em 1em;
+  background: var(--midlight);
   border: none;
   border-radius: 20px;
-  background: #b24c63;
-  box-shadow: 3px 3px 7px #000f08;
-  font-size: x-large;
+  box-shadow: 2px 2px 5px var(--dark);
+  color: var(--dark);
+  font-size: 1.4rem;
+  padding: 0.3em 1em;
+  width: auto;
 }
 
 .start-button:hover {
-  box-shadow: -3px -3px 5px #f4fff8;
-  color: #000f08;
+  box-shadow: -3px -3px 5px var(--dark);
   cursor: pointer;
   filter: brightness(85%);
 }

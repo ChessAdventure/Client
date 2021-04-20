@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import Header from '../Header/Header'
 import QuestStart from '../QuestStart/QuestStart'
+import Rules from '../Rules/Rules'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import './Dashboard.css'
@@ -17,11 +18,12 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
       <Header />
 
       <section className="container">
+        <div className="greeting">
+          <p>Welcome, </p>
+          <Thumbnail text={user} />
+        </div>
         <br></br>
-        <Thumbnail
-          imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2"
-          text={user}
-        />
+        <Rules />
         <br></br>
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <br></br>
