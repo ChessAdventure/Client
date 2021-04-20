@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction} from 'react'
 import './GameOver.css'
 import {API_ROOT} from '../../constants/index'
 
@@ -9,9 +9,9 @@ interface PropTypes {
   curExtension: string;
   userKey: string;
   setGameId: any;
-  setWinner: any;
+  setWinner: Dispatch<SetStateAction<string>>;
   setFen: any;
-  setColor: any;
+  setColor: Dispatch<SetStateAction<string>>;
 }
 
 interface dataAttributes {

@@ -1,4 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
+import { useHistory } from 'react-router-dom'
 import Header from '../Header/Header'
 import QuestStart from '../QuestStart/QuestStart'
 import Rules from '../Rules/Rules'
@@ -10,18 +11,29 @@ interface PropTypes {
   user: string;
   setGameId: Dispatch<SetStateAction<string>>;
   userKey: string;
+  activeGame: string;
 }
 
-const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
+const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
+  const history = useHistory();
+  const handleReturn = () => {
+    history.push(`/game/${activeGame}`)
+  }
+
   return (
     <>
       <Header />
-
       <section className="container">
         <div className="greeting">
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
+          {activeGame?.length > 0 && 
+          <>
+            <p>You are in an active game.</p>
+            <button className="return-to-game" onClick={handleReturn}>Return to game</button>
+          </>
+          }
         <br></br>
         <Rules />
         <br></br>

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { useHistory } from 'react-router-dom'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 import GameOver from '../GameOver/GameOver'
+import Error from '../Error/Error'
 import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
@@ -17,6 +18,7 @@ interface PropTypes {
   userKey: string;
   userName: string;
   setGameId: any;
+  setActiveGame: any;
 }
 interface userDetails {
   extension: string | undefined;
@@ -25,7 +27,7 @@ interface userDetails {
   black: string | undefined;
 }
 
-const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
+const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: PropTypes) => {
   const history = useHistory();
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
@@ -71,6 +73,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
         if (chess.game_over()) {
+          setActiveGame('')
           color === 'white' ? setWinner('black') : setWinner('white')
         }
       }
@@ -97,6 +100,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
           })
           const data = await response.json()
           setWinner(color)
+          setActiveGame('')
         } catch(e) {
           console.log(e)
         }
@@ -127,12 +131,16 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
 
   const handleLeave = () => {
     setGameId('')
+    if (!chess.game_over()) {
+      setActiveGame(gameId)
+    }
     history.push(`/dashboard`)
   }
 
   return (
     <section>
       <Header />
+      {moveError && <Error text={`Invalid Move`}/>}
       <button className="leave-game" onClick={handleLeave}>Leave Game</button>
       {opponent !== 'none' && <Thumbnail text={`Playing: ${opponent}`}/>}
       {opponent !== 'none' && <Gameboard
@@ -160,7 +168,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         userKey={userKey}
         setColor={setColor}
       />}
-      <Thumbnail />
+      <Thumbnail text={userName}/>
     </section>
   )
 }

@@ -10,6 +10,7 @@ const App = () => {
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
   const [gameId, setGameId] = useState<string>('')
+  const [activeGame, setActiveGame] = useState<string>('')
   let history = useHistory()
 
   useEffect(() => {
@@ -40,7 +41,12 @@ const App = () => {
           exact
           path="/dashboard"
           render={() => {
-            return <Dashboard user={userName} setGameId={setGameId} userKey={userKey} />
+            return <Dashboard 
+              user={userName}  
+              setGameId={setGameId} 
+              userKey={userKey} 
+              activeGame={activeGame}
+              />
           }}
         >
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
@@ -50,6 +56,7 @@ const App = () => {
           render={({ match }: any) => {
             return userKey.length > 0 ?
             <GameScreen 
+              setActiveGame={setActiveGame}
               setGameId={setGameId}
               gameId={match.params.id} 
               userKey={userKey} 
