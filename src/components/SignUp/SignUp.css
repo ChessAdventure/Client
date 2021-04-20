@@ -55,10 +55,8 @@
   filter: brightness(85%);
 }
 
-
 .signup-error {
-  background-color: #b24c63;
-
+  background-color: #d62828;
   border-radius: 5px;
   box-shadow: 3px 3px 5px var(--dark);
   color: var(--dark);
@@ -90,6 +88,47 @@
     padding-left: 1.1em;
   }
 
+  .label,
+  .confirm-label {
+    margin-bottom: 1em;
+  }
+
+  .log-in-wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .signup-error {
+    font-size: large;
+    text-align: center;
+    top: 12%;
+  }
+}
+
+/* 550 and smaller */
+@media only screen and (max-width: 550px) {
+  .title {
+    font-size: 2em;
+  }
+
+  .form-wrapper {
+    flex-direction: column;
+    height: 600px;
+    justify-content: space-evenly;
+    margin: auto;
+    margin-top: 5em;
+    width: 200px;
+    border: 1px solid greenyellow;
+  }
+  
+  .form {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-left: 1.1em;
+  }
+  
   .label,
   .confirm-label {
     margin-bottom: 1em;

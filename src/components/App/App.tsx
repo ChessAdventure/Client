@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
+import Header from '../Header/Header'
 import GameScreen from '../GameScreen/GameScreen'
 
 const App = () => {
@@ -78,15 +79,18 @@ const App = () => {
         </Route>
         <Route render={() => {
           return (
-            <div className="game-loading-screen-container">
-              <p>That's a move I've never seen before!</p>
-              <p>This URL doesn't exist, 
+            <>
+              <Header />
+              <div className="game-loading-screen-container">
+                <p>That's a move I've never seen before!</p>
+                <p>This URL doesn't exist.
                 <br></br>
                 please double check it or
                 <br></br>
-                <button onClick={goToLogin} className="go-to-login">click here</button>
+                  <button onClick={goToLogin} className="go-to-login">click here</button>
                to go home.</p>
-            </div>
+              </div>
+            </>
           )
         }}
         ></Route>

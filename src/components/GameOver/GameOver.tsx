@@ -52,10 +52,10 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
   return (
     <section className="game-over-modal">
       {winner === playerColor ? 
-        <p>You won! Play again to continue your quest.</p> :
-        <p>You've lost. It's not over. Have your friend send you a new url for a shot at revenge!</p>
+        <p className="winner-text">You won! Continue your quest and play again!</p> :
+        <p className="winner-text">You lost but it's not over!<br></br>Play again for a shot at revenge!</p>
       }
-      <button onClick={handleClick}>Continue Quest?</button>
+      <button className="play-again-button" onClick={handleClick}>Play Again</button>
     </section>
   )
 }

@@ -23,3 +23,9 @@
   position: relative;
   width: 175px;
 }
+
+.go-to-login:hover {
+    box-shadow: -3px -3px 5px var(--highlight);
+  cursor: pointer;
+  filter: brightness(85%);
+}
