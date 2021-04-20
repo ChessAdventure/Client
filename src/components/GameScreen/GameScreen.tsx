@@ -45,7 +45,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   }, [])
 
   useEffect(() => {
-    console.log('changed fen', fen)
     chess.load(fen)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fen])
@@ -92,8 +91,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
             extension: gameId,
             status: color === 'white' ? 1 : 2,
           }
-          console.log(typeof params.status)
-          console.log(params.status)
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
@@ -112,7 +109,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
             api_key: userKey,
             extension: gameId
           }
-          console.log(params)
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
