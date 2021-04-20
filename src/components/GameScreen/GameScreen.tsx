@@ -13,19 +13,12 @@ interface PropTypes {
   userName: string;
 }
 
-// chess.fen() returns current fen
-// chess.game_over() returns true if game is over
-// chess.move(move, [options]) Attempts to make a move on the board, returning a move object if the move was legal, otherwise null. 
-// chess.moves([options]) Returns a list of legal moves from the current position.
-// chess.put(piece, square) Place a piece on the square where piece is an object with the form { type: ..., color: ... }. 
-// chess.reset() Resets board
-// chess.turn() Returns current side to move (w, b)
-
 const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+  const [moveError, setMoveError] = useState<string>('')
   useEffect(() => {
     console.log(gameId)
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
@@ -71,13 +64,17 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           mode: 'cors'
         })
         const data = await response.json()
-        console.log('DATA from PATCH', data)
-      } catch(e) {
-        console.log(e)
+        if(data.errors) {
+          setMoveError(data.errors[0])
+        } else {
+          setMoveError('')
+        }
+      } catch (e) {
+        console.log("error:", e)
       }
       // after every move, if the game is over and there's a win
       // send that info to BE
-    }
+    } 
   }
 
   return (
