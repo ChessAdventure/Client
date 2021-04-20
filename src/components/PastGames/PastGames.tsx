@@ -1,3 +1,5 @@
+// not being used currently
+
 import React from 'react'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import moves from '../../king.png'

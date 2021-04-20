@@ -14,7 +14,6 @@
     "actioncable": "^5.2.5",
     "chess.js": "^0.11.0",
     "chessboardjsx": "^2.4.7",
-    "cypress": "^7.0.0",
     "react": "^17.0.2",
     "react-actioncable-provider": "^2.0.0",
     "react-dom": "^17.0.2",
@@ -49,6 +48,7 @@
   },
   "devDependencies": {
     "@types/chess.js": "^0.10.1",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "cypress": "^7.1.0"
   }
 }

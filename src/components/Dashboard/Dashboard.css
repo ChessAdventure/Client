@@ -1,37 +1,29 @@
-.grid {
-  width: 100%;
-  /* height: 80vh; */
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0.2fr 2fr;
-  gap: 10px;
-  grid-template-areas:
-    "quest-start quest-start thumbnail thumbnail"
-    "pastgame-header pastgame-header pastgame-header pastgame-header"
-    "past-games past-games past-games past-games"
-}
-
-.pastgame-header {
-  grid-area: pastgame-header;
+.container {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin: 0 3em;
-  font-size: x-large;
-  border-top: 8px double #8baaad;
+  margin: auto;
+  width: 90%;
 }
 
-.see-all-button {
-  color: #f4fff8;
-  width: auto;
-  padding: .2em 1em;
-  border-radius: 20px;
-  background: #b24c63;
-  box-shadow: 3px 3px 5px #000f08;
-  font-size: x-large;
+.greeting {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
 }
 
-.see-all-button:hover {
-  filter: brightness(85%);
+.greeting p {
+  color: var(--dark);
+  font-size: x-large;
+  margin-bottom: 0;
+  margin-top: .5em;
+  margin-right: .5em;
+}
+
+.previous-game-header {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  margin-top: .5em;
+  text-align: center;  
 }

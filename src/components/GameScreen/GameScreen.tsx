@@ -32,6 +32,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   const [color, setColor] = useState<string>('')
   const [opponent, setOpponent] = useState(false)
   const [winner, setWinner] = useState<string>('')
+  const [moveError, setMoveError] = useState<string>('')
 
   const handleUser = (userDetails: userDetails) => {
     userName === userDetails.white ? setColor('white') : setColor('black')
@@ -50,10 +51,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
-      api_key: userKey, 
+      api_key: userKey,
       extension: gameId
-    },{
-      connected: ()=> {
+    }, {
+      connected: () => {
         console.log('connected!')
       },
       disconnected: () => {
@@ -127,7 +128,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   return (
     <section>
       <Header />
-      <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
+      <Thumbnail />
       {opponent && <Gameboard
         width={500}
         fen={fen}
@@ -157,7 +158,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         userKey={userKey}
         setColor={setColor}
       />}
-      <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
+      <Thumbnail />
     </section>
   )
 }
