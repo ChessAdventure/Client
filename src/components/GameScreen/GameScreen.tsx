@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
-import Error from '../Error/Error'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
@@ -19,6 +18,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState(chess.fen())
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [moveError, setMoveError] = useState<string>('')
   useEffect(() => {
     console.log(gameId)
@@ -81,8 +81,7 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
   return (
     <section>
       <Header />
-      {moveError.length > 0 && <Error text={moveError} />}
-      <Thumbnail imageSource="https://thumbs.dreamstime.com/b/cartoon-lacrosse-player-running-illustration-man-116275009.jpg" />
+      <Thumbnail />
       <Gameboard
         width={500}
         fen={fen}
@@ -94,7 +93,8 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
           })
         }
       />
-      <Thumbnail imageSource="https://cdn11.bigcommerce.com/s-9nmdjwb5ub/images/stencil/1280x1280/products/153/1145/Business_Shark_big__95283.1513045773.jpg?c=2" />
+      <Thumbnail />
+
     </section>
   )
 
