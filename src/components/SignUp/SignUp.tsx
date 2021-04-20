@@ -39,6 +39,8 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
+          console.log(data);
+          
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureKey', apiKey)
