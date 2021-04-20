@@ -77,7 +77,17 @@ const App = () => {
         >
         </Route>
         <Route render={() => {
-          return <p>404</p>
+          return (
+            <div className="game-loading-screen-container">
+              <p>That's a move I've never seen before!</p>
+              <p>This URL doesn't exist, 
+                <br></br>
+                please double check it or
+                <br></br>
+                <button onClick={goToLogin} className="go-to-login">click here</button>
+               to go home.</p>
+            </div>
+          )
         }}
         ></Route>
       </Switch>
