@@ -15,6 +15,7 @@ const Dashboard = ({ user, setGameId, userKey }: PropTypes) => {
   return (
     <>
       <Header />
+
       <section className="container">
         <br></br>
         <Thumbnail

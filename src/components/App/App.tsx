@@ -53,8 +53,8 @@ const App = () => {
           path="/game/:id"
           render={({ match }: any) => {
             return userKey.length ?
-            <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}
-             /> : <p>Loading</p>
+              <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}
+              /> : <p>Loading</p>
           }}
         ></Route>
         <Route render={() => {
