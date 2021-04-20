@@ -15,7 +15,6 @@ const App = () => {
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
     const activeKey = localStorage.getItem('chessAdventureKey') || ''
-    console.log(activeKey)
     setUserName(activeUser)
     setUserKey(activeKey)
   }, [])
@@ -26,6 +25,7 @@ const App = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
+
   return (
     <>
       <Switch>
@@ -43,20 +43,21 @@ const App = () => {
             return <Dashboard user={userName} setGameId={setGameId} userKey={userKey} />
           }}
         >
-
-          {/* if there's a gameID in localStorage, redirect to the GameScreen
-          otherwise if there's a userKey in localStorage, redirect to the dashboard */}
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
-
         </Route>
         <Route
           path="/game/:id"
           render={({ match }: any) => {
-            return userKey.length ?
-              <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}
-              /> : <p>Loading</p>
+            return userKey.length > 0 ?
+            <GameScreen 
+              setGameId={setGameId}
+              gameId={match.params.id} 
+              userKey={userKey} 
+              userName={userName} 
+             /> : <p>Loading</p>
           }}
-        ></Route>
+        >
+        </Route>
         <Route render={() => {
           return <p>404</p>
         }}

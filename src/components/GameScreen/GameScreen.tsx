@@ -1,39 +1,56 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
+import GameOver from '../GameOver/GameOver'
 import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
+
 
 // game board should not show up until there are two people signed in
 interface PropTypes {
   gameId: string;
   userKey: string;
   userName: string;
+  setGameId: any;
+}
+interface userDetails {
+  extension: string | undefined;
+  current_fen: string | undefined;
+  white: string | undefined;
+  black: string | undefined;
 }
 
-const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
+const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
-  const [fen, setFen] = useState(chess.fen())
-
+  const [fen, setFen] = useState<string>(chess.fen())
   const [checked, setChecked] = useState<boolean>(false)
-  
-  const handleToggle = () => {
-    setChecked(!checked)
-  }
-  
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [color, setColor] = useState<string>('')
+  const [opponent, setOpponent] = useState(false)
+  const [winner, setWinner] = useState<string>('')
   const [moveError, setMoveError] = useState<string>('')
 
+  const handleUser = (userDetails: userDetails) => {
+    userName === userDetails.white ? setColor('white') : setColor('black')
+  }
+
   useEffect(() => {
-    console.log(gameId)
+    setGameId(gameId)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    chess.load(fen)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fen])
+
+  useEffect(() => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
-    console.log('API_KEY', userKey)
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
       api_key: userKey,
@@ -41,79 +58,110 @@ const GameScreen = ({ gameId, userKey, userName }: PropTypes) => {
     }, {
       connected: () => {
         console.log('connected!')
-
       },
       disconnected: () => {
         console.log('disconnected')
       },
       received: (resp: any) => {
-        console.log('received')
-        console.log('fen', resp.data.attributes.current_fen)
+        if (resp.data.attributes.black) {
+          setOpponent(true)
+        }
+        handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
-        chess.load(resp.data.attributes.current_fen)
+        if (chess.game_over()) {
+          color === 'white' ? setWinner('black') : setWinner('white')
+        }
       }
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameId])
 
-  const handleMove = async (move: any) => {
-    console.log('user credentials', gameId, userKey, fen)
-    console.log(move)
+  const handleToggle = () => {
+    setChecked(!checked)
+  }
+
+  const handleMove = async (move: object) => {
     if (chess.move(move)) {
       const newFen = chess.fen()
-      console.log(newFen)
-      try {
-        const params = {
-          fen: newFen,
-          api_key: userKey,
-          extension: gameId
+      if (chess.game_over()) {
+        try {
+          const params = {
+            fen: newFen,
+            api_key: userKey,
+            extension: gameId,
+            status: color === 'white' ? 1 : 2,
+          }
+          const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(params),
+            mode: 'cors'
+          })
+          const data = await response.json()
+          setWinner(color)
+        } catch(e) {
+          console.log(e)
         }
-        const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(params),
-          mode: 'cors'
-        })
-        const data = await response.json()
-        console.log('DATA from PATCH', data)
-        if (data.errors) {
-          setMoveError(data.errors[0])
-        } else {
-          setMoveError('')
+      } else {
+          try {
+          const params = {
+            fen: newFen,
+            api_key: userKey,
+            extension: gameId
+          }
+          const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(params),
+            mode: 'cors'
+          })
+          const data = await response.json()
+          if (data.errors) {
+            setMoveError(data.errors[0])
+          } else {
+            setMoveError('')
+          }
+        } catch(e) {
+          console.log(e)
         }
-      } catch (e) {
-        console.log("error:", e)
       }
-      // after every move, if the game is over and there's a win
-      // send that info to BE
-    } 
-
+    }
   }
 
   return (
     <section>
       <Header />
-
-      <Thumbnail text="your opponent" />
-      <div className="gameboard-wrapper">
-        <Gameboard
-          width={500}
-          fen={fen}
-          onDrop={(move: any) =>
-            handleMove({
-              from: move.sourceSquare,
-              to: move.targetSquare,
-              promotion: "q",
-            })
-          }
-        />
-      </div>
-      <Thumbnail text={userName} />
+      <Thumbnail />
+      {opponent && <Gameboard
+        width={500}
+        fen={fen}
+        orientation={checked ? 'black' : 'white'}
+        onDrop={(move: any) =>
+          handleMove({
+            from: move.sourceSquare,
+            to: move.targetSquare,
+            promotion: "q",
+          })
+        }
+      />}
+      {!opponent && <p>Send this link to a friend to start playing! <br></br> 
+        http://localhost:3000/game/{gameId}</p>}
       <label className="switch">
-        <input type="checkbox" checked={checked} onChange={handleToggle} />
+        <input type="checkbox" checked={checked} onChange={handleToggle}/>
         <span className="slider round"></span>
       </label>
-
+      {winner.length > 0 && <GameOver 
+        userName={userName}
+        setGameId={setGameId}
+        winner={winner} 
+        setFen={setFen}
+        setWinner={setWinner}
+        playerColor={color} 
+        curExtension={gameId} 
+        userKey={userKey}
+        setColor={setColor}
+      />}
+      <Thumbnail />
     </section>
   )
 }

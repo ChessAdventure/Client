@@ -41,18 +41,9 @@ describe("Show dashboard", () => {
 
     cy.get(".container")
       .should("exist")
-      .should("have.descendants", "section.thumbnail")
-    cy.get(".container")
-      .should("exist")
       .should("have.descendants", "section.quest-start")
     cy.get(".container").should("exist").should("have.descendants", "br")
 
-    cy.get(".thumbnail")
-      .should("exist")
-      .should("have.descendants", "div.thumbnail-image")
-    cy.get(".thumbnail-image")
-      .should("exist")
-      .should("have.attr", "aria-label", "Player thumbnail")
     cy.get(".thumbnail-text")
       .should("exist")
       .should("have.text", "test user name")
@@ -68,15 +59,6 @@ describe("Show dashboard", () => {
     cy.get(".previous-game-header")
       .should("exist")
       .should("have.text", "Previous Game End:")
-
-    cy.get(".gameboard-wrapper")
-      .should("exist")
-      .should("have.descendants", "div")
-      .children()
-      .should("exist")
-      .children()
-      .should("exist")
-      .should("have.attr", "style")
   })
 
   it("should sign the user out", () => {

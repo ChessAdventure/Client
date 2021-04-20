@@ -27,7 +27,6 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
 
       const currentGameId = await promise.json()
       setGameId(currentGameId.data.attributes.extension)
-      console.log(currentGameId.data.attributes.extension)
     } catch (e) {
       console.log(e);
     }
