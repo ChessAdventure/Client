@@ -124,7 +124,6 @@ describe("Sign Up and Log In", () => {
 
   it("should sign up the user", () => {
     const URL_ROOT = Cypress.env("URL_ROOT")
-    const API_ROOT = Cypress.env("API_ROOT")
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -139,7 +138,7 @@ describe("Sign Up and Log In", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
+        url: "http://localhost:3001/api/v1/users",
       },
       {
         status: 200,

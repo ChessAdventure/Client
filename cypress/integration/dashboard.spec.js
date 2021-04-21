@@ -2,9 +2,6 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
-    const URL_ROOT = Cypress.env("URL_ROOT")
-    const API_ROOT = Cypress.env("API_ROOT")
-
 describe("Show dashboard", () => {
   it("should display the dashboard", () => {
     cy.visit(Cypress.env("URL_ROOT"))
@@ -21,7 +18,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
+        url: "http://localhost:3001/api/v1/users",
       },
       {
         status: 200,
@@ -103,7 +100,6 @@ describe("Show dashboard", () => {
   })
 
   it("should sign the user out", () => {
-
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -118,7 +114,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
+        url: "http://localhost:3001/api/v1/users",
       },
       {
         status: 200,
@@ -140,8 +136,6 @@ describe("Show dashboard", () => {
   })
 
   it("should start a new game and return to the dashboard", () => {
-
-
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -156,7 +150,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
+        url: "http://localhost:3001/api/v1/users",
       },
       {
         status: 200,
@@ -169,7 +163,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: `${API_ROOT}/api/v1/friendly_games`,
+        url: "http://localhost:3001/api/v1/friendly_games",
       },
       {
         status: 200,
