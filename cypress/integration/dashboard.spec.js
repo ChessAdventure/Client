@@ -2,9 +2,11 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
+    const URL_ROOT = Cypress.env("URL_ROOT")
+    const API_ROOT = Cypress.env("API_ROOT")
+
 describe("Show dashboard", () => {
   it("should display the dashboard", () => {
-    const API_ROOT = Cypress.env("API_ROOT")
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -101,8 +103,7 @@ describe("Show dashboard", () => {
   })
 
   it("should sign the user out", () => {
-    const URL_ROOT = Cypress.env("URL_ROOT")
-    const API_ROOT = Cypress.env("API_ROOT")
+
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -139,8 +140,7 @@ describe("Show dashboard", () => {
   })
 
   it("should start a new game and return to the dashboard", () => {
-    const URL_ROOT = Cypress.env("URL_ROOT")
-    const API_ROOT = Cypress.env("API_ROOT")
+
 
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
