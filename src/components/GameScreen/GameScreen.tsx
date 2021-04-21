@@ -12,7 +12,6 @@ import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
-// game board should not show up until there are two people signed in
 interface PropTypes {
   gameId: string;
   userKey: string;
@@ -146,7 +145,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       {opponent !== 'none' && <Gameboard
         width={500}
         fen={fen}
-        orientation={color === 'white' ? 'white' : 'black'}
+        orientation={checked ? 'black' : 'white'}
+        boardStyle={{
+          'width': '500px', 'height': '500px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
+        }}
         onDrop={(move: any) =>
           handleMove({
             from: move.sourceSquare,
