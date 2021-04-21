@@ -3,10 +3,6 @@
 /// <reference types="cypress" />
 
 describe("Show dashboard", () => {
-  beforeEach(() => {
-    cy.visit(URL_ROOT)
-  })
-
   it(
     "should display the dashboard",
     {
@@ -16,8 +12,9 @@ describe("Show dashboard", () => {
         URL_ROOT: "http://localhost:3000",
       },
     },
-    
+
     () => {
+      cy.visit(URL_ROOT)
       cy.get(".signup-button").click()
 
       cy.get("input").eq(0).type("test user name")
@@ -115,113 +112,137 @@ describe("Show dashboard", () => {
     }
   )
 
-  it("should sign the user out", () => {
-    cy.get(".signup-button").click()
-
-    cy.get("input").eq(0).type("test user name")
-    cy.get("input").eq(0).should("have.value", "test user name")
-
-    cy.get("input").eq(1).type("testpassword")
-    cy.get("input").eq(1).should("have.value", "testpassword")
-    cy.get("input").eq(2).type("testpassword")
-    cy.get("input").eq(2).should("have.value", "testpassword")
-
-    cy.intercept(
-      {
-        method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
+  it(
+    "should sign the user out",
+    {
+      env: {
+        API_ROOT: "http://localhost:3001",
+        API_WS_ROOT: "ws://localhost:3001/cable",
+        URL_ROOT: "http://localhost:3000",
       },
-      {
-        status: 200,
-        fixture: "login.json",
-      }
-    )
+    },
+    () => {
+      cy.visit(URL_ROOT)
+      cy.get(".signup-button").click()
 
-    cy.get(".log-in").click({ force: true })
+      cy.get("input").eq(0).type("test user name")
+      cy.get("input").eq(0).should("have.value", "test user name")
 
-    cy.get(".thumbnail-text").should("have.text", "test user name")
+      cy.get("input").eq(1).type("testpassword")
+      cy.get("input").eq(1).should("have.value", "testpassword")
+      cy.get("input").eq(2).type("testpassword")
+      cy.get("input").eq(2).should("have.value", "testpassword")
 
-    cy.wait(2000)
-
-    cy.get("button").eq(0).click()
-
-    cy.location().should((loc) => {
-      expect(loc.href).to.eq(URL_ROOT)
-    })
-  })
-
-  it("should start a new game and return to the dashboard", () => {
-    cy.get(".signup-button").click()
-
-    cy.get("input").eq(0).type("test user name")
-    cy.get("input").eq(0).should("have.value", "test user name")
-
-    cy.get("input").eq(1).type("testpassword")
-    cy.get("input").eq(1).should("have.value", "testpassword")
-    cy.get("input").eq(2).type("testpassword")
-    cy.get("input").eq(2).should("have.value", "testpassword")
-
-    cy.intercept(
-      {
-        method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
-      },
-      {
-        status: 200,
-        fixture: "login.json",
-      }
-    )
-
-    cy.get(".log-in").click({ force: true })
-
-    cy.intercept(
-      {
-        method: "POST",
-        url: `${API_ROOT}/api/v1/friendly_games`,
-      },
-      {
-        status: 200,
-        fixture: "start-game.json",
-      }
-    )
-    cy.get("button").eq(1).click()
-
-    cy.location().should((loc) => {
-      expect(loc.href).to.eq(`${URL_ROOT}/game/test`)
-    })
-
-    cy.get(".dashboard-header").should("exist").should("have.descendants", "h1")
-    cy.get(".dashboard-header")
-      .should("exist")
-      .should("have.descendants", "button")
-
-    cy.get(".new-game-link-container")
-      .should("exist")
-      .should("have.descendants", "p.new-game-link-text")
-
-    cy.get(".new-game-link-text")
-      .should("exist")
-      .should(
-        "have.text",
-        "Send this link to a friend to start playing!http://localhost:3000/game/testThe game board will appear when the second player joins the room."
+      cy.intercept(
+        {
+          method: "POST",
+          url: `${API_ROOT}/api/v1/users`,
+        },
+        {
+          status: 200,
+          fixture: "login.json",
+        }
       )
-      .should("have.descendants", "span.new-game-link")
 
-    cy.get(".new-game-link")
-      .should("exist")
-      .should("have.text", `${URL_ROOT}/game/test`)
+      cy.get(".log-in").click({ force: true })
 
-    cy.get(".game-screen-lower-third")
-      .should("exist")
-      .should("have.descendants", "button.leave-game")
+      cy.get(".thumbnail-text").should("have.text", "test user name")
 
-    cy.get(".leave-game")
-      .should("exist")
-      .should("have.text", "Back to Dashboard")
-      .click()
+      cy.wait(2000)
 
-    cy.location().should((loc) => {
-      expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
-    })
-  })
+      cy.get("button").eq(0).click()
+
+      cy.location().should((loc) => {
+        expect(loc.href).to.eq(URL_ROOT)
+      })
+    }
+  )
+
+  it(
+    "should start a new game and return to the dashboard",
+    {
+      env: {
+        API_ROOT: "http://localhost:3001",
+        API_WS_ROOT: "ws://localhost:3001/cable",
+        URL_ROOT: "http://localhost:3000",
+      },
+    },
+    () => {
+      cy.visit(URL_ROOT)
+      cy.get(".signup-button").click()
+
+      cy.get("input").eq(0).type("test user name")
+      cy.get("input").eq(0).should("have.value", "test user name")
+
+      cy.get("input").eq(1).type("testpassword")
+      cy.get("input").eq(1).should("have.value", "testpassword")
+      cy.get("input").eq(2).type("testpassword")
+      cy.get("input").eq(2).should("have.value", "testpassword")
+
+      cy.intercept(
+        {
+          method: "POST",
+          url: `${API_ROOT}/api/v1/users`,
+        },
+        {
+          status: 200,
+          fixture: "login.json",
+        }
+      )
+
+      cy.get(".log-in").click({ force: true })
+
+      cy.intercept(
+        {
+          method: "POST",
+          url: `${API_ROOT}/api/v1/friendly_games`,
+        },
+        {
+          status: 200,
+          fixture: "start-game.json",
+        }
+      )
+      cy.get("button").eq(1).click()
+
+      cy.location().should((loc) => {
+        expect(loc.href).to.eq(`${URL_ROOT}/game/test`)
+      })
+
+      cy.get(".dashboard-header")
+        .should("exist")
+        .should("have.descendants", "h1")
+      cy.get(".dashboard-header")
+        .should("exist")
+        .should("have.descendants", "button")
+
+      cy.get(".new-game-link-container")
+        .should("exist")
+        .should("have.descendants", "p.new-game-link-text")
+
+      cy.get(".new-game-link-text")
+        .should("exist")
+        .should(
+          "have.text",
+          "Send this link to a friend to start playing!http://localhost:3000/game/testThe game board will appear when the second player joins the room."
+        )
+        .should("have.descendants", "span.new-game-link")
+
+      cy.get(".new-game-link")
+        .should("exist")
+        .should("have.text", `${URL_ROOT}/game/test`)
+
+      cy.get(".game-screen-lower-third")
+        .should("exist")
+        .should("have.descendants", "button.leave-game")
+
+      cy.get(".leave-game")
+        .should("exist")
+        .should("have.text", "Back to Dashboard")
+        .click()
+
+      cy.location().should((loc) => {
+        expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
+      })
+    }
+  )
 })
