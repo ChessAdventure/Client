@@ -1,21 +1,23 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { useHistory } from 'react-router-dom'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import { API_WS_ROOT, API_ROOT } from '../../constants/index'
 import GameOver from '../GameOver/GameOver'
+import { URL_ROOT } from '../../constants'
+import Error from '../Error/Error'
 import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
-
-// game board should not show up until there are two people signed in
 interface PropTypes {
   gameId: string;
   userKey: string;
   userName: string;
   setGameId: any;
+  setActiveGame: any;
 }
 interface userDetails {
   extension: string | undefined;
@@ -24,14 +26,15 @@ interface userDetails {
   black: string | undefined;
 }
 
-const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
+const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: PropTypes) => {
+  const history = useHistory();
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState<string>(chess.fen())
   const [checked, setChecked] = useState<boolean>(false)
   const [color, setColor] = useState<string>('')
-  const [opponent, setOpponent] = useState(false)
+  const [opponent, setOpponent] = useState<string>('none')
   const [winner, setWinner] = useState<string>('')
   const [moveError, setMoveError] = useState<string>('')
 
@@ -41,12 +44,12 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
 
   useEffect(() => {
     setGameId(gameId)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     chess.load(fen)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fen])
 
   useEffect(() => {
@@ -63,22 +66,19 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         console.log('disconnected')
       },
       received: (resp: any) => {
-        if (resp.data.attributes.black) {
-          setOpponent(true)
-        }
+        resp.data.attributes.white === userName ?
+          setOpponent(resp.data.attributes.black || 'none') :
+          setOpponent(resp.data.attributes.white)
         handleUser(resp.data.attributes)
         setFen(resp.data.attributes.current_fen)
         if (chess.game_over()) {
+          setActiveGame('')
           color === 'white' ? setWinner('black') : setWinner('white')
         }
       }
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
-
-  const handleToggle = () => {
-    setChecked(!checked)
-  }
 
   const handleMove = async (move: object) => {
     if (chess.move(move)) {
@@ -93,17 +93,18 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
           }
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(params),
             mode: 'cors'
           })
           const data = await response.json()
-          setWinner(color)
-        } catch(e) {
+          setWinner('color')
+          setActiveGame('')
+        } catch (e) {
           console.log(e)
         }
       } else {
-          try {
+        try {
           const params = {
             fen: newFen,
             api_key: userKey,
@@ -111,31 +112,43 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
           }
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(params),
             mode: 'cors'
           })
           const data = await response.json()
-          if (data.errors) {
-            setMoveError(data.errors[0])
-          } else {
-            setMoveError('')
-          }
-        } catch(e) {
+          setMoveError('')
+        } catch (e) {
           console.log(e)
         }
       }
+    } else {
+      setMoveError('Invalid Move')
+      console.log('Invalid Move')
     }
+  }
+
+  const handleLeave = () => {
+    setGameId('')
+    if (!chess.game_over()) {
+      setActiveGame(gameId)
+    }
+    history.push(`/dashboard`)
   }
 
   return (
     <section>
       <Header />
-      <Thumbnail />
-      {opponent && <Gameboard
+      {moveError && <Error text={`Invalid Move`} />}
+
+      {opponent !== 'none' && <Thumbnail text={`Playing: ${opponent}`} />}
+      {opponent !== 'none' && <Gameboard
         width={500}
         fen={fen}
         orientation={checked ? 'black' : 'white'}
+        boardStyle={{
+          'width': '500px', 'height': '500px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
+        }}
         onDrop={(move: any) =>
           handleMove({
             from: move.sourceSquare,
@@ -144,24 +157,35 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
           })
         }
       />}
-      {!opponent && <p>Send this link to a friend to start playing! <br></br> 
-        http://localhost:3000/game/{gameId}</p>}
-      <label className="switch">
-        <input type="checkbox" checked={checked} onChange={handleToggle}/>
-        <span className="slider round"></span>
-      </label>
-      {winner.length > 0 && <GameOver 
+
+      {opponent === 'none' &&
+        <div className="new-game-link-container">
+          <p className="new-game-link-text">Send this link to a friend to start playing!
+        <br></br>
+            <br></br>
+            <span className="new-game-link">
+              {URL_ROOT}/game/{gameId}
+            </span>
+            <br></br>
+            <br></br>
+            The game board will appear when the second player joins the room.</p>
+        </div>}
+
+      {winner.length > 0 && <GameOver
         userName={userName}
         setGameId={setGameId}
-        winner={winner} 
+        winner={winner}
         setFen={setFen}
         setWinner={setWinner}
-        playerColor={color} 
-        curExtension={gameId} 
+        playerColor={color}
+        curExtension={gameId}
         userKey={userKey}
         setColor={setColor}
       />}
-      <Thumbnail />
+      <div className="game-screen-lower-third">
+        {opponent !== 'none' && <Thumbnail text={userName} />}
+        <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
+      </div>
     </section>
   )
 }

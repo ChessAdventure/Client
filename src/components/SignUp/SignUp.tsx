@@ -39,7 +39,6 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          console.log(data);
           
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
@@ -80,7 +79,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           setUserKey(apiKey)
           history.push(`/dashboard`)
         } catch (e: any) {
-          setError('Passwords must match. Username must be at least 4 characters.')
+          setError('Passwords must match. Username must be at least 4 characters and cannot include spaces.')
           console.log(e)
           // eventually display a custom error message depending on what you borked
         }

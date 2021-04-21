@@ -1,3 +1,5 @@
+// this component is not in use
+
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 
 interface PropTypes {
