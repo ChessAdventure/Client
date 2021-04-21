@@ -138,7 +138,7 @@ describe("Show dashboard", () => {
     })
   })
 
-  it.only("should start a new game and return to the dashboard", () => {
+  it("should start a new game and return to the dashboard", () => {
     cy.get(".signup-button").click()
 
     cy.get("input").eq(0).type("test user name")
