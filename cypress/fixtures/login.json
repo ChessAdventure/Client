@@ -1,8 +1,10 @@
 {
-  "data": {
-    "attributes": {
-      "api_key": "test-key",
-      "username": "test user name"
+    "data": {
+        "id": "47",
+        "type": "user",
+        "attributes": {
+            "api_key": "test-key",
+            "username": "testusername"
+        }
     }
-  }
 }
