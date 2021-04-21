@@ -150,7 +150,7 @@ describe("Sign Up and Log In", () => {
 
     cy.location().should((loc) => {
       expect(loc.host).to.eq("localhost:3000")
-      expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
+      expect(loc.href).to.eq(`${URL_ROOT}`)
     })
   })
 })

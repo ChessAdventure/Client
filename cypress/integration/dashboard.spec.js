@@ -5,6 +5,7 @@
 describe("Show dashboard", () => {
   it("should display the dashboard", () => {
     cy.visit(Cypress.env("URL_ROOT"))
+
     cy.get(".signup-button").click()
 
     cy.get("input").eq(0).type("test user name")
@@ -27,6 +28,8 @@ describe("Show dashboard", () => {
     )
 
     cy.get(".log-in").click({ force: true })
+
+    cy.wait(3000)
 
     cy.get(".dashboard-header").should("exist").should("have.descendants", "h1")
     cy.get(".dashboard-header")
@@ -124,14 +127,17 @@ describe("Show dashboard", () => {
 
     cy.get(".log-in").click({ force: true })
 
-    cy.get(".thumbnail-text").should("have.text", "test user name")
+    cy.wait(3000)
 
-    cy.wait(2000)
+    cy.get(".thumbnail-text")
+      .should("exist")
+      .should("have.text", "test user name")
 
     cy.get("button").eq(0).click()
 
     cy.location().should((loc) => {
-      expect(loc.href).to.eq(URL_ROOT)
+      expect(loc.host).to.eq("localhost:3000")
+      expect(loc.href).to.eq(`${URL_ROOT}`)
     })
   })
 
