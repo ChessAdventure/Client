@@ -1,10 +1,12 @@
 /* eslint-disable jest/valid-expect */
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
+const URL_ROOT = Cypress.env('URL_ROOT')
+const API_ROOT = Cypress.env("API_ROOT")
 
 describe("Show dashboard", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/")
+    cy.visit(URL_ROOT)
   })
 
   it("should display the dashboard", () => {
@@ -21,7 +23,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: "http://localhost:3001/api/v1/users",
+        url: `${API_ROOT}/api/v1/users`,
       },
       {
         status: 200,
@@ -116,7 +118,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: "http://localhost:3001/api/v1/users",
+        url: `${API_ROOT}/api/v1/users`,
       },
       {
         status: 200,
@@ -133,8 +135,7 @@ describe("Show dashboard", () => {
     cy.get("button").eq(0).click()
 
     cy.location().should((loc) => {
-      expect(loc.host).to.eq("localhost:3000")
-      expect(loc.href).to.eq("http://localhost:3000/")
+      expect(loc.href).to.eq(URL_ROOT)
     })
   })
 
@@ -152,7 +153,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: "http://localhost:3001/api/v1/users",
+        url: `${API_ROOT}/api/v1/users`,
       },
       {
         status: 200,
@@ -165,7 +166,7 @@ describe("Show dashboard", () => {
     cy.intercept(
       {
         method: "POST",
-        url: "http://localhost:3001/api/v1/friendly_games",
+        url: `${API_ROOT}/api/v1/friendly_games`,
       },
       {
         status: 200,
@@ -175,7 +176,7 @@ describe("Show dashboard", () => {
     cy.get("button").eq(1).click()
 
     cy.location().should((loc) => {
-      expect(loc.href).to.eq("http://localhost:3000/game/test")
+      expect(loc.href).to.eq(`${URL_ROOT}/game/test`)
     })
 
     cy.get(".dashboard-header").should("exist").should("have.descendants", "h1")
@@ -197,7 +198,7 @@ describe("Show dashboard", () => {
 
     cy.get(".new-game-link")
       .should("exist")
-      .should("have.text", "http://localhost:3000/game/test")
+      .should("have.text", `${URL_ROOT}/game/test`)
 
     cy.get(".game-screen-lower-third")
       .should("exist")
@@ -209,7 +210,7 @@ describe("Show dashboard", () => {
       .click()
 
     cy.location().should((loc) => {
-      expect(loc.href).to.eq("http://localhost:3000/dashboard")
+      expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
     })
   })
 })
