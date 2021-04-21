@@ -68,14 +68,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
           {lastWinner === '' ? <h3 className="previous-game-header">Play a game and its end board will show here.</h3> :
             <h3 className="previous-game-header">Last time you played,
             <span>
-              {lastWinner === 'won' ? <span> white was the winner!</span> : <span>black was the winner!</span>}
+              {lastWinner === 'won' ? <span> white was the winner!</span> : <span> black was the winner!</span>}
             </span>
             <span>
               <br></br>
-            {streak === "No wins yet" ? streak : <span>Your biggest streak is {streak}</span>}
+            {streak === "No wins yet" ? streak : <span>Your longest streak is {streak}!</span>}
             </span>
-
-
           </h3>}
           <Gameboard
             width={300}

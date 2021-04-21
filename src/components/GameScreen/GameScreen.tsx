@@ -36,10 +36,13 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   const [opponent, setOpponent] = useState<string>('none')
   const [winner, setWinner] = useState<string>('')
   const [moveError, setMoveError] = useState<string>('')
+  const [spectator, setSpectator] = useState<boolean>(false);
 
   const handleUser = (userDetails: userDetails) => {
     console.log(userDetails)
-    userName === userDetails.white ? setColor('white') : setColor('black')
+    userName === userDetails.white ? setColor('white') : 
+      userName === userDetails.black ? setColor('black') :
+      setSpectator(true)
   }
 
   useEffect(() => {
@@ -130,7 +133,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
 
   const handleLeave = () => {
     setGameId('')
-    if (!chess.game_over()) {
+    if (!chess.game_over() && !spectator) {
       setActiveGame(gameId)
     }
     history.push(`/dashboard`)
@@ -141,11 +144,12 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       <Header />
       {moveError && <Error text={`Invalid Move`} />}
 
-      {opponent !== 'none' && <Thumbnail text={`Playing: ${opponent}`} />}
+      {opponent !== 'none' && !spectator && <Thumbnail text={`Playing: ${opponent}`} />}
+      {spectator && <Thumbnail text="Observing" />}
       {opponent !== 'none' && <Gameboard
         width={500}
         fen={fen}
-        orientation={color === 'white' ? 'white' : 'black'}
+        orientation={color === 'black' ? 'black' : 'white'}
         boardStyle={{
           'width': '500px', 'height': '500px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
         }}
@@ -171,7 +175,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             The game board will appear when the second player joins the room.</p>
         </div>}
 
-      {winner.length > 0 && <GameOver
+      {winner.length > 0 && !spectator && <GameOver
         userName={userName}
         setGameId={setGameId}
         winner={winner}
@@ -183,7 +187,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         setColor={setColor}
       />}
       <div className="game-screen-lower-third">
-        {opponent !== 'none' && <Thumbnail text={userName} />}
+        {opponent !== 'none' && !spectator && <Thumbnail text={userName} />}
         <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
       </div>
     </section>
