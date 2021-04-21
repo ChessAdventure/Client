@@ -9,8 +9,6 @@ import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
-
-// game board should not show up until there are two people signed in
 interface PropTypes {
   gameId: string;
   userKey: string;
