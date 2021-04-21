@@ -20,7 +20,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   const history = useHistory();
   const handleReturn = () => {
     history.push(`/game/${activeGame}`)
-
+  }
   const [lastGame, setLastGame] = useState<string>('')
   const [lastWinner, setLastWinner] = useState<string>('')
 
@@ -57,11 +57,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         <Rules />
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <section>
-          <h3 className="previous-game-header">Last time you played,
+          {lastWinner === '' ? <h3 className="previous-game-header">Play a game and its end board will show here.</h3> :
+            <h3 className="previous-game-header">Last time you played,
             <span>
               {lastWinner === 'won' ? <span> white was the winner!</span> : <span>black was the winner!</span>}
             </span>
-          </h3>
+          </h3>}
           <Gameboard
             width={300}
             orientation={'white'}
@@ -78,6 +79,3 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
 }
 
 export default Dashboard
-
-
-

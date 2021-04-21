@@ -7,7 +7,7 @@ describe("Show dashboard", () => {
     cy.visit("http://localhost:3000/")
   })
 
-  it.only("should display the dashboard", () => {
+  it("should display the dashboard", () => {
     cy.get(".signup-button").click()
 
     cy.get("input").eq(0).type("test user name")
@@ -47,7 +47,7 @@ describe("Show dashboard", () => {
       .should("have.descendants", "section.quest-start")
       .should("have.descendants", "div.rules-container")
       .should("have.descendants", "section")
-    
+
     cy.get(".thumbnail-text")
       .should("exist")
       .should("have.text", "test user name")
@@ -68,13 +68,15 @@ describe("Show dashboard", () => {
       .should("exist")
       .should("have.descendants", "h3.rules-text")
 
-    cy.get(".rules-text").eq(0)
-      .should("have.text", '♟Click Start A New ChessPedition and send the game URL to your opponent.')
-
     cy.get(".rules-text")
+      .eq(0)
+      .should(
+        "have.text",
+        "♟Click Start A New ChessPedition and send the game URL to your opponent."
+      )
       .should("have.descendants", "span.chess-piece")
 
-    cy.get("")
+    cy.get(".rules-text")
       .eq(1)
       .should(
         "have.text",
@@ -97,7 +99,7 @@ describe("Show dashboard", () => {
 
     cy.get(".previous-game-header")
       .should("exist")
-      .should("have.text", "Previous Game End:")
+      .should("have.text", "Play a game and its end board will show here.")
   })
 
   it("should sign the user out", () => {
@@ -123,9 +125,8 @@ describe("Show dashboard", () => {
     )
 
     cy.get(".log-in").click({ force: true })
-    
-    cy.get(".thumbnail-text")
-    .should("have.text", "test user name")
+
+    cy.get(".thumbnail-text").should("have.text", "test user name")
 
     cy.wait(2000)
 
@@ -137,7 +138,7 @@ describe("Show dashboard", () => {
     })
   })
 
-  it("should start a new game", () => {
+  it.only("should start a new game and return to the dashboard", () => {
     cy.get(".signup-button").click()
 
     cy.get("input").eq(0).type("test user name")
@@ -174,8 +175,41 @@ describe("Show dashboard", () => {
     cy.get("button").eq(1).click()
 
     cy.location().should((loc) => {
-      expect(loc.host).to.eq("localhost:3000")
       expect(loc.href).to.eq("http://localhost:3000/game/test")
+    })
+
+    cy.get(".dashboard-header").should("exist").should("have.descendants", "h1")
+    cy.get(".dashboard-header")
+      .should("exist")
+      .should("have.descendants", "button")
+
+    cy.get(".new-game-link-container")
+      .should("exist")
+      .should("have.descendants", "p.new-game-link-text")
+
+    cy.get(".new-game-link-text")
+      .should("exist")
+      .should(
+        "have.text",
+        "Send this link to a friend to start playing!http://localhost:3000/game/testThe game board will appear when the second player joins the room."
+      )
+      .should("have.descendants", "span.new-game-link")
+
+    cy.get(".new-game-link")
+      .should("exist")
+      .should("have.text", "http://localhost:3000/game/test")
+
+    cy.get(".game-screen-lower-third")
+      .should("exist")
+      .should("have.descendants", "button.leave-game")
+
+    cy.get(".leave-game")
+      .should("exist")
+      .should("have.text", "Back to Dashboard")
+      .click()
+
+    cy.location().should((loc) => {
+      expect(loc.href).to.eq("http://localhost:3000/dashboard")
     })
   })
 })
