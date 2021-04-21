@@ -4,5 +4,6 @@
     "API_WS_ROOT": "ws://localhost:3001/cable",
     "URL_ROOT": "http://localhost:3000",
     "CYPRESS_BASE_URL": "http://localhost:3001"
-  }
+  },
+  "chromeWebSecurity": false
 }
