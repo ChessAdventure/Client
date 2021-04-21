@@ -31,7 +31,6 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   }, [])
 
   const getLastGame = async () => {
-
     try {
       const response = await fetch(`${API_ROOT}/api/v1/stats/${user}`, {
         method: 'GET',
@@ -57,6 +56,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
+        {activeGame?.length > 0 &&
+          <>
+            <p>You are in an active game.</p>
+            <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
+          </>
+        }
         <Rules />
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <section>

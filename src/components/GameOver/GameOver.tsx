@@ -23,18 +23,18 @@ interface dataAttributes {
 
 const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWinner, setFen, setColor, userName}: PropTypes) => {
 
+  console.log(winner, playerColor, userName)
   const resetGame = ({extension, current_fen, white}: dataAttributes) => {
     setFen(current_fen)
     setGameId(extension)
     setWinner('')
-    console.log('white player', white, 'userName', userName)
+    console.log(white)
     setColor(white === userName ? 'white' : 'black')
   }
 
   const handleClick = async () => {
     try {
       const params = { api_key: userKey, extension: curExtension }
-      console.log(params)
       const promise = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,7 +42,7 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
         body: JSON.stringify(params)
       })
       const data = await promise.json()
-      console.log('data from next game response', data.data.attributes.current_fen)
+      console.log(data)
       resetGame(data.data.attributes)
     } catch(e) {
       console.log(e)
