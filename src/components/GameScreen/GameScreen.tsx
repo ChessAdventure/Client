@@ -147,6 +147,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       {opponent !== 'none' && !spectator && <Thumbnail text={`Playing: ${opponent}`} />}
       {spectator && <Thumbnail text="Observing" />}
       {opponent !== 'none' && <Gameboard
+        draggable={!spectator}
         width={500}
         fen={fen}
         orientation={color === 'black' ? 'black' : 'white'}
