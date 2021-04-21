@@ -12,11 +12,12 @@ jobs:
         with:
           build: npm run build
           start: npm start
-          headless: false
           wait-on: http://localhost:3000
+          video: false
         env: 
           ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
           CI: false
+          
 
 # name: My workflow
 
