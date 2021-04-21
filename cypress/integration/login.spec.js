@@ -127,8 +127,8 @@ describe("Sign Up and Log In", () => {
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
-    cy.get("input").eq(0).type("test user name")
-    cy.get("input").eq(0).should("have.value", "test user name")
+    cy.get("input").eq(0).type("testusername")
+    cy.get("input").eq(0).should("have.value", "testusername")
 
     cy.get("input").eq(1).type("testpassword")
     cy.get("input").eq(1).should("have.value", "testpassword")
@@ -150,7 +150,7 @@ describe("Sign Up and Log In", () => {
 
     cy.location().should((loc) => {
       expect(loc.host).to.eq("localhost:3000")
-      expect(loc.href).to.eq(`${URL_ROOT}/`)
+      expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
     })
   })
 })
