@@ -134,6 +134,9 @@ const GameScreen = ({ gameId, userKey, userName, setGameId }: PropTypes) => {
         width={500}
         fen={fen}
         orientation={checked ? 'black' : 'white'}
+        boardStyle={{
+          'width': '500px', 'height': '500px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
+        }}
         onDrop={(move: any) =>
           handleMove({
             from: move.sourceSquare,
