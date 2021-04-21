@@ -1,7 +1,7 @@
 /* eslint-disable jest/valid-expect */
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
-const URL_ROOT = Cypress.env('URL_ROOT')
+const URL_ROOT = Cypress.env("URL_ROOT")
 const API_ROOT = Cypress.env("API_ROOT")
 
 describe("Show dashboard", () => {

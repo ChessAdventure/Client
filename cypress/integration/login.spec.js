@@ -2,9 +2,12 @@
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
 
+const URL_ROOT = Cypress.env("URL_ROOT")
+const API_ROOT = Cypress.env("API_ROOT")
+
 describe("Sign Up and Log In", () => {
   beforeEach(() => {
-    cy.visit("http://localhost:3000/")
+    cy.visit(URL_ROOT)
   })
 
   it("should display the login screen", () => {
@@ -138,7 +141,7 @@ describe("Sign Up and Log In", () => {
     cy.intercept(
       {
         method: "POST",
-        url: "http://localhost:3001/api/v1/users",
+        url: `${API_ROOT}/api/v1/users`,
       },
       {
         status: 200,
@@ -150,7 +153,7 @@ describe("Sign Up and Log In", () => {
 
     cy.location().should((loc) => {
       expect(loc.host).to.eq("localhost:3000")
-      expect(loc.href).to.eq("http://localhost:3000/dashboard")
+      expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
     })
   })
 })
