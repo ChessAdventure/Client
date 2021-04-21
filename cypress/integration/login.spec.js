@@ -135,16 +135,7 @@ describe("Sign Up and Log In", () => {
     cy.get("input").eq(2).type("testpassword")
     cy.get("input").eq(2).should("have.value", "testpassword")
 
-    cy.intercept(
-      {
-        method: "POST",
-        url: "http://localhost:3001/api/v1/users",
-      },
-      {
-        status: 200,
-        fixture: "login.json",
-      }
-    )
+    cy.intercept("**/users", { fixture: "login.json"})
 
     cy.get(".log-in").click({ force: true })
 
