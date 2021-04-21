@@ -27,7 +27,7 @@ The goal of this project was to undertake new technologies while building a full
 ## Table of Contents
 1. [Introduction](#introduction)
 3. [Instructions](#setup-instructions)
-4. [How-To](#using-kitchen-sink)
+4. [How-To](#using-ChessPedition)
 5. [Future Plans](#notes-and-plans-for-future-iterations)
 
 ## Introduction
