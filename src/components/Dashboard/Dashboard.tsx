@@ -43,7 +43,6 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
       setLastGame(data.data.meta.last_game.fen)
       setLastWinner(data.data.meta.last_game.status)
       setStreak(data.data.meta.streak)
-      console.log(data.data.meta.streak);
       
     } catch (e) {
       console.log(e);
