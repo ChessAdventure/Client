@@ -30,7 +30,6 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   }, [])
 
   const getLastGame = async () => {
-    console.log("here?");
     try {
       const response = await fetch(`${API_ROOT}/api/v1/stats/${user}`, {
         method: 'GET',
@@ -38,10 +37,8 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         mode: 'cors'
       })
       const data = await response.json()
-      console.log("look here", data);
       setLastGame(data.data.meta.last_game.fen)
       setLastWinner(data.data.meta.last_game.status)
-
     } catch (e) {
       console.log(e);
     }
@@ -55,6 +52,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
+        {activeGame?.length > 0 &&
+          <>
+            <p>You are in an active game.</p>
+            <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
+          </>
+        }
         <Rules />
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <section>

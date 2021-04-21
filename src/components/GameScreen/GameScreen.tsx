@@ -32,13 +32,13 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState<string>(chess.fen())
-  const [checked, setChecked] = useState<boolean>(false)
   const [color, setColor] = useState<string>('')
   const [opponent, setOpponent] = useState<string>('none')
   const [winner, setWinner] = useState<string>('')
   const [moveError, setMoveError] = useState<string>('')
 
   const handleUser = (userDetails: userDetails) => {
+    console.log(userDetails)
     userName === userDetails.white ? setColor('white') : setColor('black')
   }
 
@@ -98,7 +98,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             mode: 'cors'
           })
           const data = await response.json()
-          setWinner('color')
+          setWinner(color)
           setActiveGame('')
         } catch (e) {
           console.log(e)
@@ -145,7 +145,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       {opponent !== 'none' && <Gameboard
         width={500}
         fen={fen}
-        orientation={checked ? 'black' : 'white'}
+        orientation={color === 'white' ? 'white' : 'black'}
         boardStyle={{
           'width': '500px', 'height': '500px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
         }}
