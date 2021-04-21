@@ -14,7 +14,7 @@ describe("Sign Up and Log In", () => {
     },
 
     () => {
-      cy.visit(URL_ROOT)
+      cy.visit(Cypress.env('URL_ROOT'))
       cy.get(".splash").should("exist").should("have.descendants", "section")
 
       cy.get(".login-modal").should("exist").should("have.descendants", "h1")
@@ -76,7 +76,7 @@ describe("Sign Up and Log In", () => {
       },
     },
     () => {
-      cy.visit(URL_ROOT)
+      cy.visit(Cypress.env("URL_ROOT"))
       cy.get(".signup-button").click()
 
       cy.get(".splash").should("exist").should("have.descendants", "section")
@@ -153,7 +153,7 @@ describe("Sign Up and Log In", () => {
       },
     },
     () => {
-      cy.visit(URL_ROOT)
+      cy.visit(Cypress.env("URL_ROOT"))
       cy.get(".signup-button").click()
 
       cy.get("input").eq(0).type("test user name")
@@ -164,6 +164,7 @@ describe("Sign Up and Log In", () => {
       cy.get("input").eq(2).type("testpassword")
       cy.get("input").eq(2).should("have.value", "testpassword")
 
+      const API_ROOT = Cypress.env('API_ROOT')
       cy.intercept(
         {
           method: "POST",
@@ -176,7 +177,7 @@ describe("Sign Up and Log In", () => {
       )
 
       cy.get(".log-in").click({ force: true })
-
+      
       cy.location().should((loc) => {
         expect(loc.host).to.eq("localhost:3000")
         expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)

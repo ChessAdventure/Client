@@ -3,7 +3,7 @@
 /// <reference types="cypress" />
 
 describe("Show dashboard", () => {
-  it(
+  it.skip(
     "should display the dashboard",
     {
       env: {
@@ -14,7 +14,7 @@ describe("Show dashboard", () => {
     },
 
     () => {
-      cy.visit(URL_ROOT)
+      cy.visit(Cypress.env("URL_ROOT"))
       cy.get(".signup-button").click()
 
       cy.get("input").eq(0).type("test user name")
@@ -112,7 +112,7 @@ describe("Show dashboard", () => {
     }
   )
 
-  it(
+  it.skip(
     "should sign the user out",
     {
       env: {
@@ -122,7 +122,7 @@ describe("Show dashboard", () => {
       },
     },
     () => {
-      cy.visit(URL_ROOT)
+      cy.visit(Cypress.env("URL_ROOT"))
       cy.get(".signup-button").click()
 
       cy.get("input").eq(0).type("test user name")
@@ -158,7 +158,7 @@ describe("Show dashboard", () => {
     }
   )
 
-  it(
+  it.skip(
     "should start a new game and return to the dashboard",
     {
       env: {
@@ -168,7 +168,7 @@ describe("Show dashboard", () => {
       },
     },
     () => {
-      cy.visit(URL_ROOT)
+      cy.visit(Cypress.env("URL_ROOT"))
       cy.get(".signup-button").click()
 
       cy.get("input").eq(0).type("test user name")
