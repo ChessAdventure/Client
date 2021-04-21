@@ -24,6 +24,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   }
   const [lastGame, setLastGame] = useState<string>('')
   const [lastWinner, setLastWinner] = useState<string>('')
+  const [streak, setStreak] = useState<string>('')
 
   useEffect(() => {
     getLastGame()
@@ -37,8 +38,11 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         mode: 'cors'
       })
       const data = await response.json()
+
       setLastGame(data.data.meta.last_game.fen)
       setLastWinner(data.data.meta.last_game.status)
+      setStreak(data.data.meta.streak)
+      
     } catch (e) {
       console.log(e);
     }
@@ -66,6 +70,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
             <span>
               {lastWinner === 'won' ? <span> white was the winner!</span> : <span>black was the winner!</span>}
             </span>
+            <span>
+              <br></br>
+            {streak === "No wins yet" ? streak : <span>Your biggest streak is {streak}</span>}
+            </span>
+
+
           </h3>}
           <Gameboard
             width={300}
