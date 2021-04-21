@@ -1,108 +1,119 @@
 /* eslint-disable jest/valid-expect */
 /* eslint-disable no-undef */
 /// <reference types="cypress" />
-const URL_ROOT = Cypress.env("URL_ROOT")
-const API_ROOT = Cypress.env("API_ROOT")
 
 describe("Show dashboard", () => {
   beforeEach(() => {
     cy.visit(URL_ROOT)
   })
 
-  it("should display the dashboard", () => {
-    cy.get(".signup-button").click()
-
-    cy.get("input").eq(0).type("test user name")
-    cy.get("input").eq(0).should("have.value", "test user name")
-
-    cy.get("input").eq(1).type("testpassword")
-    cy.get("input").eq(1).should("have.value", "testpassword")
-    cy.get("input").eq(2).type("testpassword")
-    cy.get("input").eq(2).should("have.value", "testpassword")
-
-    cy.intercept(
-      {
-        method: "POST",
-        url: `${API_ROOT}/api/v1/users`,
+  it(
+    "should display the dashboard",
+    {
+      env: {
+        API_ROOT: "http://localhost:3001",
+        API_WS_ROOT: "ws://localhost:3001/cable",
+        URL_ROOT: "http://localhost:3000",
       },
-      {
-        status: 200,
-        fixture: "login.json",
-      }
-    )
+    },
+    
+    () => {
+      cy.get(".signup-button").click()
 
-    cy.get(".log-in").click({ force: true })
+      cy.get("input").eq(0).type("test user name")
+      cy.get("input").eq(0).should("have.value", "test user name")
 
-    cy.get(".dashboard-header").should("exist").should("have.descendants", "h1")
-    cy.get(".dashboard-header")
-      .should("exist")
-      .should("have.descendants", "button")
+      cy.get("input").eq(1).type("testpassword")
+      cy.get("input").eq(1).should("have.value", "testpassword")
+      cy.get("input").eq(2).type("testpassword")
+      cy.get("input").eq(2).should("have.value", "testpassword")
 
-    cy.get("h1").should("have.text", "ChessPedition")
-    cy.get("button").eq(0).should("have.text", "Sign Out")
-
-    cy.get(".container")
-      .should("exist")
-      .should("have.descendants", "div.greeting")
-      .should("have.descendants", "p")
-      .should("have.descendants", "button")
-      .should("have.descendants", "section.quest-start")
-      .should("have.descendants", "div.rules-container")
-      .should("have.descendants", "section")
-
-    cy.get(".thumbnail-text")
-      .should("exist")
-      .should("have.text", "test user name")
-
-    cy.get(".greeting")
-      .should("exist")
-      .should("have.text", "Welcome, test user name")
-
-    cy.get(".quest-start")
-      .should("exist")
-      .should("have.attr", "id", "quest-start")
-      .should("have.descendants", "button")
-    cy.get(".start-button")
-      .should("exist")
-      .should("have.text", "Start A New ChessPedition")
-
-    cy.get(".rules-container")
-      .should("exist")
-      .should("have.descendants", "h3.rules-text")
-
-    cy.get(".rules-text")
-      .eq(0)
-      .should(
-        "have.text",
-        "♟Click Start A New ChessPedition and send the game URL to your opponent."
-      )
-      .should("have.descendants", "span.chess-piece")
-
-    cy.get(".rules-text")
-      .eq(1)
-      .should(
-        "have.text",
-        "♟If you win the game, you carry only your leftover pieces to the next game!"
+      cy.intercept(
+        {
+          method: "POST",
+          url: `${API_ROOT}/api/v1/users`,
+        },
+        {
+          status: 200,
+          fixture: "login.json",
+        }
       )
 
-    cy.get(".rules-text")
-      .eq(2)
-      .should(
-        "have.text",
-        "♟If you lose the game, you get a full set of pieces."
-      )
+      cy.get(".log-in").click({ force: true })
 
-    cy.get(".rules-text")
-      .eq(3)
-      .should(
-        "have.text",
-        "♟Keep playing against each other to find the true ChessPedition champion!"
-      )
+      cy.get(".dashboard-header")
+        .should("exist")
+        .should("have.descendants", "h1")
+      cy.get(".dashboard-header")
+        .should("exist")
+        .should("have.descendants", "button")
 
-    cy.get(".previous-game-header")
-      .should("exist")
-      .should("have.text", "Play a game and its end board will show here.")
-  })
+      cy.get("h1").should("have.text", "ChessPedition")
+      cy.get("button").eq(0).should("have.text", "Sign Out")
+
+      cy.get(".container")
+        .should("exist")
+        .should("have.descendants", "div.greeting")
+        .should("have.descendants", "p")
+        .should("have.descendants", "button")
+        .should("have.descendants", "section.quest-start")
+        .should("have.descendants", "div.rules-container")
+        .should("have.descendants", "section")
+
+      cy.get(".thumbnail-text")
+        .should("exist")
+        .should("have.text", "test user name")
+
+      cy.get(".greeting")
+        .should("exist")
+        .should("have.text", "Welcome, test user name")
+
+      cy.get(".quest-start")
+        .should("exist")
+        .should("have.attr", "id", "quest-start")
+        .should("have.descendants", "button")
+      cy.get(".start-button")
+        .should("exist")
+        .should("have.text", "Start A New ChessPedition")
+
+      cy.get(".rules-container")
+        .should("exist")
+        .should("have.descendants", "h3.rules-text")
+
+      cy.get(".rules-text")
+        .eq(0)
+        .should(
+          "have.text",
+          "♟Click Start A New ChessPedition and send the game URL to your opponent."
+        )
+        .should("have.descendants", "span.chess-piece")
+
+      cy.get(".rules-text")
+        .eq(1)
+        .should(
+          "have.text",
+          "♟If you win the game, you carry only your leftover pieces to the next game!"
+        )
+
+      cy.get(".rules-text")
+        .eq(2)
+        .should(
+          "have.text",
+          "♟If you lose the game, you get a full set of pieces."
+        )
+
+      cy.get(".rules-text")
+        .eq(3)
+        .should(
+          "have.text",
+          "♟Keep playing against each other to find the true ChessPedition champion!"
+        )
+
+      cy.get(".previous-game-header")
+        .should("exist")
+        .should("have.text", "Play a game and its end board will show here.")
+    }
+  )
 
   it("should sign the user out", () => {
     cy.get(".signup-button").click()
