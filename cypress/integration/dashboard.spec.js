@@ -7,7 +7,7 @@ describe("Show dashboard", () => {
     cy.visit("http://localhost:3000/")
   })
 
-  it("should display the dashboard", () => {
+  it.only("should display the dashboard", () => {
     cy.get(".signup-button").click()
 
     cy.get("input").eq(0).type("test user name")
@@ -41,12 +41,20 @@ describe("Show dashboard", () => {
 
     cy.get(".container")
       .should("exist")
+      .should("have.descendants", "div.greeting")
+      .should("have.descendants", "p")
+      .should("have.descendants", "button")
       .should("have.descendants", "section.quest-start")
-    cy.get(".container").should("exist").should("have.descendants", "br")
-
+      .should("have.descendants", "div.rules-container")
+      .should("have.descendants", "section")
+    
     cy.get(".thumbnail-text")
       .should("exist")
       .should("have.text", "test user name")
+
+    cy.get(".greeting")
+      .should("exist")
+      .should("have.text", "Welcome, test user name")
 
     cy.get(".quest-start")
       .should("exist")
@@ -54,7 +62,38 @@ describe("Show dashboard", () => {
       .should("have.descendants", "button")
     cy.get(".start-button")
       .should("exist")
-      .should("have.text", "Start A ChessPedition")
+      .should("have.text", "Start A New ChessPedition")
+
+    cy.get(".rules-container")
+      .should("exist")
+      .should("have.descendants", "h3.rules-text")
+
+    cy.get(".rules-text").eq(0)
+      .should("have.text", '♟Click Start A New ChessPedition and send the game URL to your opponent.')
+
+    cy.get(".rules-text")
+      .should("have.descendants", "span.chess-piece")
+
+    cy.get("")
+      .eq(1)
+      .should(
+        "have.text",
+        "♟If you win the game, you carry only your leftover pieces to the next game!"
+      )
+
+    cy.get(".rules-text")
+      .eq(2)
+      .should(
+        "have.text",
+        "♟If you lose the game, you get a full set of pieces."
+      )
+
+    cy.get(".rules-text")
+      .eq(3)
+      .should(
+        "have.text",
+        "♟Keep playing against each other to find the true ChessPedition champion!"
+      )
 
     cy.get(".previous-game-header")
       .should("exist")
