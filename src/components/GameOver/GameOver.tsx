@@ -55,7 +55,7 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
         <p className="winner-text">You won! Continue your quest and play again!</p> :
         <p className="winner-text">You lost but it's not over!<br></br>Play again for a shot at revenge!</p>
       }
-      <button className="play-again-button" onClick={handleClick}>Play Again</button>
+      <button className="button-dk-bg" onClick={handleClick}>Play Again</button>
     </section>
   )
 }

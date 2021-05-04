@@ -71,7 +71,7 @@ const App = () => {
                 <p>Hang on, we're setting up the game board!</p>
                 <p>If you see this screen for more than a few seconds,
                   <br></br>
-                  please <button onClick={goToLogin} className="go-to-login">click here to log in</button> or refresh the page.</p>
+                  please <button onClick={goToLogin} className="button-lt-bg">click here to log in</button> or refresh the page.</p>
               </div>
 
           }}

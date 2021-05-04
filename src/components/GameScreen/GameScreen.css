@@ -4,16 +4,9 @@
   height: auto;
 }
 
-.leave-game {
-  background: var(--midlight);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 2px 2px 5px var(--dark);
-  color: var(--dark);
-  font-size: 1.2rem;
+.back-to-dashboard {
   margin: auto;
   margin-bottom: 1em;
-  padding: 0.2em 0;
   position: relative;
   top: 25px;
   width: 220px;

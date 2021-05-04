@@ -70,9 +70,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          console.log(">>>>>>>>>>>LOOK HERE")
           console.log(data)
-          console.log(">>>>>>>>>>>LOOK HERE")
           
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
@@ -134,7 +132,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           </label>}
       </form>
       <div className='log-in-wrapper'>
-        <button className="log-in" onClick={(e) => handleClick(e)}>Enter</button>
+        <button className="button-dk-bg enter-button" onClick={(e) => handleClick(e)}>Enter</button>
       </div>
       {error && <p className="signup-error">{error}</p>}
     </section>

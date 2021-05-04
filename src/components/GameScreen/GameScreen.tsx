@@ -189,7 +189,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       />}
       <div className="game-screen-lower-third">
         {opponent !== 'none' && !spectator && <Thumbnail text={userName} />}
-        <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
+        <button className="button-lt-bg back-to-dashboard" onClick={handleLeave}>Back to Dashboard</button>
       </div>
     </section>
   )
