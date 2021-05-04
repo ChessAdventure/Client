@@ -3,7 +3,7 @@ import './Thumbnail.css'
 
 interface PropTypes {
   text?: string;
-  turn?: boolean;
+  turn?: any;
 }
 
 const Thumbnail = ({ text, turn }: PropTypes) => {
