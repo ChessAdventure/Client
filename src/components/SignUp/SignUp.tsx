@@ -27,11 +27,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
       case 'Log In':
         try {
           const params = {
-            "user": {
+            "auth": { // used to be user
               username: username,
               password: password
             }
           }
+          // get the correct endpoint from max
           const response = await fetch(`${API_ROOT}/api/v1/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -39,8 +40,8 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          
-          const apiKey = data.data.attributes.api_key
+          // should get back the jwt here?
+          const apiKey = data.data.attributes.jwt
           const userName = data.data.attributes.username
           localStorage.setItem('jwt', apiKey)
           localStorage.setItem('chessAdventureName', userName)
@@ -64,7 +65,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           }
         }
         try {
-          // get the correct endpoint
+          // get the correct endpoint from max
           const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -72,8 +73,8 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          
-          const apiKey = data.data.attributes.api_key
+          // should get back the jwt here?
+          const apiKey = data.data.attributes.jwt
           const userName = data.data.attributes.username
           localStorage.setItem('jwt', apiKey) // key changed to jwt throughout
           localStorage.setItem('chessAdventureName', userName)

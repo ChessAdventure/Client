@@ -31,10 +31,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   }, [])
 
   const getLastGame = async () => {
+    let token = "Bearer" + localStorage.getItem("jwt")
+    // create bearer token and send it in headers
     try {
       const response = await fetch(`${API_ROOT}/api/v1/stats/${user}`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': token},
         mode: 'cors'
       })
       const data = await response.json()

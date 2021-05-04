@@ -94,9 +94,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             extension: gameId,
             status: color === 'white' ? 1 : 2,
           }
+          let token = "Bearer" + localStorage.getItem('jwt')
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': token },
             body: JSON.stringify(params),
             mode: 'cors'
           })
@@ -113,9 +114,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             api_key: userKey,
             extension: gameId
           }
+          let token = "Bearer" + localStorage.getItem('jwt')
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': token },
             body: JSON.stringify(params),
             mode: 'cors'
           })

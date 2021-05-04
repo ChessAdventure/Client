@@ -33,16 +33,18 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
   }
 
   const handleClick = async () => {
+    let token = "Bearer" + localStorage.getItem("jwt")
+    // create bearer token and send it in headers
     try {
       const params = { api_key: userKey, extension: curExtension }
       const promise = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': token },
         mode: 'cors',
         body: JSON.stringify(params)
       })
       const data = await promise.json()
-      console.log(data)
+      // console.log(data)
       resetGame(data.data.attributes)
     } catch(e) {
       console.log(e)
