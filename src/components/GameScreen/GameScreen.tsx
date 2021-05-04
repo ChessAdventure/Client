@@ -38,9 +38,9 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   const [moveError, setMoveError] = useState<string>('')
   const [spectator, setSpectator] = useState<boolean>(false);
   const [gameOver, setGameOver] = useState<boolean>(false)
+  const [turn, setTurn] = useState<string>('w')
 
   const handleUser = (userDetails: userDetails) => {
-    console.log(userDetails)
     userName === userDetails.white ? setColor('white') : 
       userName === userDetails.black ? setColor('black') :
       setSpectator(true)
@@ -74,7 +74,9 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
           setOpponent(resp.data.attributes.black || 'none') :
           setOpponent(resp.data.attributes.white)
         handleUser(resp.data.attributes)
+        setMoveError('')
         setFen(resp.data.attributes.current_fen)
+        setTurn(chess.turn())
         if (chess.game_over()) {
           setActiveGame('')
           setGameOver(true)
@@ -128,7 +130,11 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         }
       }
     } else {
-      setMoveError('Invalid Move')
+      if (turn !== color.slice(0,1)) {
+        setMoveError('Not Your Turn')
+      } else {
+        setMoveError('Invalid Move')
+      }
     }
   }
 
@@ -143,9 +149,8 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   return (
     <section>
       <Header />
-      {moveError && <Error text={`Invalid Move`} />}
-
-      {opponent !== 'none' && !spectator && <Thumbnail text={`Playing: ${opponent}`} />}
+      {moveError && <Error text={moveError} />}
+      {opponent !== 'none' && !spectator && <Thumbnail turn={turn !== color.slice(0,1)} text={`Playing: ${opponent}`} />}
       {spectator && <Thumbnail text="Observing" />}
       {opponent !== 'none' && <Gameboard
         draggable={!spectator}
@@ -189,7 +194,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         setGameOver={setGameOver}
       />}
       <div className="game-screen-lower-third">
-        {opponent !== 'none' && !spectator && <Thumbnail text={userName} />}
+        {opponent !== 'none' && !spectator && <Thumbnail turn={turn === color.slice(0,1)} text={userName} />}
         <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
       </div>
     </section>
