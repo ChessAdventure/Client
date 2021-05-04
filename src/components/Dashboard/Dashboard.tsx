@@ -58,7 +58,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         </div>
         {activeGame?.length > 0 &&
           <>
-            <p>You are in an active game.</p>
+            <p style={{color: 'red'}}>You are in an active game.</p>
             <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
           </>
         }
