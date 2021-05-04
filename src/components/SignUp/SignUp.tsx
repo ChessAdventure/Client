@@ -42,7 +42,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
-          localStorage.setItem('chessAdventureKey', apiKey)
+          localStorage.setItem('jwt', apiKey)
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
           setUserKey(apiKey)
@@ -54,29 +54,28 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           console.log(e);
         }
         break
+
       case 'Sign Up':
         const params = {
-          "user": {
+          "auth": { // used to be user
             username: username,
             password: password,
             password_confirmation: confirmPassword
           }
         }
         try {
-          const response = await fetch(`${API_ROOT}/api/v1/users`, {
+          // get the correct endpoint
+          const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          console.log(">>>>>>>>>>>LOOK HERE")
-          console.log(data)
-          console.log(">>>>>>>>>>>LOOK HERE")
           
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
-          localStorage.setItem('chessAdventureKey', apiKey)
+          localStorage.setItem('jwt', apiKey) // key changed to jwt throughout
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
           setUserKey(apiKey)

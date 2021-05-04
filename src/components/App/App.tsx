@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
-    const activeKey = localStorage.getItem('chessAdventureKey') || ''
+    const activeKey = localStorage.getItem('jwt') || ''
     setUserName(activeUser)
     setUserKey(activeKey)
   }, [])
