@@ -154,15 +154,15 @@ describe("Show dashboard", () => {
       .should("exist")
       .should("have.descendants", "button")
 
-    cy.get(".new-game-link-container")
-      .should("exist")
-      .should("have.descendants", "p.new-game-link-text")
+    // cy.get(".new-game-link-container")
+    //   .should("exist")
+    //   .should("have.descendants", "p.new-game-link-text")
 
-    cy.get(".new-game-link-text")
-      .should("exist")
-      .should("have.descendants", "span.new-game-link")
+    // cy.get(".new-game-link-text")
+    //   .should("exist")
+    //   .should("have.descendants", "span.new-game-link")
 
-    cy.get(".new-game-link").should("exist")
+    // cy.get(".new-game-link").should("exist")
     // .should("have.text", `${URL_ROOT}/game/test`)
 
   })
