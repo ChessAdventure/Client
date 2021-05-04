@@ -33,13 +33,17 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             }
           }
           // get the correct endpoint from max
-          const response = await fetch(`${API_ROOT}/api/v1/login`, {
+          console.log(params);
+          
+          const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(params)
           })
           const data = await response.json();
+          console.log(data);
+          
           // should get back the jwt here?
           const apiKey = data.data.attributes.jwt
           const userName = data.data.attributes.username
@@ -65,21 +69,22 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           }
         }
         try {
-          // get the correct endpoint from max
-          const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
+          const response = await fetch(`${API_ROOT}/api/v1/users`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          // should get back the jwt here?
-          const apiKey = data.data.attributes.jwt
-          const userName = data.data.attributes.username
-          localStorage.setItem('jwt', apiKey) // key changed to jwt throughout
-          localStorage.setItem('chessAdventureName', userName)
-          setUserName(userName)
-          setUserKey(apiKey)
+          console.log(data);
+          
+
+          // const apiKey = data.data.attributes.jwt
+          // const userName = data.data.attributes.username
+          // localStorage.setItem('jwt', apiKey) // key changed to jwt throughout
+          // localStorage.setItem('chessAdventureName', userName)
+          // setUserName(userName)
+          // setUserKey(apiKey)
           history.push(`/dashboard`)
         } catch (e: any) {
           setError('Passwords must match. Username must be at least 4 characters and cannot include spaces.')
