@@ -140,7 +140,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   }
 
   return (
-    <section>
+    <section className="game-screen-container">
       <Header />
       {moveError && <Error text={`Invalid Move`} />}
 
