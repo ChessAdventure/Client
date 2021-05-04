@@ -4,6 +4,7 @@
 
 describe("Show dashboard", () => {
   it("should display the dashboard", () => {
+    cy.viewport(1000, 1000)
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -19,9 +20,9 @@ describe("Show dashboard", () => {
       fixture: "login.json",
     })
 
-    cy.get(".log-in").click({ force: true })
+    cy.get(".enter-button").click({ force: true })
 
-    cy.wait(3000)
+    cy.wait(1000)
 
     cy.get(".dashboard-header").should("exist").should("have.descendants", "h1")
     cy.get(".dashboard-header")
@@ -96,7 +97,8 @@ describe("Show dashboard", () => {
       // stub the /stats GET
   })
 
-  it("should sign the user out", () => {
+  it("should sign the user out", () => {    
+    cy.viewport(1000, 1000)
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -112,7 +114,7 @@ describe("Show dashboard", () => {
       fixture: "login.json",
     })
 
-    cy.get(".log-in").click({ force: true })
+    cy.get(".enter-button").click({ force: true })
 
     cy.wait(3000)
 
@@ -128,6 +130,7 @@ describe("Show dashboard", () => {
   })
 
   it("should start a new game", () => {
+    cy.viewport(1000, 1000)
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -141,7 +144,7 @@ describe("Show dashboard", () => {
 
     cy.intercept("**/users", { fixture: "login.json" })   
 
-    cy.get(".log-in").click({ force: true })
+    cy.get(".enter-button").click({ force: true })
 
     cy.intercept("**/friendly_games", {fixture: "start-game.json"})
     cy.get("button").eq(1).click()
@@ -162,20 +165,5 @@ describe("Show dashboard", () => {
     cy.get(".new-game-link").should("exist")
     // .should("have.text", `${URL_ROOT}/game/test`)
 
-    cy.get(".game-screen-lower-third")
-      .should("exist")
-      .should("have.descendants", "button.leave-game")
-
-    cy.get(".leave-game")
-      .should("exist")
-      .should("have.text", "Back to Dashboard")
-      // .click()
-    // this is triggering the useEffect on GameScreen line 55
-    // because the gameID has changed - but there's no resp.data
-    // so perhaps that needs to be stubbed somehow?
-    
-    // cy.location().should((loc) => {
-    //   expect(loc.href).to.eq(`${URL_ROOT}/dashboard`)
-    // })
   })
 })

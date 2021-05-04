@@ -4,6 +4,7 @@
 
 describe("Sign Up and Log In", () => {
   it("should display the login screen", () => {
+    cy.viewport(1000, 1000)
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".splash").should("exist").should("have.descendants", "section")
 
@@ -50,12 +51,13 @@ describe("Sign Up and Log In", () => {
       .should("exist")
       .should("have.descendants", "button")
 
-    cy.get(".log-in").should("exist").should("have.text", "Enter")
+    cy.get(".enter-button").should("exist").should("have.text", "Enter")
 
     cy.get(".signup-button").should("exist").should("have.text", "Sign Up")
   })
 
   it("should display the sign up screen", () => {
+    cy.viewport(1000, 1000)
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
@@ -117,12 +119,13 @@ describe("Sign Up and Log In", () => {
       .should("exist")
       .should("have.descendants", "button")
 
-    cy.get(".log-in").should("exist").should("have.text", "Enter")
+    cy.get(".enter-button").should("exist").should("have.text", "Enter")
 
     cy.get(".signup-button").should("exist").should("have.text", "Log In")
   })
 
   it("should sign up the user", () => {
+    cy.viewport(1000, 1000)
     const URL_ROOT = Cypress.env("URL_ROOT")
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
@@ -135,9 +138,9 @@ describe("Sign Up and Log In", () => {
     cy.get("input").eq(2).type("testpassword")
     cy.get("input").eq(2).should("have.value", "testpassword")
 
-    cy.intercept("**/users", { fixture: "login.json"})
+    cy.intercept("**/users", { fixture: "login.json" })
 
-    cy.get(".log-in").click({ force: true })
+    cy.get(".enter-button").click({ force: true })
 
     cy.location().should((loc) => {
       expect(loc.host).to.eq("localhost:3000")
