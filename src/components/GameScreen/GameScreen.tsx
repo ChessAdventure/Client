@@ -70,7 +70,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         console.log('disconnected')
       },
       received: (resp: any) => {
-        console.log(resp)
         resp.data.attributes.white === userName ?
           setOpponent(resp.data.attributes.black || 'none') :
           setOpponent(resp.data.attributes.white)
@@ -87,6 +86,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
 
   const handleMove = async (move: object) => {
     if (chess.move(move)) {
+      setFen(chess.fen())
       const newFen = chess.fen()
       if (chess.game_over()) {
         try {
@@ -129,7 +129,6 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       }
     } else {
       setMoveError('Invalid Move')
-      console.log('Invalid Move')
     }
   }
 

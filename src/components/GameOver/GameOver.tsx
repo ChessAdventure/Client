@@ -23,7 +23,6 @@ interface dataAttributes {
 
 const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWinner, setFen, setColor, userName}: PropTypes) => {
 
-  console.log(winner, userName)
   const resetGame = ({extension, current_fen, white}: dataAttributes) => {
     setFen(current_fen)
     setGameId(extension)
@@ -42,7 +41,6 @@ const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWi
         body: JSON.stringify(params)
       })
       const data = await promise.json()
-      console.log(data)
       resetGame(data.data.attributes)
     } catch(e) {
       console.log(e)
