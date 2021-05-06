@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import ChessBoard from 'chessboardjsx'
+import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
 import './Computer.css'
 const Chess = require('chess.js')
-
 interface pieceValues {
   'p': number,
   'n': number,
@@ -18,18 +19,34 @@ interface pieces {
 }
 
 const Computer = () => {
+
+  const history = useHistory();
   const [chess] = useState<any>(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   )
   const [fen, setFen] = useState<string>(chess.fen())
+  const [playerTurn, setPlayerTurn] = useState<boolean>(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      makeAIMove()
+    },1000)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+
+  const makeAIMove = () => {
+    let newMove = calcBestMove(3, chess, chess.turn())[1];
+    chess.move(newMove);
+    setFen(chess.fen());  
+    setPlayerTurn(true)
+  }
 
   const handleMove = (move: object) => {
     if (chess.move(move)) {
       setFen(chess.fen())
+      setPlayerTurn(false)
       setTimeout(() => {
-        let newMove = calcBestMove(3, chess, chess.turn())[1];
-        chess.move(newMove);
-        setFen(chess.fen());  
+        makeAIMove()
       }, 1000)
     }
   }
@@ -108,21 +125,31 @@ const Computer = () => {
     return value;
   }
 
+  const handleLeave = () => {
+    history.push(`/dashboard`)
+  }
+
   return (
-  <div className="computer">
-      <ChessBoard
-        orientation={'white'}
-        draggable={true}
-        onDrop={(move: any) =>
-          handleMove({
-            from: move.sourceSquare,
-            to: move.targetSquare,
-            promotion: "q",
-          })
-        }
-        position={fen}
-      />
-  </div>
+  <>
+    <div className="computer">
+        <ChessBoard
+          orientation={'black'}
+          draggable={playerTurn}
+          onDrop={(move: any) =>
+            handleMove({
+              from: move.sourceSquare,
+              to: move.targetSquare,
+              promotion: "q",
+            })
+          }
+          position={fen}
+        />
+    </div>
+    <div className="game-screen-lower-third">
+      {<Thumbnail text={'You'} />}
+      <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
+    </div>
+  </>
   )
 }
 
