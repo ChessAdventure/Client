@@ -26,6 +26,7 @@ const Computer = ({userName} :any) => {
   )
   const [fen, setFen] = useState<string>(chess.fen())
   const [playerTurn, setPlayerTurn] = useState<boolean>(true)
+  const [gameOver, setGameOver] = useState<boolean>(false)
 
   useEffect(() => {
     setTimeout(() => {
@@ -34,11 +35,18 @@ const Computer = ({userName} :any) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
+  const checkEndGame = () => {
+    if (chess.game_over()) {
+      setGameOver(true)
+    }
+  }
+
   const makeAIMove = () => {
     let newMove = calcBestMove(3, chess, chess.turn())[1];
     chess.move(newMove);
     setFen(chess.fen());  
     setPlayerTurn(true)
+    checkEndGame()
   }
 
   const handleMove = (move: object) => {
@@ -65,7 +73,7 @@ const Computer = ({userName} :any) => {
     let bestMove = null; // best move not set yet
     let possibleMoves = game.moves();
     // Set random order for possible moves
-    possibleMoves.sort(function(a: any, b: any){return 0.5 - Math.random()});
+    possibleMoves.sort((a: any, b: any) => 0.5 - Math.random());
     // Set a default best move value
     let bestMoveValue = isMaximizingPlayer ? Number.NEGATIVE_INFINITY
                     : Number.POSITIVE_INFINITY;
@@ -80,15 +88,15 @@ const Computer = ({userName} :any) => {
     if (isMaximizingPlayer) {
     // Look for moves that maximize position
     if (value > bestMoveValue) {
-    bestMoveValue = value;
-    bestMove = move;
+      bestMoveValue = value;
+      bestMove = move;
     }
     alpha = Math.max(alpha, value);
     } else {
     // Look for moves that minimize position
     if (value < bestMoveValue) {
-    bestMoveValue = value;
-    bestMove = move;
+      bestMoveValue = value;
+      bestMove = move;
     }
     beta = Math.min(beta, value);
     }

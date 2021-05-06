@@ -9,13 +9,8 @@ interface PropTypes {
 }
 
 const QuestStart = ({ setGameId, userKey }: PropTypes) => {
-  //remove Link
-  //start button fetches backend for game id
-  //create state in App for gameId
-  //dashboard can redirect to gameScren once that exists
 
   const handleClick = async () => {
-    //const currentGameId = fetch(gameId, userKey)
     try {
       const params = { api_key: userKey }
       const promise = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
