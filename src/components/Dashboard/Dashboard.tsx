@@ -48,6 +48,10 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
     }
   }
 
+  const handleComputer = () => {
+    history.push('/gofishing')
+  }
+
   return (
     <>
       <Header />
@@ -58,13 +62,13 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         </div>
         {activeGame?.length > 0 &&
           <>
-            <p style={{color: 'red'}}>You are in an active game.</p>
-            <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
+            <button className="button-lt-bg" onClick={handleReturn}>Return to current game</button>
           </>
         }
         <Rules />
         <QuestStart setGameId={setGameId} userKey={userKey} />
-        <section>
+        <button className="CPU-start" onClick={handleComputer}>Play the computer</button>
+          <section>
           {lastWinner === '' ? <h3 className="previous-game-header">Play a game and its end board will show here.</h3> :
             <h3 className="previous-game-header">Last time you played,
             <span>
@@ -85,6 +89,8 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
             }}
           />
         </section>
+        <div className="footer">
+        </div>
       </section>
     </>
   )
