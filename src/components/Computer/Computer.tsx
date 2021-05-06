@@ -18,7 +18,7 @@ interface pieces {
   'color': string,
 }
 
-const Computer = () => {
+const Computer = ({userName} :any) => {
 
   const history = useHistory();
   const [chess] = useState<any>(
@@ -131,6 +131,9 @@ const Computer = () => {
 
   return (
   <>
+    <div className="game-screen-lower-third">
+      {<Thumbnail text={!playerTurn ? 'Thinking...' : 'Computer'} />}
+    </div>
     <div className="computer">
         <ChessBoard
           orientation={'black'}
@@ -146,7 +149,7 @@ const Computer = () => {
         />
     </div>
     <div className="game-screen-lower-third">
-      {<Thumbnail text={'You'} />}
+      {<Thumbnail text={userName} />}
       <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
     </div>
   </>

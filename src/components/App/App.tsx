@@ -63,7 +63,7 @@ const App = () => {
             return (
             <>
               <Header />
-              <Computer />
+              <Computer userName={userName}/>
             </>)
           })}
         >
