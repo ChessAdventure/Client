@@ -5,6 +5,7 @@ import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
 import Header from '../Header/Header'
 import GameScreen from '../GameScreen/GameScreen'
+import Computer from '../Computer/Computer'
 
 const App = () => {
 
@@ -55,6 +56,17 @@ const App = () => {
           }}
         >
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
+        </Route>
+        <Route
+          path="/gofishing"  
+          render={(() => {
+            return (
+            <>
+              <Header />
+              <Computer userName={userName}/>
+            </>)
+          })}
+        >
         </Route>
         <Route
           path="/game/:id"
