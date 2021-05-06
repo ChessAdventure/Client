@@ -26,7 +26,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   const [lastGame, setLastGame] = useState<string>('')
   const [lastWinner, setLastWinner] = useState<string>('')
   const [streak, setStreak] = useState<string>('')
-  const [toggle, setToggle] = useState<string>(false)
+  const [toggle, setToggle] = useState<boolean>(false)
 
   useEffect(() => {
     getLastGame()
