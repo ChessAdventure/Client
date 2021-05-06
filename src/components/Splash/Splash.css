@@ -25,7 +25,8 @@
 .title {
   font-size: 2.5rem;
   left: 50%;
-  margin-top: 0.5em;
+  margin-top: 0.2em;
+  margin-bottom: .5em;
   position: absolute;
   text-shadow: 2px 2px 1px var(--dark);
   transform: translateX(-50%);
