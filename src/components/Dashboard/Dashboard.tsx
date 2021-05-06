@@ -8,6 +8,7 @@ import Rules from '../Rules/Rules'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import { API_ROOT } from '../../constants/index'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
+import Expand from 'react-expand-animated'
 import './Dashboard.css'
 
 interface PropTypes {
@@ -25,6 +26,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   const [lastGame, setLastGame] = useState<string>('')
   const [lastWinner, setLastWinner] = useState<string>('')
   const [streak, setStreak] = useState<string>('')
+  const [toggle, setToggle] = useState<string>(false)
 
   useEffect(() => {
     getLastGame()
@@ -56,18 +58,25 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
     <>
       <Header />
       <section className="container">
+
+        <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button>
+        <Expand open={toggle}>
+          <Rules />
+        </Expand>
+
         <div className="greeting">
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
+
         {activeGame?.length > 0 &&
           <>
-            <button className="button-lt-bg" onClick={handleReturn}>Return to current game</button>
+            <button className="button-lt-bg" onClick={handleReturn}>Back to current game</button>
           </>
         }
-        <Rules />
+
         <QuestStart setGameId={setGameId} userKey={userKey} />
-        <button className="CPU-start" onClick={handleComputer}>Play the computer</button>
+        <button className="CPU-start button-lt-bg" onClick={handleComputer}>Play the computer</button>
           <section>
           {lastWinner === '' ? <h3 className="previous-game-header">Play a game and its end board will show here.</h3> :
             <h3 className="previous-game-header">Last time you played,
