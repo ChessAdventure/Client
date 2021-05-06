@@ -3,12 +3,13 @@ import './Thumbnail.css'
 
 interface PropTypes {
   text?: string;
+  turn?: any;
 }
 
-const Thumbnail = ({ text }: PropTypes) => {
+const Thumbnail = ({ text, turn }: PropTypes) => {
   return (
     <section className="thumbnail">
-      <p className="thumbnail-text">{text}</p>
+      <p style={turn ? {'color': 'green'} : {'color': 'black'}} className="thumbnail-text">{text}</p>
     </section>
   )
 }
