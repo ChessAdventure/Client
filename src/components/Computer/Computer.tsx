@@ -38,6 +38,8 @@ const Computer = ({userName} :any) => {
   const checkEndGame = () => {
     if (chess.game_over()) {
       setGameOver(true)
+      setPlayerTurn(false)
+      //make a fetch here for a washed board and start the game over with an AI move
     }
   }
 
@@ -142,6 +144,7 @@ const Computer = ({userName} :any) => {
     <div className="game-screen-lower-third">
       {<Thumbnail text={!playerTurn ? 'Thinking...' : 'Computer'} />}
     </div>
+    {gameOver && <p style={{'textAlign': 'center'}}>Game Over!</p>}
     <div className="computer">
         <ChessBoard
           orientation={'black'}
