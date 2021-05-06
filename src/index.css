@@ -1,13 +1,17 @@
 body {
+  background-color: #eae2b7;
+  color: #003049;
+  font-family: "Dosis", sans-serif;
+  height: 100vh;
+  letter-spacing: 0.1em;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --dark: #003049;
+  --highlight: #fcbf49;
+  --light: #eae2b7;
+  --lowlight: #d62828;
+  --midlight: #f77f00;
 }

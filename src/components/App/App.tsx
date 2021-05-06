@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
 import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
+import Header from '../Header/Header'
 import GameScreen from '../GameScreen/GameScreen'
 
 const App = () => {
@@ -10,12 +11,12 @@ const App = () => {
   const [userName, setUserName] = useState<string>('')
   const [userKey, setUserKey] = useState<string>('')
   const [gameId, setGameId] = useState<string>('')
+  const [activeGame, setActiveGame] = useState<string>('')
   let history = useHistory()
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
     const activeKey = localStorage.getItem('chessAdventureKey') || ''
-    console.log(activeKey)
     setUserName(activeUser)
     setUserKey(activeKey)
   }, [])
@@ -26,6 +27,11 @@ const App = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameId])
+
+  const goToLogin = () => {
+    history.push(`/`)
+  }
+
   return (
     <>
       <Switch>
@@ -40,28 +46,54 @@ const App = () => {
           exact
           path="/dashboard"
           render={() => {
-            return <Dashboard user={userName} setGameId={setGameId} userKey={userKey} />
+            return <Dashboard
+              user={userName}
+              setGameId={setGameId}
+              userKey={userKey}
+              activeGame={activeGame}
+            />
           }}
         >
-
-          {/* if there's a gameID in localStorage, redirect to the GameScreen
-          otherwise if there's a userKey in localStorage, redirect to the dashboard */}
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
-
         </Route>
         <Route
           path="/game/:id"
           render={({ match }: any) => {
-            return userKey.length ?
-              <GameScreen gameId={match.params.id} userKey={userKey} userName={userName}
-              /> : <p>Loading</p>
+            return userKey.length > 0 ?
+              <GameScreen
+                setActiveGame={setActiveGame}
+                setGameId={setGameId}
+                gameId={match.params.id}
+                userKey={userKey}
+                userName={userName}
+              /> :
+              <div className="game-loading-screen-container">
+                <p>Hang on, we're setting up the game board!</p>
+                <p>If you see this screen for more than a few seconds,
+                  <br></br>
+                  please <button onClick={goToLogin} className="go-to-login">click here to log in</button> or refresh the page.</p>
+              </div>
+
           }}
-        ></Route>
+        >
+        </Route>
         <Route render={() => {
-          return <p>404</p>
+          return (
+            <>
+              <Header />
+              <div className="game-loading-screen-container">
+                <p>That's a move I've never seen before!</p>
+                <p>This URL doesn't exist.
+                <br></br>
+                please double check it or
+                <br></br>
+                  <button onClick={goToLogin} className="go-to-login">click here</button>
+               to go home.</p>
+              </div>
+            </>
+          )
         }}
         ></Route>
-
       </Switch>
     </>
   );

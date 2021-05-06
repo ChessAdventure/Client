@@ -1,0 +1,39 @@
+.game-over-modal {
+  align-items: center;
+  background: var(--dark);
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px var(--dark), -2px -2px 5px var(--highlight);
+  color: var(--light);
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+  justify-content: center;
+  margin-bottom: -200px;
+  padding: 1em;
+  position: relative;
+  text-align: center;
+  top: -400px;
+  width: 280px;
+  z-index: 9999;
+}
+
+.play-again-button {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--highlight);
+  color: var(--dark);
+  font-size: 1.2rem;
+  margin: auto;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 0.2em 0;
+  position: relative;
+  width: 175px;
+}
+
+.play-again-button:hover {
+  box-shadow: -3px -3px 5px var(--highlight);
+  cursor: pointer;
+  filter: brightness(85%);
+}

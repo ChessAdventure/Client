@@ -1,0 +1,50 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 90%;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+}
+
+.greeting p {
+  color: var(--dark);
+  font-size: x-large;
+  margin-bottom: 0;
+  margin-top: .5em;
+  margin-right: .5em;
+}
+
+.previous-game-header {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  margin-top: -.5em;
+  text-align: center;  
+}
+
+.return-to-game {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--dark);
+  color: var(--dark);
+  font-size: 1.4rem;
+  padding: 0.3em 1em;
+  width: auto;
+}
+
+.return-to-game:hover {
+  box-shadow: -3px -3px 5px var(--dark);
+  cursor: pointer;
+  filter: brightness(85%);
+}
+
+.quest-start {
+  margin: .5em;
+}
