@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import Header from '../Header/Header'
 import QuestStart from '../QuestStart/QuestStart'
 import Rules from '../Rules/Rules'
+import Expand from 'react-expand-animated'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import { API_ROOT } from '../../constants/index'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
@@ -25,12 +26,13 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   const [lastGame, setLastGame] = useState<string>('')
   const [lastWinner, setLastWinner] = useState<string>('')
   const [streak, setStreak] = useState<string>('')
+  const [previousGames, hasPreviousGames] = useState<boolean>(false)
+  const [toggle, setToggle] = useState<boolean>(false)
+  const [showStats, toggleShowStats] = useState<boolean>(false)
 
-  useEffect(() => {
-    getLastGame()
-  }, [])
 
-  const getLastGame = async () => {
+
+  const handleClick = async (e: any) => {
     try {
       const response = await fetch(`${API_ROOT}/api/v1/stats/${user}`, {
         method: 'GET',
@@ -39,42 +41,52 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
       })
       const data = await response.json()
 
-      setLastGame(data.data.meta.last_game.fen)
-      setLastWinner(data.data.meta.last_game.status)
-      setStreak(data.data.meta.streak)
-      
+      if (!data.error) {
+        setLastGame(data.data.meta.last_game.fen)
+        setLastWinner(data.data.meta.last_game.status)
+        setStreak(data.data.meta.streak)
+        hasPreviousGames(true)
+      }
     } catch (e) {
       console.log(e);
     }
+    toggleShowStats(!showStats)
   }
 
   return (
     <>
       <Header />
       <section className="container">
+        <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button>
+        <Expand open={toggle}>
+          <Rules />
+        </Expand>
         <div className="greeting">
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
         {activeGame?.length > 0 &&
           <>
-            <p style={{color: 'red'}}>You are in an active game.</p>
+            <p style={{ color: 'red' }}>You are in an active game.</p>
             <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
           </>
         }
-        <Rules />
         <QuestStart setGameId={setGameId} userKey={userKey} />
         <section>
-          {lastWinner === '' ? <h3 className="previous-game-header">Play a game and its end board will show here.</h3> :
-            <h3 className="previous-game-header">Last time you played,
+          <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Show Stats</button>
+          <Expand open={showStats}>
+            {!previousGames ? <h3 className="previous-game-header">Play a game and its end board will show here.</h3> :
+              <h3 className="previous-game-header">Last time you played,
             <span>
-              {lastWinner === 'won' ? <span> white was the winner!</span> : <span> black was the winner!</span>}
-            </span>
-            <span>
-              <br></br>
-            {streak === "No wins yet" ? streak : <span>Your longest streak is {streak}!</span>}
-            </span>
-          </h3>}
+                  {lastWinner === 'won' ? <span> white was the winner!</span> : <span> black was the winner!</span>}
+                </span>
+                <span>
+                  <br></br>
+                  {streak === "No wins yet" ? streak : <span>Your longest streak is {streak}!</span>}
+                </span>
+              </h3>}
+          </Expand>
+
           <Gameboard
             width={300}
             orientation={'white'}
