@@ -5,6 +5,7 @@ import Splash from '../Splash/Splash'
 import Dashboard from '../Dashboard/Dashboard'
 import Header from '../Header/Header'
 import GameScreen from '../GameScreen/GameScreen'
+import Computer from '../Computer/Computer'
 
 const App = () => {
 
@@ -57,6 +58,17 @@ const App = () => {
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
         </Route>
         <Route
+          path="/gofishing"  
+          render={(() => {
+            return (
+            <>
+              <Header />
+              <Computer userName={userName}/>
+            </>)
+          })}
+        >
+        </Route>
+        <Route
           path="/game/:id"
           render={({ match }: any) => {
             return userKey.length > 0 ?
@@ -71,7 +83,7 @@ const App = () => {
                 <p>Hang on, we're setting up the game board!</p>
                 <p>If you see this screen for more than a few seconds,
                   <br></br>
-                  please <button onClick={goToLogin} className="go-to-login">click here to log in</button> or refresh the page.</p>
+                  please <button onClick={goToLogin} className="button-lt-bg">click here to log in</button> or refresh the page.</p>
               </div>
 
           }}

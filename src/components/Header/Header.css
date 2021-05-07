@@ -16,7 +16,7 @@ h1 {
   margin: 0;
 }
 
-.sign-out-button {
+.button-dk-bg {
   background: var(--midlight);
   border: none;
   border-radius: 20px;
@@ -27,7 +27,7 @@ h1 {
   width: auto;
 }
 
-.sign-out-button:hover {
+.button-dk-bg:hover {
   box-shadow: -3px -3px 5px var(--highlight);
   cursor: pointer;
   filter: brightness(85%);

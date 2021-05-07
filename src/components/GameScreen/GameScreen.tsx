@@ -34,12 +34,13 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   const [fen, setFen] = useState<string>(chess.fen())
   const [color, setColor] = useState<string>('')
   const [opponent, setOpponent] = useState<string>('none')
-  const [winner, setWinner] = useState<string>('')
+  const [winner, setWinner] = useState<boolean>(false)
   const [moveError, setMoveError] = useState<string>('')
   const [spectator, setSpectator] = useState<boolean>(false);
+  const [gameOver, setGameOver] = useState<boolean>(false)
+  const [turn, setTurn] = useState<string>('w')
 
   const handleUser = (userDetails: userDetails) => {
-    console.log(userDetails)
     userName === userDetails.white ? setColor('white') : 
       userName === userDetails.black ? setColor('black') :
       setSpectator(true)
@@ -73,10 +74,12 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
           setOpponent(resp.data.attributes.black || 'none') :
           setOpponent(resp.data.attributes.white)
         handleUser(resp.data.attributes)
+        setMoveError('')
         setFen(resp.data.attributes.current_fen)
+        setTurn(chess.turn())
         if (chess.game_over()) {
           setActiveGame('')
-          color === 'white' ? setWinner('black') : setWinner('white')
+          setGameOver(true)
         }
       }
     })
@@ -85,6 +88,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
 
   const handleMove = async (move: object) => {
     if (chess.move(move)) {
+      setFen(chess.fen())
       const newFen = chess.fen()
       if (chess.game_over()) {
         try {
@@ -102,7 +106,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             mode: 'cors'
           })
           const data = await response.json()
-          setWinner(color)
+          setWinner(true)
           setActiveGame('')
         } catch (e) {
           console.log(e)
@@ -128,8 +132,11 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         }
       }
     } else {
-      setMoveError('Invalid Move')
-      console.log('Invalid Move')
+      if (turn !== color.slice(0,1)) {
+        setMoveError('Not Your Turn')
+      } else {
+        setMoveError('Invalid Move')
+      }
     }
   }
 
@@ -142,11 +149,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   }
 
   return (
-    <section>
+    <section className="game-screen-container">
       <Header />
-      {moveError && <Error text={`Invalid Move`} />}
-
-      {opponent !== 'none' && !spectator && <Thumbnail text={`Playing: ${opponent}`} />}
+      {moveError && <Error text={moveError} />}
+      {opponent !== 'none' && !spectator && <Thumbnail turn={turn !== color.slice(0,1)} text={`Playing: ${opponent}`} />}
       {spectator && <Thumbnail text="Observing" />}
       {opponent !== 'none' && <Gameboard
         draggable={!spectator}
@@ -178,20 +184,20 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             The game board will appear when the second player joins the room.</p>
         </div>}
 
-      {winner.length > 0 && !spectator && <GameOver
+      {gameOver && !spectator && <GameOver
         userName={userName}
         setGameId={setGameId}
         winner={winner}
         setFen={setFen}
         setWinner={setWinner}
-        playerColor={color}
         curExtension={gameId}
         userKey={userKey}
         setColor={setColor}
+        setGameOver={setGameOver}
       />}
       <div className="game-screen-lower-third">
-        {opponent !== 'none' && !spectator && <Thumbnail text={userName} />}
-        <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
+        {opponent !== 'none' && !spectator && <Thumbnail turn={turn === color.slice(0,1)} text={userName} />}
+        <button className="button-lt-bg back-to-dashboard" onClick={handleLeave}>Back to Dashboard</button>
       </div>
     </section>
   )

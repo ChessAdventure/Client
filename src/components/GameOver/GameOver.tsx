@@ -4,14 +4,14 @@ import {API_ROOT} from '../../constants/index'
 
 interface PropTypes {
   userName: string;
-  winner: string;
-  playerColor: string;
+  winner: boolean;
   curExtension: string;
   userKey: string;
   setGameId: any;
-  setWinner: Dispatch<SetStateAction<string>>;
+  setWinner: Dispatch<SetStateAction<boolean>>;
   setFen: any;
   setColor: Dispatch<SetStateAction<string>>;
+  setGameOver: Dispatch<SetStateAction<boolean>>
 }
 
 interface dataAttributes {
@@ -21,14 +21,13 @@ interface dataAttributes {
   black: string | undefined;
 }
 
-const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWinner, setFen, setColor, userName}: PropTypes) => {
+const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWinner, setFen, setColor, userName}: PropTypes) => {
 
-  console.log(winner, playerColor, userName)
   const resetGame = ({extension, current_fen, white}: dataAttributes) => {
     setFen(current_fen)
     setGameId(extension)
-    setWinner('')
-    console.log(white)
+    setWinner(false)
+    setGameOver(false)
     setColor(white === userName ? 'white' : 'black')
   }
 
@@ -44,7 +43,10 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
         body: JSON.stringify(params)
       })
       const data = await promise.json()
+<<<<<<< HEAD
       // console.log(data)
+=======
+>>>>>>> main
       resetGame(data.data.attributes)
     } catch(e) {
       console.log(e)
@@ -53,11 +55,11 @@ const GameOver = ({ winner, playerColor, curExtension, userKey, setGameId, setWi
 
   return (
     <section className="game-over-modal">
-      {winner === playerColor ? 
+      {winner ? 
         <p className="winner-text">You won! Continue your quest and play again!</p> :
         <p className="winner-text">You lost but it's not over!<br></br>Play again for a shot at revenge!</p>
       }
-      <button className="play-again-button" onClick={handleClick}>Play Again</button>
+      <button className="button-dk-bg" onClick={handleClick}>Play Again</button>
     </section>
   )
 }
