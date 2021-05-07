@@ -69,11 +69,6 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         <Expand open={toggle}>
           <Rules />
         </Expand>
-        {activeGame?.length > 0 &&
-          <>
-            <button className="button-lt-bg" onClick={handleReturn}>Return to current game</button>
-          </>
-        }
         <QuestStart setGameId={setGameId} userKey={userKey} />
 
         <button className="button-lt-bg CPU-start" onClick={handleComputer}>Play the computer</button>
@@ -100,8 +95,13 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
             boardStyle={{
               'width': '300px', 'height': '300px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
             }}
-          />
+            />
         </section>
+        {activeGame?.length > 0 &&
+          <>
+            <button className="button-lt-bg active-game" onClick={handleReturn}>Return to current game</button>
+          </>
+        }
         <div className="footer">
         </div>
       </section>
