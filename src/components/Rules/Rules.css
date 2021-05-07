@@ -1,17 +1,17 @@
 .rules-container {
-    border-radius: 5px;
-    box-shadow: 3px 3px 7px var(--dark);
-    margin: 1em;
-    padding: 1em;
+  border-radius: 5px;
+  box-shadow: 3px 3px 7px var(--dark);
+  margin: 1em;
+  padding: 1em;
 }
 
 .bold {
-    color: var(--midlight);
-    font-size: x-large;
+  color: var(--midlight);
+  font-size: x-large;
 }
 
 .chess-piece {
-    color: var(--dark);
-    font-size: x-large;
-    margin-right: .5em;
+  color: var(--dark);
+  font-size: x-large;
+  margin-right: 0.5em;
 }
