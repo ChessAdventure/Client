@@ -40,14 +40,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json()
-          console.log('jwt: ', data)
           
           const apiKey = data.jwt
-          const userName = localStorage.getItem('chessAdventureName')
           localStorage.setItem('jwt', apiKey)
-          setUserName(userName)
           setUserKey(apiKey)
-
+          setUserName(params.auth.username)
+          
           history.push(`/dashboard`)
 
         } catch (e) {
@@ -72,14 +70,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();      
-          console.log(data);
           
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
 
-          // history.push(`/dashboard`)
-          // display "please sign in"
+          history.push(`/dashboard`)
 
         } catch (e: any) {
           setError('Passwords must match. Username must be at least 4 characters and cannot include spaces.')
@@ -133,7 +129,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           </label>}
       </form>
       <div className='log-in-wrapper'>
-        <button className="button-dk-bg enter-button" onClick={(e) => handleClick(e)}>Enter</button>
+        <button className="button-dk-bg enter-button" onClick={(e) => handleClick(e)}>ENTER</button>
       </div>
       {error && <p className="signup-error">{error}</p>}
     </section>
