@@ -142,12 +142,12 @@ const Computer = ({userName} :any) => {
   return (
   <>
     <div className="game-screen-lower-third">
-      {<Thumbnail text={!playerTurn ? 'Thinking...' : 'Computer'} />}
+      {<Thumbnail text={!playerTurn ? 'Thinking ...' : 'Computer'} />}
     </div>
     {gameOver && <p style={{'textAlign': 'center'}}>Game Over!</p>}
     <div className="computer">
         <ChessBoard
-          orientation={'black'}
+          orientation={'black'} 
           draggable={playerTurn}
           onDrop={(move: any) =>
             handleMove({
@@ -161,7 +161,7 @@ const Computer = ({userName} :any) => {
     </div>
     <div className="game-screen-lower-third">
       {<Thumbnail text={userName} />}
-      <button className="leave-game" onClick={handleLeave}>Back to Dashboard</button>
+      <button className="leave-game button-lt-bg" onClick={handleLeave}>Back to Dashboard</button>
     </div>
   </>
   )

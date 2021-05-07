@@ -99,7 +99,7 @@ const App = () => {
                 <br></br>
                 please double check it or
                 <br></br>
-                  <button onClick={goToLogin} className="go-to-login">click here</button>
+                  <button onClick={goToLogin} className="go-to-login button-lt-bg">click here</button>
                to go home.</p>
               </div>
             </>
