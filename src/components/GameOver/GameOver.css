@@ -17,23 +17,4 @@
   z-index: 9999;
 }
 
-.play-again-button {
-  background: var(--midlight);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 2px 2px 5px var(--highlight);
-  color: var(--dark);
-  font-size: 1.2rem;
-  margin: auto;
-  margin-left: 1em;
-  margin-right: 1em;
-  padding: 0.2em 0;
-  position: relative;
-  width: 175px;
-}
 
-.play-again-button:hover {
-  box-shadow: -3px -3px 5px var(--highlight);
-  cursor: pointer;
-  filter: brightness(85%);
-}

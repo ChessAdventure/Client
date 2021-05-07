@@ -15,3 +15,37 @@ body {
   --lowlight: #d62828;
   --midlight: #f77f00;
 }
+
+.button-dk-bg {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--highlight);
+  color: var(--dark);
+  font-size: 1.2rem;
+  padding: 0.2em 1em;
+  width: auto;
+}
+
+.button-dk-bg:hover {
+  box-shadow: -3px -3px 5px var(--highlight);
+  cursor: pointer;
+  filter: brightness(85%);
+}
+
+.button-lt-bg {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--dark);
+  color: var(--dark);
+  font-size: 1.2rem;
+  padding: 0.2em 1em;
+  width: auto;
+}
+
+.button-lt-bg:hover {
+  box-shadow: -3px -3px 5px var(--dark);
+  cursor: pointer;
+  filter: brightness(85%);
+}

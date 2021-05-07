@@ -53,6 +53,10 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
     toggleShowStats(!showStats)
   }
 
+  const handleComputer = () => {
+    history.push('/gofishing')
+  }
+
   return (
     <>
       <Header />
@@ -67,11 +71,12 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         </div>
         {activeGame?.length > 0 &&
           <>
-            <p style={{ color: 'red' }}>You are in an active game.</p>
-            <button className="return-to-game" onClick={handleReturn}>Return to current game</button>
+            <button className="button-lt-bg" onClick={handleReturn}>Return to current game</button>
           </>
         }
         <QuestStart setGameId={setGameId} userKey={userKey} />
+
+        <button className="CPU-start" onClick={handleComputer}>Play the computer</button>
         <section>
           <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Show Stats</button>
           <Expand open={showStats}>
@@ -97,6 +102,8 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
             }}
           />
         </section>
+        <div className="footer">
+        </div>
       </section>
     </>
   )

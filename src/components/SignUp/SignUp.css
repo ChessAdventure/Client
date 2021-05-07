@@ -35,24 +35,11 @@
   justify-content: center;
 }
 
-.log-in {
-  background: var(--midlight);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 2px 2px 5px var(--highlight);
-  color: var(--dark);
-  font-size: 1.2rem;
+.enter-button {
   margin: auto;
-  padding: 0.2em 0;
   position: relative;
   top: 10px;
-  width: 150px;
-}
-
-.log-in:hover {
-  box-shadow: -3px -3px 5px var(--highlight);
-  cursor: pointer;
-  filter: brightness(85%);
+  width: 150px !important;
 }
 
 .signup-error {
@@ -119,7 +106,6 @@
     margin: auto;
     margin-top: 5em;
     width: 200px;
-    border: 1px solid greenyellow;
   }
   
   .form {
