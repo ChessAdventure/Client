@@ -43,10 +43,6 @@ const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWi
         body: JSON.stringify(params)
       })
       const data = await promise.json()
-<<<<<<< HEAD
-      // console.log(data)
-=======
->>>>>>> main
       resetGame(data.data.attributes)
     } catch(e) {
       console.log(e)
