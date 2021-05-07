@@ -143,9 +143,9 @@ const Computer = ({ userName }: any) => {
   return (
     <>
       <div className="game-screen-lower-third">
-        {<Thumbnail text={!playerTurn ? 'Thinking ...' : 'Computer'} />}
+        {<Thumbnail text={!playerTurn && !gameOver ? 'Thinking ...' : 'Computer'} />}
       </div>
-      {gameOver && <p style={{ 'textAlign': 'center' }}>Game Over!</p>}
+      {gameOver && <p className='thumbnail-text'>Game Over!</p>}
       <div className="center">
         <ChessBoard
           orientation={'black'}
@@ -157,6 +157,7 @@ const Computer = ({ userName }: any) => {
               promotion: "q",
             })
           }
+
           position={fen}
         />
       </div>
