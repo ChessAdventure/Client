@@ -58,12 +58,10 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
     <>
       <Header />
       <section className="container">
-
         <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button>
         <Expand open={toggle}>
           <Rules />
         </Expand>
-
         <div className="greeting">
           <p>Welcome, </p>
           <Thumbnail text={user} />
