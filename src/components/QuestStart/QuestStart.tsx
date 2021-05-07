@@ -1,6 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { API_ROOT } from '../../constants/index'
-import './QuestStart.css'
 
 interface PropTypes {
   setGameId: Dispatch<SetStateAction<string>>;

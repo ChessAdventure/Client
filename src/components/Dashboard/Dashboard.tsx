@@ -59,24 +59,38 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
     <>
       <Header />
       <section className="container">
+
+        {/* greeting */}
         <div className="greeting">
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
-        <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button>
+
+        {/* rules dropdown */}
+        {!toggle ? <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button> :
+          <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>Hide Rules</button>}
         <Expand open={toggle}>
           <Rules />
         </Expand>
+
+        {/* return to friendly game */}
         {activeGame?.length > 0 &&
           <>
             <button className="button-lt-bg" onClick={handleReturn}>Return to friendly game</button>
           </>
         }
+
+        {/* start a new friendly game */}
         <QuestStart setGameId={setGameId} userKey={userKey} />
 
+        {/* start a new computer game */}
         <button className="button-lt-bg CPU-start" onClick={handleComputer}>Play the computer</button>
-        <section className='computer'>
-          <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Show Stats</button>
+
+
+        <section className='center'>
+
+          {/* show recent stats */}
+          {!showStats ? <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Show Stats</button> : <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Hide Stats</button>}
           <Expand open={showStats}>
             {!previousGames ? <h3 className="previous-game-header">When you finish a game, its end board will show here.</h3> :
               <h3 className="previous-game-header">Last time you played,
@@ -90,6 +104,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
               </h3>}
           </Expand>
 
+          {/* last gameboard */}
           <Gameboard
             width={300}
             orientation={'white'}
@@ -99,9 +114,9 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
               'width': '300px', 'height': '300px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'
             }}
           />
+          <h3>Your last endgame</h3>
         </section>
-        <div className="footer">
-        </div>
+
       </section>
     </>
   )

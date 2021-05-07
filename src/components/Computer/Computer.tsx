@@ -146,7 +146,7 @@ const Computer = ({ userName }: any) => {
         {<Thumbnail text={!playerTurn ? 'Thinking ...' : 'Computer'} />}
       </div>
       {gameOver && <p style={{ 'textAlign': 'center' }}>Game Over!</p>}
-      <div className="computer">
+      <div className="center">
         <ChessBoard
           orientation={'black'}
           draggable={playerTurn}
