@@ -16,19 +16,6 @@ h1 {
   margin: 0;
 }
 
-.button-dk-bg {
-  background: var(--midlight);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 2px 2px 5px var(--highlight);
-  color: var(--dark);
-  font-size: 1.2rem;
-  padding: 0.2em 1em;
+.sign-out {
   width: auto;
-}
-
-.button-dk-bg:hover {
-  box-shadow: -3px -3px 5px var(--highlight);
-  cursor: pointer;
-  filter: brightness(85%);
 }

@@ -26,7 +26,7 @@
   font-size: 2.5rem;
   left: 50%;
   margin-top: 0.2em;
-  margin-bottom: .5em;
+  margin-bottom: 0.5em;
   position: absolute;
   text-shadow: 2px 2px 1px var(--dark);
   transform: translateX(-50%);
@@ -36,7 +36,7 @@
   margin: auto;
   position: relative;
   top: 25px;
-  width: 150px!important;
+  width: 150px !important;
 }
 
 a {
@@ -59,10 +59,3 @@ a {
     top: -25px;
   }
 }
-
-/* 570 and smaller */
-/* @media only screen and (max-width: 1150px) {
-  body {
-    color: black;
-  }
-} */

@@ -39,14 +39,14 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          
+
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureKey', apiKey)
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
           setUserKey(apiKey)
-          
+
           history.push(`/dashboard`)
 
         } catch (e) {
@@ -70,8 +70,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-          console.log(data)
-          
+
           const apiKey = data.data.attributes.api_key
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureKey', apiKey)
@@ -79,10 +78,10 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           setUserName(userName)
           setUserKey(apiKey)
           history.push(`/dashboard`)
+
         } catch (e: any) {
           setError('Passwords must match. Username must be at least 4 characters and cannot include spaces.')
           console.log(e)
-          // eventually display a custom error message depending on what you borked
         }
         break
       default:
@@ -138,6 +137,5 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
     </section>
   )
 }
-
 
 export default SignUp
