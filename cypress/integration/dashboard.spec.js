@@ -127,7 +127,7 @@ describe("Show dashboard", () => {
     })
   })
 
-  it("should start a new game", () => {
+  it.skip("should start a new game", () => {
     cy.visit(Cypress.env("URL_ROOT"))
     cy.get(".signup-button").click()
 
