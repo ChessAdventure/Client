@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { Dispatch, SetStateAction, useState, useEffect } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { API_ROOT } from '../../constants/index'
 import Expand from 'react-expand-animated'
@@ -31,7 +31,8 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
   const [showStats, toggleShowStats] = useState<boolean>(false)
 
   const handleClick = async (e: any) => {
-    let token = "Bearer" + localStorage.getItem("jwt")
+    let token = "Bearer " + localStorage.getItem("jwt")
+
     try {
       const response = await fetch(`${API_ROOT}/api/v1/stats/${user}`, {
         method: 'GET',
@@ -47,7 +48,9 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         hasPreviousGames(true)
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
+      // this should not return a 404 if the user has no games
+      // it should return a better error
     }
     toggleShowStats(!showStats)
   }
@@ -92,8 +95,9 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
 
           {/* show recent stats */}
           {!showStats ? <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Show Stats</button> : <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Hide Stats</button>}
+          
           <Expand open={showStats}>
-            {!previousGames ? <h3 className="previous-game-header">When you finish a game, its end board will show here.</h3> :
+            {!previousGames ? <h3 className="previous-game-header">When you finish a game, its end board and your stats will show here.</h3> :
               <h3 className="previous-game-header">Last time you played,
             <span>
                   {lastWinner === 'won' ? <span> white was the winner!</span> : <span> black was the winner!</span>}

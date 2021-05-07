@@ -32,7 +32,7 @@ const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWi
   }
 
   const handleClick = async () => {
-    let token = "Bearer" + localStorage.getItem("jwt")
+    let token = "Bearer " + localStorage.getItem("jwt")
     // create bearer token and send it in headers
     try {
       const params = { api_key: userKey, extension: curExtension }

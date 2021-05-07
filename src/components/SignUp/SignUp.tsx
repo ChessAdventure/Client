@@ -44,6 +44,8 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           const apiKey = data.jwt
           localStorage.setItem('jwt', apiKey)
           setUserKey(apiKey)
+
+          localStorage.setItem('chessAdventureName', params.auth.username)
           setUserName(params.auth.username)
           
           history.push(`/dashboard`)
@@ -56,7 +58,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
 
       case 'Sign Up':
         const params = {
-          "user": { // used to be user
+          "user": { 
             username: username,
             password: password,
             password_confirmation: confirmPassword
