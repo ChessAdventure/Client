@@ -61,14 +61,14 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
     <>
       <Header />
       <section className="container">
-        <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button>
-        <Expand open={toggle}>
-          <Rules />
-        </Expand>
         <div className="greeting">
           <p>Welcome, </p>
           <Thumbnail text={user} />
         </div>
+        <button className="show-rules button-lt-bg" onClick={() => setToggle(!toggle)}>What's ChessPedition?</button>
+        <Expand open={toggle}>
+          <Rules />
+        </Expand>
         {activeGame?.length > 0 &&
           <>
             <button className="button-lt-bg" onClick={handleReturn}>Return to current game</button>
@@ -76,7 +76,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
         }
         <QuestStart setGameId={setGameId} userKey={userKey} />
 
-        <button className="CPU-start" onClick={handleComputer}>Play the computer</button>
+        <button className="button-lt-bg CPU-start" onClick={handleComputer}>Play the computer</button>
         <section>
           <button className="show-stats button-lt-bg" onClick={(e) => handleClick(e)}>Show Stats</button>
           <Expand open={showStats}>

@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: row;
   margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 .greeting p {
@@ -33,24 +34,16 @@
 }
 
 .CPU-start {
-  background: var(--midlight);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 2px 2px 5px var(--dark);
-  color: var(--dark);
-  font-size: 1.4rem;
-  padding: 0.3em 1em;
-  width: auto;
   margin-bottom: 20px;
-}
-
-.CPU-start:hover {
-  box-shadow: -3px -3px 5px var(--dark);
-  cursor: pointer;
-  filter: brightness(85%);
 }
 
 .footer {
   width: 100%;
   height: 40px;
+}
+
+.show-stats {
+  margin-left: 50%;
+  margin-bottom: 20px;
+  transform: translateX(-50%);
 }
