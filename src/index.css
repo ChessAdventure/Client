@@ -23,8 +23,8 @@ body {
   box-shadow: 2px 2px 5px var(--highlight);
   color: var(--dark);
   font-size: 1.2rem;
-  margin-bottom: .75em;
-  margin-top: .75em;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
   padding: 0.2em 1em;
   width: 250px;
 }
@@ -43,8 +43,8 @@ body {
   color: var(--dark);
   font-size: 1.2rem;
   margin: auto;
-  margin-bottom: .75em;
-  margin-top: .75em;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
   padding: 0.2em 1em;
   width: 250px;
 }

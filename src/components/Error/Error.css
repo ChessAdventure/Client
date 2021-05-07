@@ -1,9 +1,8 @@
 .error {
-    width: 400px;
-    height: auto;
-    z-index: 1;
-    margin: auto;
-    text-align: center;
-    font-size: x-large;
+  font-size: x-large;
+  height: auto;
+  margin: auto;
+  text-align: center;
+  width: 400px;
+  z-index: 1;
 }
-

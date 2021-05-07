@@ -2,7 +2,6 @@ import React, { Dispatch, SetStateAction } from 'react'
 import { API_ROOT } from '../../constants/index'
 import './QuestStart.css'
 
-
 interface PropTypes {
   setGameId: Dispatch<SetStateAction<string>>;
   userKey: string;
@@ -28,7 +27,7 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
   }
   return (
     <section className="quest-start" id="quest-start">
-      <button className="button-lt-bg start-button" onClick={handleClick}>Start A New ChessPedition</button>
+      <button className="button-lt-bg start-button" onClick={handleClick}>Start A ChessPedition</button>
     </section>
   )
 }

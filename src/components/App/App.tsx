@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
-import Splash from '../Splash/Splash'
-import Dashboard from '../Dashboard/Dashboard'
-import Header from '../Header/Header'
-import GameScreen from '../GameScreen/GameScreen'
 import Computer from '../Computer/Computer'
+import Dashboard from '../Dashboard/Dashboard'
+import GameScreen from '../GameScreen/GameScreen'
+import Header from '../Header/Header'
+import Splash from '../Splash/Splash'
 
 const App = () => {
 
@@ -58,13 +58,13 @@ const App = () => {
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
         </Route>
         <Route
-          path="/gofishing"  
+          path="/gofishing"
           render={(() => {
             return (
-            <>
-              <Header />
-              <Computer userName={userName}/>
-            </>)
+              <>
+                <Header />
+                <Computer userName={userName} />
+              </>)
           })}
         >
         </Route>
