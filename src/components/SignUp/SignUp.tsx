@@ -76,11 +76,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json();
-<<<<<<< HEAD
-          console.log(data);
-=======
           console.log(data)
->>>>>>> main
           
 
           // const apiKey = data.data.attributes.jwt
