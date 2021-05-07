@@ -41,7 +41,7 @@ const App = () => {
           path="/"
           render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} /> }}
         >
-          {userKey.length && <Redirect to={`/dashboard`} />}
+          {userKey && <Redirect to={`/dashboard`} />}
         </Route>
         <Route
           exact

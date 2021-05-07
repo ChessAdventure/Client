@@ -27,13 +27,11 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
       case 'Log In':
         try {
           const params = {
-            "auth": { // used to be user
+            "auth": { 
               username: username,
               password: password
             }
           }
-          // get the correct endpoint from max
-          console.log(params);
           
           const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
             method: 'POST',
@@ -41,16 +39,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();
-          console.log(data);
+          const data = await response.json()
+          console.log('jwt: ', data)
           
-          // should get back the jwt here?
-          const apiKey = data.data.attributes.jwt
-
-          // const apiKey = data.data.attributes.api_key
-          const userName = data.data.attributes.username
+          const apiKey = data.jwt
+          const userName = localStorage.getItem('chessAdventureName')
           localStorage.setItem('jwt', apiKey)
-          localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
           setUserKey(apiKey)
 
@@ -64,7 +58,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
 
       case 'Sign Up':
         const params = {
-          "auth": { // used to be user
+          "user": { // used to be user
             username: username,
             password: password,
             password_confirmation: confirmPassword
@@ -77,24 +71,15 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();
-          console.log(data)
+          const data = await response.json();      
+          console.log(data);
           
-
-          // const apiKey = data.data.attributes.jwt
-          // const userName = data.data.attributes.username
-          // localStorage.setItem('jwt', apiKey) // key changed to jwt throughout
-          // localStorage.setItem('chessAdventureName', userName)
-          // setUserName(userName)
-          // setUserKey(apiKey)
-
-          const apiKey = data.data.attributes.jwt
           const userName = data.data.attributes.username
-          localStorage.setItem('chessAdventureKey', apiKey)
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
-          setUserKey(apiKey)
-          history.push(`/dashboard`)
+
+          // history.push(`/dashboard`)
+          // display "please sign in"
 
         } catch (e: any) {
           setError('Passwords must match. Username must be at least 4 characters and cannot include spaces.')
