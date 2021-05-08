@@ -53,7 +53,7 @@ describe("Sign Up and Log In", () => {
 
     cy.get(".enter-button").should("exist").should("have.text", "ENTER")
 
-    cy.get(".signup-button").should("exist").should("have.text", "Sign Up")
+    cy.get(".signup-button").should("exist").should("have.text", "Create Account")
   })
 
   it("should display the sign up screen", () => {
@@ -121,7 +121,7 @@ describe("Sign Up and Log In", () => {
 
     cy.get(".enter-button").should("exist").should("have.text", "ENTER")
 
-    cy.get(".signup-button").should("exist").should("have.text", "Log In")
+    cy.get(".signup-button").should("exist").should("have.text", "Back to login")
   })
 
   it("should sign up the user", () => {
