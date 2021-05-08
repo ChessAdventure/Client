@@ -56,12 +56,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
 
   useEffect(() => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
-    const token = "Bearer " + userKey
-    console.log(token);
     
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
-      api_key: token,
+      token: userKey,
       extension: gameId
     }, {
       connected: () => {
