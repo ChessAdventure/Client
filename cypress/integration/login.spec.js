@@ -14,7 +14,7 @@ describe("Sign Up and Log In", () => {
 
     cy.get(".form-wrapper")
       .should("exist")
-      .should("have.text", "Username:Password:Enter")
+      .should("have.text", "Username:Password:ENTER")
       .should("have.descendants", "form")
 
     cy.get(".form").should("exist").should("have.descendants", "label")
@@ -51,7 +51,7 @@ describe("Sign Up and Log In", () => {
       .should("exist")
       .should("have.descendants", "button")
 
-    cy.get(".enter-button").should("exist").should("have.text", "Enter")
+    cy.get(".enter-button").should("exist").should("have.text", "ENTER")
 
     cy.get(".signup-button").should("exist").should("have.text", "Sign Up")
   })
@@ -69,7 +69,7 @@ describe("Sign Up and Log In", () => {
 
     cy.get(".form-wrapper")
       .should("exist")
-      .should("have.text", "Username:Password:Confirm Password:Enter")
+      .should("have.text", "Username:Password:Confirm Password:ENTER")
       .should("have.descendants", "form")
 
     cy.get(".form").should("exist").should("have.descendants", "label")
@@ -119,7 +119,7 @@ describe("Sign Up and Log In", () => {
       .should("exist")
       .should("have.descendants", "button")
 
-    cy.get(".enter-button").should("exist").should("have.text", "Enter")
+    cy.get(".enter-button").should("exist").should("have.text", "ENTER")
 
     cy.get(".signup-button").should("exist").should("have.text", "Log In")
   })
