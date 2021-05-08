@@ -17,7 +17,7 @@ const App = () => {
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
-    const activeKey = localStorage.getItem('chessAdventureKey') || ''
+    const activeKey = localStorage.getItem('jwt') || ''
     setUserName(activeUser)
     setUserKey(activeKey)
   }, [])
@@ -41,7 +41,7 @@ const App = () => {
           path="/"
           render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} /> }}
         >
-          {userKey.length && <Redirect to={`/dashboard`} />}
+          {userKey && <Redirect to={`/dashboard`} />}
         </Route>
         <Route
           exact

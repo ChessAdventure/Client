@@ -92,7 +92,7 @@ describe("Show dashboard", () => {
 
     cy.get(".previous-game-header")
       .should("exist")
-      .should("have.text", "When you finish a game, its end board will show here.")
+      .should("have.text", "When you finish a game, its end board and your stats will show here.")
 
       // stub the /stats GET
   })

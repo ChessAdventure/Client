@@ -27,26 +27,27 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
       case 'Log In':
         try {
           const params = {
-            "user": {
+            "auth": { 
               username: username,
               password: password
             }
           }
-          const response = await fetch(`${API_ROOT}/api/v1/login`, {
+          
+          const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();
-
-          const apiKey = data.data.attributes.api_key
-          const userName = data.data.attributes.username
-          localStorage.setItem('chessAdventureKey', apiKey)
-          localStorage.setItem('chessAdventureName', userName)
-          setUserName(userName)
+          const data = await response.json()
+          
+          const apiKey = data.jwt
+          localStorage.setItem('jwt', apiKey)
           setUserKey(apiKey)
 
+          localStorage.setItem('chessAdventureName', params.auth.username)
+          setUserName(params.auth.username)
+          
           history.push(`/dashboard`)
 
         } catch (e) {
@@ -54,9 +55,10 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           console.log(e);
         }
         break
+
       case 'Sign Up':
         const params = {
-          "user": {
+          "user": { 
             username: username,
             password: password,
             password_confirmation: confirmPassword
@@ -69,14 +71,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();
-
-          const apiKey = data.data.attributes.api_key
+          const data = await response.json();      
+          
           const userName = data.data.attributes.username
-          localStorage.setItem('chessAdventureKey', apiKey)
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
-          setUserKey(apiKey)
+
           history.push(`/dashboard`)
 
         } catch (e: any) {
@@ -131,7 +131,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           </label>}
       </form>
       <div className='log-in-wrapper'>
-        <button className="button-dk-bg enter-button" onClick={(e) => handleClick(e)}>Enter</button>
+        <button className="button-dk-bg enter-button" onClick={(e) => handleClick(e)}>ENTER</button>
       </div>
       {error && <p className="signup-error">{error}</p>}
     </section>

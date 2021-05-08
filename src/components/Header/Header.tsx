@@ -4,7 +4,7 @@ import './Header.css'
 const Header = () => {
 
   const handleSignOut = () => {
-    localStorage.removeItem('chessAdventureKey')
+    localStorage.removeItem('jwt')
     localStorage.removeItem('chessAdventureName')
     window.location.replace('/');
   }
