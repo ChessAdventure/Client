@@ -1,7 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react'
 import { API_ROOT } from '../../constants/index'
-import './QuestStart.css'
-
 
 interface PropTypes {
   setGameId: Dispatch<SetStateAction<string>>;
@@ -11,13 +9,12 @@ interface PropTypes {
 const QuestStart = ({ setGameId, userKey }: PropTypes) => {
 
   const handleClick = async () => {
+    let token = "Bearer " + localStorage.getItem('jwt')
     try {
-      const params = { api_key: userKey }
       const promise = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': token },
         mode: 'cors',
-        body: JSON.stringify(params)
       })
 
       const currentGameId = await promise.json()
@@ -28,7 +25,7 @@ const QuestStart = ({ setGameId, userKey }: PropTypes) => {
   }
   return (
     <section className="quest-start" id="quest-start">
-      <button className="button-lt-bg start-button" onClick={handleClick}>Start A New ChessPedition</button>
+      <button className="button-lt-bg start-button" onClick={handleClick}>Start A ChessPedition</button>
     </section>
   )
 }

@@ -4,7 +4,7 @@ import './Header.css'
 const Header = () => {
 
   const handleSignOut = () => {
-    localStorage.removeItem('chessAdventureKey')
+    localStorage.removeItem('jwt')
     localStorage.removeItem('chessAdventureName')
     window.location.replace('/');
   }
@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <header className="dashboard-header">
       <h1>ChessPedition</h1>
-      <button className="button-dk-bg" onClick={handleSignOut}>Sign Out</button>
+      <button className="sign-out button-dk-bg" onClick={handleSignOut}>Sign Out</button>
     </header>
   )
 }

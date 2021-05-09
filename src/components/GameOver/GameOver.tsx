@@ -1,6 +1,6 @@
-import React, { Dispatch, SetStateAction} from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import './GameOver.css'
-import {API_ROOT} from '../../constants/index'
+import { API_ROOT } from '../../constants/index'
 
 interface PropTypes {
   userName: string;
@@ -21,9 +21,9 @@ interface dataAttributes {
   black: string | undefined;
 }
 
-const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWinner, setFen, setColor, userName}: PropTypes) => {
+const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWinner, setFen, setColor, userName }: PropTypes) => {
 
-  const resetGame = ({extension, current_fen, white}: dataAttributes) => {
+  const resetGame = ({ extension, current_fen, white }: dataAttributes) => {
     setFen(current_fen)
     setGameId(extension)
     setWinner(false)
@@ -32,24 +32,26 @@ const GameOver = ({ setGameOver, winner, curExtension, userKey, setGameId, setWi
   }
 
   const handleClick = async () => {
+    let token = "Bearer " + localStorage.getItem("jwt")
+    // create bearer token and send it in headers
     try {
       const params = { api_key: userKey, extension: curExtension }
       const promise = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': token },
         mode: 'cors',
         body: JSON.stringify(params)
       })
       const data = await promise.json()
       resetGame(data.data.attributes)
-    } catch(e) {
+    } catch (e) {
       console.log(e)
     }
   }
 
   return (
     <section className="game-over-modal">
-      {winner ? 
+      {winner ?
         <p className="winner-text">You won! Continue your quest and play again!</p> :
         <p className="winner-text">You lost but it's not over!<br></br>Play again for a shot at revenge!</p>
       }

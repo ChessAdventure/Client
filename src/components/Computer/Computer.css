@@ -1,26 +1,10 @@
-.computer {
-  width: 100%;
+.center {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
+  width: 100%;
 }
 
 .leave-game {
-  background: var(--midlight);
-  border: none;
-  border-radius: 20px;
-  box-shadow: 2px 2px 5px var(--dark);
-  color: var(--dark);
-  font-size: 1.4rem;
-  padding: 0.3em 1em;
-  width: 30%;
   margin: auto;
-  margin-bottom: 20px;
-}
-
-.leave-game:hover {
-  box-shadow: -3px -3px 5px var(--dark);
-  cursor: pointer;
-  filter: brightness(85%);
 }

@@ -107,14 +107,14 @@
     margin-top: 5em;
     width: 200px;
   }
-  
+
   .form {
     align-items: center;
     display: flex;
     flex-direction: column;
     padding-left: 1.1em;
   }
-  
+
   .label,
   .confirm-label {
     margin-bottom: 1em;

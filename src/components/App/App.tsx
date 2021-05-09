@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import './App.css';
-import Splash from '../Splash/Splash'
-import Dashboard from '../Dashboard/Dashboard'
-import Header from '../Header/Header'
-import GameScreen from '../GameScreen/GameScreen'
 import Computer from '../Computer/Computer'
+import Dashboard from '../Dashboard/Dashboard'
+import GameScreen from '../GameScreen/GameScreen'
+import Header from '../Header/Header'
+import Splash from '../Splash/Splash'
 
 const App = () => {
 
@@ -17,7 +17,7 @@ const App = () => {
 
   useEffect(() => {
     const activeUser = localStorage.getItem('chessAdventureName') || ''
-    const activeKey = localStorage.getItem('chessAdventureKey') || ''
+    const activeKey = localStorage.getItem('jwt') || ''
     setUserName(activeUser)
     setUserKey(activeKey)
   }, [])
@@ -41,7 +41,7 @@ const App = () => {
           path="/"
           render={() => { return <Splash setUserName={setUserName} setUserKey={setUserKey} /> }}
         >
-          {userKey.length && <Redirect to={`/dashboard`} />}
+          {userKey && <Redirect to={`/dashboard`} />}
         </Route>
         <Route
           exact
@@ -58,13 +58,13 @@ const App = () => {
           {gameId.length && <Redirect to={`/game/${gameId}`} /> && !userKey.length && <Redirect to={`/`} />}
         </Route>
         <Route
-          path="/gofishing"  
+          path="/gofishing"
           render={(() => {
             return (
-            <>
-              <Header />
-              <Computer userName={userName}/>
-            </>)
+              <>
+                <Header />
+                <Computer userName={userName} />
+              </>)
           })}
         >
         </Route>
@@ -99,7 +99,7 @@ const App = () => {
                 <br></br>
                 please double check it or
                 <br></br>
-                  <button onClick={goToLogin} className="go-to-login">click here</button>
+                  <button onClick={goToLogin} className="go-to-login button-lt-bg">click here</button>
                to go home.</p>
               </div>
             </>

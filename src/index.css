@@ -23,8 +23,10 @@ body {
   box-shadow: 2px 2px 5px var(--highlight);
   color: var(--dark);
   font-size: 1.2rem;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
   padding: 0.2em 1em;
-  width: auto;
+  width: 250px;
 }
 
 .button-dk-bg:hover {
@@ -40,8 +42,11 @@ body {
   box-shadow: 2px 2px 5px var(--dark);
   color: var(--dark);
   font-size: 1.2rem;
+  margin: auto;
+  margin-bottom: 0.25em;
+  margin-top: 0.25em;
   padding: 0.2em 1em;
-  width: auto;
+  width: 250px;
 }
 
 .button-lt-bg:hover {

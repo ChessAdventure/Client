@@ -55,7 +55,7 @@ describe("Show dashboard", () => {
       .should("have.descendants", "button")
     cy.get(".start-button")
       .should("exist")
-      .should("have.text", "Start A New ChessPedition")
+      .should("have.text", "Start A ChessPedition")
 
     cy.get(".rules-container")
       .should("exist")
@@ -92,7 +92,7 @@ describe("Show dashboard", () => {
 
     cy.get(".previous-game-header")
       .should("exist")
-      .should("have.text", "Play a game and its end board will show here.")
+      .should("have.text", "When you finish a game, its end board and your stats will show here.")
 
       // stub the /stats GET
   })

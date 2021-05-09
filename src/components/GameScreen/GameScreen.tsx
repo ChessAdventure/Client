@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useEffect, Dispatch, SetStateAction } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useState, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
+import { URL_ROOT, API_WS_ROOT, API_ROOT } from '../../constants'
+import './GameScreen.css'
+import Error from '../Error/Error'
+import GameOver from '../GameOver/GameOver'
 import Header from '../Header/Header'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
-import { API_WS_ROOT, API_ROOT } from '../../constants/index'
-import GameOver from '../GameOver/GameOver'
-import { URL_ROOT } from '../../constants'
-import Error from '../Error/Error'
-import './GameScreen.css'
 const actioncable = require('actioncable');
 const Chess = require('chess.js')
 
@@ -41,26 +41,25 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
   const [turn, setTurn] = useState<string>('w')
 
   const handleUser = (userDetails: userDetails) => {
-    userName === userDetails.white ? setColor('white') : 
+    userName === userDetails.white ? setColor('white') :
       userName === userDetails.black ? setColor('black') :
-      setSpectator(true)
+        setSpectator(true)
   }
 
   useEffect(() => {
     setGameId(gameId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     chess.load(fen)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fen])
 
   useEffect(() => {
     const cable = actioncable.createConsumer(`${API_WS_ROOT}`)
+    
     cable.subscriptions.create({
       channel: 'FriendlyGamesChannel',
-      api_key: userKey,
+      token: userKey,
       extension: gameId
     }, {
       connected: () => {
@@ -76,6 +75,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         handleUser(resp.data.attributes)
         setMoveError('')
         setFen(resp.data.attributes.current_fen)
+        
         setTurn(chess.turn())
         if (chess.game_over()) {
           setActiveGame('')
@@ -98,9 +98,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             extension: gameId,
             status: color === 'white' ? 1 : 2,
           }
+          let token = "Bearer " + localStorage.getItem('jwt')
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': token },
             body: JSON.stringify(params),
             mode: 'cors'
           })
@@ -117,9 +118,10 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
             api_key: userKey,
             extension: gameId
           }
+          let token = "Bearer " + localStorage.getItem('jwt')
           const response = await fetch(`${API_ROOT}/api/v1/friendly_games`, {
             method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': token },
             body: JSON.stringify(params),
             mode: 'cors'
           })
@@ -130,7 +132,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         }
       }
     } else {
-      if (turn !== color.slice(0,1)) {
+      if (turn !== color.slice(0, 1)) {
         setMoveError('Not Your Turn')
       } else {
         setMoveError('Invalid Move')
@@ -150,7 +152,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
     <section className="game-screen-container">
       <Header />
       {moveError && <Error text={moveError} />}
-      {opponent !== 'none' && !spectator && <Thumbnail turn={turn !== color.slice(0,1)} text={`Playing: ${opponent}`} />}
+      {opponent !== 'none' && !spectator && <Thumbnail turn={turn !== color.slice(0, 1)} text={`Playing: ${opponent}`} />}
       {spectator && <Thumbnail text="Observing" />}
       {opponent !== 'none' && <Gameboard
         draggable={!spectator}
@@ -194,7 +196,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
         setGameOver={setGameOver}
       />}
       <div className="game-screen-lower-third">
-        {opponent !== 'none' && !spectator && <Thumbnail turn={turn === color.slice(0,1)} text={userName} />}
+        {opponent !== 'none' && !spectator && <Thumbnail turn={turn === color.slice(0, 1)} text={userName} />}
         <button className="button-lt-bg back-to-dashboard" onClick={handleLeave}>Back to Dashboard</button>
       </div>
     </section>
