@@ -82,10 +82,14 @@ const Computer = ({ userName }: any) => {
     if (chess.move(move)) {
       setFen(chess.fen())
       setPlayerTurn(false)
-      await checkEndGame()
-      setTimeout(() => {
-        makeAIMove()
-      }, 1000)
+      if (chess.game_over()) {
+        setGameOver(true)
+        setPlayerTurn(false)
+      } else {
+        setTimeout(() => {
+          makeAIMove()
+        }, 1000)
+      }
     }
   }
 
