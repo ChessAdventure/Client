@@ -6,6 +6,7 @@ import { API_ROOT } from '../../constants/index'
 import Expand from 'react-expand-animated'
 import './Dashboard.css'
 import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 import QuestStart from '../QuestStart/QuestStart'
 import Rules from '../Rules/Rules'
 import Gameboard from '../UIComponents/Gameboard/Gameboard'
@@ -121,7 +122,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
           />
           <h3>Your last endgame</h3>
         </section>
-
+          <Footer />
       </section>
     </>
   )
