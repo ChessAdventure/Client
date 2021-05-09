@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import ChessBoard from 'chessboardjsx'
 import './Computer.css'
 import Thumbnail from '../UIComponents/Thumbnail/Thumbnail'
+import { API_ROOT } from '../../constants'
 const Chess = require('chess.js')
 interface pieceValues {
   'p': number,
@@ -35,10 +36,36 @@ const Computer = ({ userName }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const checkEndGame = () => {
+  const resetGame = (fen: string) => {
+    setTimeout(() => {
+      chess.load(fen)
+      setFen(fen)
+      setPlayerTurn(false)
+      setGameOver(false)
+      makeAIMove()
+    }, 2000)
+  }
+
+  const checkEndGame = async () => {
     if (chess.game_over()) {
       setGameOver(true)
       setPlayerTurn(false)
+      try {
+        const params = {
+          fen: chess.fen(),
+        }
+        let token = "Bearer " + localStorage.getItem('jwt')
+        const response = await fetch(`${API_ROOT}/api/v1/wash`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': token },
+          body: JSON.stringify(params),
+          mode: 'cors'
+        })
+        const data = await response.json()
+        resetGame(data.data)
+      } catch (e) {
+        console.log(e)
+      }
       //make a fetch here for a washed board and start the game over with an AI move
     }
   }
@@ -47,17 +74,22 @@ const Computer = ({ userName }: any) => {
     let newMove = calcBestMove(3, chess, chess.turn())[1];
     chess.move(newMove);
     setFen(chess.fen());
-    setPlayerTurn(true)
     checkEndGame()
+    setPlayerTurn(true)
   }
 
-  const handleMove = (move: object) => {
+  const handleMove = async (move: object) => {
     if (chess.move(move)) {
       setFen(chess.fen())
       setPlayerTurn(false)
-      setTimeout(() => {
-        makeAIMove()
-      }, 1000)
+      if (chess.game_over()) {
+        setGameOver(true)
+        setPlayerTurn(false)
+      } else {
+        setTimeout(() => {
+          makeAIMove()
+        }, 1000)
+      }
     }
   }
 
