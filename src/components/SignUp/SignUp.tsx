@@ -77,6 +77,10 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
 
+          const apiKey = data.jwt
+          localStorage.setItem('jwt', apiKey)
+          setUserKey(apiKey)
+          
           history.push(`/dashboard`)
 
         } catch (e: any) {
