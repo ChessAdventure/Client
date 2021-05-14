@@ -27,12 +27,12 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
       case 'Log In':
         try {
           const params = {
-            "auth": { 
+            "auth": {
               username: username,
               password: password
             }
           }
-          
+
           const response = await fetch(`${API_ROOT}/api/v1/user_token`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -40,14 +40,14 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             body: JSON.stringify(params)
           })
           const data = await response.json()
-          
+
           const apiKey = data.jwt
           localStorage.setItem('jwt', apiKey)
           setUserKey(apiKey)
 
           localStorage.setItem('chessAdventureName', params.auth.username)
           setUserName(params.auth.username)
-          
+
           history.push(`/dashboard`)
 
         } catch (e) {
@@ -58,7 +58,7 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
 
       case 'Sign Up':
         const params = {
-          "user": { 
+          "user": {
             username: username,
             password: password,
             password_confirmation: confirmPassword
@@ -71,16 +71,34 @@ const SignUp = ({ form, setUserName, setUserKey }: PropTypes) => {
             mode: 'cors',
             body: JSON.stringify(params)
           })
-          const data = await response.json();      
-          
+          const data = await response.json();
+
           const userName = data.data.attributes.username
           localStorage.setItem('chessAdventureName', userName)
           setUserName(userName)
 
-          const apiKey = data.jwt
+          const params1 = {
+            "auth": {
+              username: username,
+              password: password
+            }
+          }
+
+          const response1 = await fetch(`${API_ROOT}/api/v1/user_token`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            mode: 'cors',
+            body: JSON.stringify(params1)
+          })
+          const data1 = await response1.json()
+
+          const apiKey = data1.jwt
           localStorage.setItem('jwt', apiKey)
           setUserKey(apiKey)
-          
+
+          localStorage.setItem('chessAdventureName', params1.auth.username)
+          setUserName(params1.auth.username)
+
           history.push(`/dashboard`)
 
         } catch (e: any) {
