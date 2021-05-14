@@ -16,8 +16,8 @@ const Splash = ({ setUserName, setUserKey }: PropTypes) => {
       <section className="login-modal">
         <h1 className="title">ChessPedition</h1>
         <SignUp form={formState} setUserName={setUserName} setUserKey={setUserKey} />
-        {formState === 'Log In' && <button className="button-dk-bg signup-button" onClick={() => setFormState('Sign Up')}>Create Account</button>}
-        {formState === 'Sign Up' && <button className="button-dk-bg signup-button" onClick={() => setFormState('Log In')}>Back to login</button>}
+        {formState === 'Log In' && <button className="button-dk-bg signup-button" onClick={() => setFormState('Sign Up')}>Show Account Creation</button>}
+        {formState === 'Sign Up' && <button className="button-dk-bg signup-button" onClick={() => setFormState('Log In')}>Show Login</button>}
       </section>
     </div>
   )
