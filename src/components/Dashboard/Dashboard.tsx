@@ -114,7 +114,7 @@ const Dashboard = ({ user, setGameId, userKey, activeGame }: PropTypes) => {
           <Gameboard
             width={300}
             orientation={'white'}
-            draggable={false}
+            // draggable={false}
             fen={lastGame}
             boardStyle={{
               'width': '300px', 'height': '300px', 'cursor': 'default', 'borderRadius': '5px', 'boxShadow': 'rgba(0, 0, 0, 0.5) 0px 5px 15px'

@@ -140,6 +140,19 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
     }
   }
 
+  const calcMovable = () => {
+    const dests = new Map()
+    chess.SQUARES.forEach((s: any) => {
+      const ms = chess.moves({ square: s, verbose: true })
+      if (ms.length) dests.set(s, ms.map((m: { to: any }) => m.to))
+    })
+    return {
+      free: false,
+      dests,
+      color: "white"
+    }
+  }
+
   const handleLeave = () => {
     setGameId('')
     if (!chess.game_over() && !spectator) {
@@ -155,7 +168,7 @@ const GameScreen = ({ gameId, userKey, userName, setGameId, setActiveGame }: Pro
       {opponent !== 'none' && !spectator && <Thumbnail turn={turn !== color.slice(0, 1)} text={`Playing: ${opponent}`} />}
       {spectator && <Thumbnail text="Observing" />}
       {opponent !== 'none' && <Gameboard
-        draggable={!spectator}
+        movable={calcMovable()}
         width={500}
         fen={fen}
         orientation={color === 'black' ? 'black' : 'white'}
