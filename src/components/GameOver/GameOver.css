@@ -1,0 +1,18 @@
+.game-over-modal {
+  align-items: center;
+  background: var(--dark);
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px var(--dark), -2px -2px 5px var(--highlight);
+  color: var(--light);
+  display: flex;
+  flex-direction: column;
+  font-size: x-large;
+  justify-content: center;
+  margin-bottom: -200px;
+  padding: 1em;
+  position: relative;
+  text-align: center;
+  top: -400px;
+  width: 280px;
+  z-index: 9999;
+}

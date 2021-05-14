@@ -1,0 +1,21 @@
+.dashboard-header {
+  align-items: center;
+  background-color: var(--dark);
+  border-radius: 0 0 5px 5px;
+  box-shadow: 3px 3px 7px var(--dark);
+  color: var(--light);
+  display: flex;
+  height: 10vh;
+  justify-content: space-evenly;
+  margin: auto;
+  width: 70%;
+}
+
+h1 {
+  font-size: 3em;
+  margin: 0;
+}
+
+.sign-out {
+  width: auto;
+}

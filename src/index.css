@@ -1,13 +1,56 @@
 body {
+  background-color: #eae2b7;
+  color: #003049;
+  font-family: "Dosis", sans-serif;
+  height: 100vh;
+  letter-spacing: 0.1em;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --dark: #003049;
+  --highlight: #fcbf49;
+  --light: #eae2b7;
+  --lowlight: #d62828;
+  --midlight: #f77f00;
+}
+
+.button-dk-bg {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--highlight);
+  color: var(--dark);
+  font-size: 1.2rem;
+  margin-bottom: 0.75em;
+  margin-top: 0.75em;
+  padding: 0.2em 1em;
+  width: 250px;
+}
+
+.button-dk-bg:hover {
+  box-shadow: -3px -3px 5px var(--highlight);
+  cursor: pointer;
+  filter: brightness(85%);
+}
+
+.button-lt-bg {
+  background: var(--midlight);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 2px 2px 5px var(--dark);
+  color: var(--dark);
+  font-size: 1.2rem;
+  margin: auto;
+  margin-bottom: 0.25em;
+  margin-top: 0.25em;
+  padding: 0.2em 1em;
+  width: 250px;
+}
+
+.button-lt-bg:hover {
+  box-shadow: -3px -3px 5px var(--dark);
+  cursor: pointer;
+  filter: brightness(85%);
 }

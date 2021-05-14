@@ -1,0 +1,17 @@
+.gameboard-wrapper {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: auto;
+  width: auto;
+  height: auto;
+}
+
+.board {
+  width: 500px;
+  height: 500px;
+  cursor: default;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 5px 15px;
+}

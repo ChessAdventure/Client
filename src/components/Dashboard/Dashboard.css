@@ -1,0 +1,38 @@
+.container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  width: 90%;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.greeting p {
+  color: black;
+  font-size: x-large;
+  margin-bottom: 0;
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+}
+
+.show-rules {
+  margin-top: 0.5em;
+}
+
+.show-stats {
+  margin-bottom: 2em;
+}
+
+.previous-game-header {
+  font-size: 1.3em;
+  margin-bottom: 1em;
+  margin-top: -0.5em;
+  text-align: center;
+}

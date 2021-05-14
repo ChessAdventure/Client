@@ -1,0 +1,8 @@
+.error {
+  font-size: x-large;
+  height: auto;
+  margin: auto;
+  text-align: center;
+  width: 400px;
+  z-index: 1;
+}
