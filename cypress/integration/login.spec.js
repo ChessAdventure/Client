@@ -121,7 +121,7 @@ describe("Sign Up and Log In", () => {
 
     cy.get(".enter-button").should("exist").should("have.text", "ENTER")
 
-    cy.get(".signup-button").should("exist").should("have.text", "Show login")
+    cy.get(".signup-button").should("exist").should("have.text", "Show Login")
   })
 
   it("should sign up the user", () => {
